@@ -1,0 +1,2 @@
+# ViedaSlimnica
+Projektēšanas labratorija
