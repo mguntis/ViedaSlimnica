@@ -59,7 +59,34 @@ namespace ViedaSlimnicaProject.Models
             pacientaID = new int[palatasIetilpiba];
             pacientaID = pacID;
         }
-    }   
+    } 
+     public class Pacients
+    {
+        public int pacientaID { get; set; }
+        public string Vards { get; set; }
+        public string Uzvards { get; set; }
+        public string PersKods { get; set; }
+        public string Simptomi { get; set; }
+        public string Nodala { get; set; }
+        public int PalatasID { get; set; }
+        public DateTime IerasanasDatums { get; set; }
+
+        public Pacients(int pacID, string var, string uzvar, string perskod, string simp, string nod, int palID, DateTime ier)
+        {
+            pacientaID = pacID;
+            Vards = var;
+            Uzvards = uzvar;
+            PersKods = perskod;
+            Simptomi = simp;
+            Nodala = nod;
+            PalatasID = palID;
+            IerasanasDatums = ier;
+        }
+
+
+
+
+    }
 }
 
 #region Helpers
