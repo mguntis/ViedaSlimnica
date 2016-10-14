@@ -70,10 +70,10 @@ namespace ViedaSlimnicaProject.Models
         public int PalatasID { get; set; }
         public DateTime IerasanasDatums { get; set; }
 
-        public Pacients(int pacID, string var, string uzvar, string perskod, string simp, string nod, int palID, DateTime ier)
+        public Pacients(int pacID, string vard, string uzvar, string perskod, string simp, string nod, int palID, DateTime ier)
         {
             pacientaID = pacID;
-            Vards = var;
+            Vards = vard;
             Uzvards = uzvar;
             PersKods = perskod;
             Simptomi = simp;
