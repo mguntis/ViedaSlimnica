@@ -41,6 +41,7 @@ namespace ViedaSlimnicaProject.Models
     }
     public class Palata
     {
+        public int palatasID { get; set; }
         public string Nodala { get; set; }
         public int Stavs { get; set; }
         public int gultasNr { get; set; }
@@ -48,8 +49,9 @@ namespace ViedaSlimnicaProject.Models
         public int[] pacientaID { get; set; }
 
         // const
-        public Palata(string nod, int sta, int gulNr, int palaIet, int[] pacID)
+        public Palata(int palID, string nod, int sta, int gulNr, int palaIet, int[] pacID)
         {
+            palatasID = palID;
             Nodala = nod;
             Stavs = sta;
             gultasNr = gulNr;
