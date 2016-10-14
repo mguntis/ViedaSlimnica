@@ -44,19 +44,18 @@ namespace ViedaSlimnicaProject.Models
         public int palatasID { get; set; }
         public string Nodala { get; set; }
         public int Stavs { get; set; }
-        public int gultasNr { get; set; }
         public int palatasIetilpiba { get; set; }
+        public int[] gultasNr { get; set; }
         public int[] pacientaID { get; set; }
 
         // const
-        public Palata(int palID, string nod, int sta, int gulNr, int palaIet, int[] pacID)
+        public Palata(int palID, string nod, int sta, int palaIet,int[] gulNr, int[] pacID)
         {
             palatasID = palID;
             Nodala = nod;
             Stavs = sta;
             gultasNr = gulNr;
             palatasIetilpiba = palaIet;
-            pacientaID = new int[palatasIetilpiba];
             pacientaID = pacID;
         }
     } 
