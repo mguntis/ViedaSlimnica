@@ -79,6 +79,7 @@ namespace ViedaSlimnicaProject.Models
         public int PalatasID { get; set; }
         public DateTime IerasanasDatums { get; set; }
 
+        //Test
         public Pacients(int pacID, string vard, string uzvar, string perskod, string simp, string nod, int palID, DateTime ier)
         {
             PacientaID = pacID;
