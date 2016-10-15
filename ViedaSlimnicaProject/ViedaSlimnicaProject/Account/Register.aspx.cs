@@ -32,5 +32,10 @@ namespace ViedaSlimnicaProject.Account
                 ErrorMessage.Text = result.Errors.FirstOrDefault();
             }
         }
+
+        protected void Email_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

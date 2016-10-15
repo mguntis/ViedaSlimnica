@@ -1,12 +1,10 @@
-﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="ViedaSlimnicaProject.Account.Register" %>
-
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegisterValidation.aspx.cs" Inherits="ViedaSlimnicaProject.RegisterValidation" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %>Reģistrēt</h2>
     <p class="text-danger">
-        <asp:Literal runat="server" ID="ErrorMessage" />
+    <asp:Literal runat="server" ID="ErrorMessage" />
     </p>
-
-    <div class="form-horizontal">
+       <div class="form-horizontal">
         <h4>Create a new account</h4>
         <hr />
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
@@ -42,4 +40,5 @@
             </div>
         </div>
     </div>
+    
 </asp:Content>
