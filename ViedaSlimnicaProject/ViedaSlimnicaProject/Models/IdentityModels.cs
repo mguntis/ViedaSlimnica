@@ -42,7 +42,7 @@ namespace ViedaSlimnicaProject.Models
     }
     public partial class Palata
     {
-        public int palatasID { get; set; }
+        public int PalatasID { get; set; }
         [StringLength(50)]
         public string Nodala { get; set; }
         [Range(1, 5)]//Nosakam ka kopā mums ir pieci stāvi lai nevar ievadit nepareizus skaitļus
@@ -55,7 +55,7 @@ namespace ViedaSlimnicaProject.Models
         // const
         public Palata(int palID, string nod, int sta, int palaIet,int[] gulNr, int[] pacID)
         {
-            palatasID = palID;
+            PalatasID = palID;
             Nodala = nod;
             Stavs = sta;
             GultasNr = gulNr;
@@ -65,7 +65,7 @@ namespace ViedaSlimnicaProject.Models
     } 
      public partial class Pacients
     {
-        public int pacientaID { get; set; }
+        public int PacientaID { get; set; }
         [StringLength(50)]
         public string Vards { get; set; }
         [StringLength(50)]
@@ -81,7 +81,7 @@ namespace ViedaSlimnicaProject.Models
 
         public Pacients(int pacID, string vard, string uzvar, string perskod, string simp, string nod, int palID, DateTime ier)
         {
-            pacientaID = pacID;
+            PacientaID = pacID;
             Vards = vard;
             Uzvards = uzvar;
             PersKods = perskod;
