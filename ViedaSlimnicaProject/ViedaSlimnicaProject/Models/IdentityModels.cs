@@ -40,62 +40,7 @@ namespace ViedaSlimnicaProject.Models
             return new ApplicationDbContext();
         }
     }
-    public partial class Palata
-    {
-        public int PalatasID { get; set; }
-        [StringLength(50)]
-        public string Nodala { get; set; }
-        [Range(1, 5)]//Nosakam ka kopā mums ir pieci stāvi lai nevar ievadit nepareizus skaitļus
-        public Nullable<decimal> Stavs { get; set; }
-        [Range(1, 4)]//Palatas ietilpiba nevar but lielaka par 4
-        public Nullable<decimal> PalatasIetilpiba { get; set; }
-        public int[] GultasNr { get; set; }
-        public int[] PacientaID { get; set; }
 
-        // const
-        public Palata(int palID, string nod, int sta, int palaIet,int[] gulNr, int[] pacID)
-        {
-            PalatasID = palID;
-            Nodala = nod;
-            Stavs = sta;
-            GultasNr = gulNr;
-            PalatasIetilpiba = palaIet;
-            PacientaID = pacID;
-        }
-    } 
-     public partial class Pacients
-    {
-        public int PacientaID { get; set; }
-        [StringLength(50)]
-        public string Vards { get; set; }
-        [StringLength(50)]
-        public string Uzvards { get; set; }
-        [StringLength(12)]
-        public string PersKods { get; set; }
-        [StringLength(50)]
-        public string Simptomi { get; set; }
-        [StringLength(50)]
-        public string Nodala { get; set; } //Tas arī ir definēts klassē palātā bet nevar izmantot to pašu? 
-        public int PalatasID { get; set; }
-        public DateTime IerasanasDatums { get; set; }
-
-        //Test
-        public Pacients(int pacID, string vard, string uzvar, string perskod, string simp, string nod, int palID, DateTime ier)
-        {
-            PacientaID = pacID;
-            Vards = vard;
-            Uzvards = uzvar;
-            PersKods = perskod;
-            Simptomi = simp;
-            Nodala = nod;
-            PalatasID = palID;
-            IerasanasDatums = ier;
-        }
-
-
-
-
-    }
 }
 
 #region Helpers

@@ -402,6 +402,8 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MetaDati.cs" />
+    <Compile Include="Models\Pacients.cs" />
+    <Compile Include="Models\Palata.cs" />
     <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">

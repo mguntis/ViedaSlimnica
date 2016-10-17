@@ -15,6 +15,9 @@ namespace ContosoSite.Models
         [Range(0, 4)]
         public Nullable<decimal> PalatasIetilpiba;
 
+        [Range(0, 4)]
+        public Nullable<decimal> GultasNr;
+
     }
 
     public class Pacients
