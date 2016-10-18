@@ -43,24 +43,26 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // POST: Palatas/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PalatasID,Nodala,Stavs,PalatasIetilpiba,GultasNr")] Palata palata)
+        public ActionResult Create(Palata palata)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Palatas.Add(palata);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Palatas.Add(palata);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(palata);
             }
-
-            return View(palata);
+            catch {
+                return View();
+                    }
         }
 
         // GET: Palatas/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {
@@ -75,54 +77,46 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // POST: Palatas/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PalatasID,Nodala,Stavs,PalatasIetilpiba,GultasNr")] Palata palata)
+        public ActionResult Edit(Palata palata)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(palata).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(palata).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(palata);
             }
-            return View(palata);
+            catch {
+                return View();
+            }
         }
 
         // GET: Palatas/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id,Palata palata)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (ModelState.IsValid)
+                {
+                    if (id == null)
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    palata = db.Palatas.Find(id);
+                    if (palata == null)
+                        return HttpNotFound();
+                    db.Palatas.Remove(palata);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(palata);
             }
-            Palata palata = db.Palatas.Find(id);
-            if (palata == null)
+            catch
             {
-                return HttpNotFound();
+                return View();
             }
-            return View(palata);
-        }
-
-        // POST: Palatas/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Palata palata = db.Palatas.Find(id);
-            db.Palatas.Remove(palata);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

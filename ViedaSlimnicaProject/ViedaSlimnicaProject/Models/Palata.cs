@@ -21,6 +21,7 @@ namespace ViedaSlimnicaProject.Models
         public int[] PacientaID { get; set; }
 
         // const
+        /*
         public Palata(int palID, string nod, int sta, int palaIet, Nullable<decimal> gulNr, int[] pacID)
         {
             PalatasID = palID;
@@ -29,6 +30,6 @@ namespace ViedaSlimnicaProject.Models
             GultasNr = gulNr;
             PalatasIetilpiba = palaIet;
             PacientaID = pacID;
-        }
+        }*/
     }
 }
