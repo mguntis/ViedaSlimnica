@@ -95,7 +95,20 @@ namespace ViedaSlimnicaProject.Controllers
             }
         }
 
+
         // GET: Palatas/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Palata palata = db.Palatas.Find(id);
+            if (palata == null)
+                return HttpNotFound();
+            return View(palata);
+        }
+
+        // POST: Palatas/Delete/5
+        [HttpPost]
         public ActionResult Delete(int? id,Palata palata)
         {
             try

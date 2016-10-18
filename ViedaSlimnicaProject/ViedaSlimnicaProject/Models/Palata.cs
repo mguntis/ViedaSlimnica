@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace ViedaSlimnicaProject.Models
 {
@@ -11,13 +12,18 @@ namespace ViedaSlimnicaProject.Models
         [Key]
         public int PalatasID { get; set; }
         [StringLength(50)]
+        [DisplayName("Nodaļa")]
         public string Nodala { get; set; }
         [Range(1, 5)]//Nosakam ka kopā mums ir pieci stāvi lai nevar ievadit nepareizus skaitļus
+        [DisplayName("Stāvs")]
         public Nullable<decimal> Stavs { get; set; }
         [Range(1, 4)]//Palatas ietilpiba nevar but lielaka par 4
+        [DisplayName("Palātas Ietilpība")]
         public Nullable<decimal> PalatasIetilpiba { get; set; }
         [Range(1, 4)]
+        [DisplayName("Gultas Nr.")]
         public Nullable<decimal> GultasNr { get; set; }
+        
         public int[] PacientaID { get; set; }
 
         // const

@@ -4,10 +4,10 @@
     ViewBag.Title = "Palātas";
 }
 
-<h2>Index</h2>
+<h2>Palātas</h2>
 
 <p>
-    @Html.ActionLink("Izveidot Jaunu Palātu", "Create")
+    @Html.ActionLink("Izveidot jaunu palātu", "Create")
 </p>
 <table class="table">
     <tr>
@@ -41,9 +41,9 @@
             @Html.DisplayFor(modelItem => item.GultasNr)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PalatasID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PalatasID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PalatasID })
+            @Html.ActionLink("Labot", "Edit", new { id=item.PalatasID }) |
+            @Html.ActionLink("Detaļas", "Details", new { id=item.PalatasID }) |
+            @Html.ActionLink("Dzēst", "Delete", new { id=item.PalatasID })
         </td>
     </tr>
 }
