@@ -21,6 +21,12 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                 </ul>
+                <AnonymousTemplate>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a runat="server" href="~/Palatas/Index">Palātas(temp)</a></li>
+                        <li><a runat="server" href="~/Pacients/Index">Reģistrēt</a></li>
+                    </ul>
+                </AnonymousTemplate>
             </div>
         </div>
     </div>
@@ -29,7 +35,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Viedā Slimnīca</p>
         </footer>
     </div>
 
