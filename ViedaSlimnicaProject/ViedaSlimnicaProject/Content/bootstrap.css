@@ -2106,9 +2106,9 @@ textarea.input-lg {
 
 .btn {
   display: inline-block;
-  padding: 6px 12px;
+  padding: 6px 16px;
   margin-bottom: 0;
-  font-size: 14px;
+  font-size: 22px;
   font-weight: normal;
   line-height: 1.428571429;
   text-align: center;
@@ -2157,7 +2157,7 @@ fieldset[disabled] .btn {
 
 .btn-default {
   color: #333333;
-  background-color: #ffffff;
+  background-color: #d8d8d8;
   border-color: #cccccc;
 }
 
@@ -4677,6 +4677,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar-inverse {
   background-image: url(images/site_master_image.png);
+  background-repeat: no-repeat;
+  background-position: center;
   border-color: #080808;
 }
 
