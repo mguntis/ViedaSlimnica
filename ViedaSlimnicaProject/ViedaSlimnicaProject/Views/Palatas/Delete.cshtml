@@ -1,0 +1,56 @@
+﻿@model ViedaSlimnicaProject.Models.Palata
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Palata</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nodala)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nodala)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Stavs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stavs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PalatasIetilpiba)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PalatasIetilpiba)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GultasNr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GultasNr)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -8,6 +8,7 @@ namespace ViedaSlimnicaProject.Models
 {
     public class Palata
     {
+        [Key]
         public int PalatasID { get; set; }
         [StringLength(50)]
         public string Nodala { get; set; }

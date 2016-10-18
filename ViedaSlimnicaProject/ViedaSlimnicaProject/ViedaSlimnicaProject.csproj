@@ -298,6 +298,11 @@
     <Content Include="Views\Pacients\Details.cshtml" />
     <Content Include="Views\Pacients\Edit.cshtml" />
     <Content Include="Views\Pacients\Delete.cshtml" />
+    <Content Include="Views\Palatas\Create.cshtml" />
+    <Content Include="Views\Palatas\Delete.cshtml" />
+    <Content Include="Views\Palatas\Details.cshtml" />
+    <Content Include="Views\Palatas\Edit.cshtml" />
+    <Content Include="Views\Palatas\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -433,7 +438,9 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="Context\PacientsContext.cs" />
+    <Compile Include="Context\PalataContext.cs" />
     <Compile Include="Controllers\PacientsController.cs" />
+    <Compile Include="Controllers\PalatasController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

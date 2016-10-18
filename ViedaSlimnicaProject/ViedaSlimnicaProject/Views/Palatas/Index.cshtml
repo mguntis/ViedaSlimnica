@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ViedaSlimnicaProject.Models.Palata>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nodala)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stavs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PalatasIetilpiba)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GultasNr)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nodala)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stavs)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PalatasIetilpiba)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GultasNr)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PalatasID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PalatasID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PalatasID })
+        </td>
+    </tr>
+}
+
+</table>
