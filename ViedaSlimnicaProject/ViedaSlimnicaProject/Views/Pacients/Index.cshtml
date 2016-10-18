@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Pacientu saraksts</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Reģistrēt jaunu pacientu", "Create")
 </p>
 <table class="table">
     <tr>
@@ -59,9 +59,9 @@
             @Html.DisplayFor(modelItem => item.IerasanasDatums)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PacientaID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PacientaID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PacientaID })
+            @Html.ActionLink("Labot", "Edit", new { id=item.PacientaID }) |
+            @Html.ActionLink("Detaļas", "Details", new { id=item.PacientaID }) |
+            @Html.ActionLink("Dzēst", "Delete", new { id=item.PacientaID })
         </td>
     </tr>
 }

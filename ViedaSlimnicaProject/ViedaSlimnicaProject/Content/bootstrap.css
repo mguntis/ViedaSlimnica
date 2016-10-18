@@ -312,10 +312,10 @@ html {
 
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.428571429;
   color: #333333;
-  background-color: #ffffff;
+  background-color: #989898;
 }
 
 input,
@@ -1411,6 +1411,7 @@ table {
 
 th {
   text-align: left;
+  background-color: gainsboro;
 }
 
 .table {
@@ -1427,7 +1428,8 @@ th {
   padding: 8px;
   line-height: 1.428571429;
   vertical-align: top;
-  border-top: 1px solid #dddddd;
+
+  border-top: 1px solid #8e8e8e;
 }
 
 .table thead > tr > th {
@@ -4135,7 +4137,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
     margin-left: -15px;
   }
   .navbar-collapse .navbar-nav.navbar-right:last-child {
-    margin-right: -15px;
+    margin-right: 20px;
   }
   .navbar-collapse .navbar-text:last-child {
     margin-right: 0;
@@ -4193,7 +4195,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar-brand {
   float: left;
-  padding: 15px 15px;
+  padding: 15px 150px;
   font-size: 18px;
   line-height: 20px;
 }
@@ -4501,12 +4503,12 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse {
-  background-color: #222222;
+  background-image: url(images/site_master_image.png);
   border-color: #080808;
 }
 
 .navbar-inverse .navbar-brand {
-  color: #999999;
+  color: #080808;
 }
 
 .navbar-inverse .navbar-brand:hover,
@@ -4520,7 +4522,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse .navbar-nav > li > a {
-  color: #999999;
+  color: #000000;
 }
 
 .navbar-inverse .navbar-nav > li > a:hover,
