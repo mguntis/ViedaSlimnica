@@ -8,6 +8,7 @@ namespace ViedaSlimnicaProject.Models
 {
     public partial class Pacients
     {
+        [Key]
         public int PacientaID { get; set; }
         [StringLength(50)]
         public string Vards { get; set; }
@@ -23,7 +24,7 @@ namespace ViedaSlimnicaProject.Models
         public DateTime IerasanasDatums { get; set; }
 
         //Test
-        public Pacients(int pacID, string vard, string uzvar, string perskod, string simp, string nod, int palID, DateTime ier)
+       /* public Pacients(int pacID, string vard, string uzvar, string perskod, string simp, string nod, int palID, DateTime ier)
         {
             PacientaID = pacID;
             Vards = vard;
@@ -33,6 +34,6 @@ namespace ViedaSlimnicaProject.Models
             Nodala = nod;
             PalatasID = palID;
             IerasanasDatums = ier;
-        }
+        }*/
     }
 }

@@ -1,0 +1,74 @@
+﻿@model ViedaSlimnicaProject.Models.Pacients
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pacients</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Vards)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vards)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Uzvards)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Uzvards)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PersKods)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersKods)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Simptomi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Simptomi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nodala)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nodala)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PalatasID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PalatasID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IerasanasDatums)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IerasanasDatums)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PacientaID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

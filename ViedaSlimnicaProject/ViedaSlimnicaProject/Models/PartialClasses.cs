@@ -8,8 +8,8 @@ namespace ContosoSite.Models
     {
     }
 
-    [MetadataType(typeof(Pacients))]
+   /* [MetadataType(typeof(PacientsM))]
     public partial class Enrollment
     {
-    }
+    }*/
 }

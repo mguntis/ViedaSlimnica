@@ -20,7 +20,7 @@ namespace ContosoSite.Models
 
     }
 
-    public class Pacients
+   /* public class PacientsM
     {
         [StringLength(50)]
         [Required(ErrorMessage = "Vārds nedrīkst pārsniegt 50 burtus")]
@@ -44,5 +44,5 @@ namespace ContosoSite.Models
 
         [Required(ErrorMessage = "Nepareizs datums")]
         public Nullable<System.DateTime> EnrollmentDate;
-    }
+    }*/
 }
