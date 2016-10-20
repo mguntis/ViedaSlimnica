@@ -17,7 +17,7 @@ namespace ViedaSlimnicaProject.Controllers
         {
             return View(db.Pacienti.ToList());
         }
-
+ 
         // GET: Pacients/Details/5
         public ActionResult Details(int? id)
         {

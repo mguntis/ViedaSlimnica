@@ -12,19 +12,18 @@ namespace ViedaSlimnicaProject.Models
     {
         [Key]
         public int PacientaID { get; set; }
-        [StringLength(50)]
         [DisplayName("Vārds")]
         public string Vards { get; set; }
-        [StringLength(50)]
         [DisplayName("Uzvārds")]
         public string Uzvards { get; set; }
-        [StringLength(12)]
         [DisplayName("Personas kods")]
         public string PersKods { get; set; }
-        [StringLength(50)]
-        [DisplayName("Simptomi")]
-        public string Simptomi { get; set; }
-        [StringLength(50)]
+        [DisplayName("E-Pasts")]
+        public string Epasts { get; set; }
+        [DisplayName("Telefona numurs")]
+        public string TNumurs { get; set; }
+        /*[DisplayName("Simptomi")]
+        public string Simptomi { get; set; }*/
         [DisplayName("Nodaļa")]
         public string Nodala { get; set; } //Tas arī ir definēts klassē palātā bet nevar izmantot to pašu? 
         [DisplayName("Pālātas Nr.")]

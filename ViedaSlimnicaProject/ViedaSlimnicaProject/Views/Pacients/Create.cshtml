@@ -40,12 +40,30 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Epasts, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Epasts, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Epasts, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TNumurs, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TNumurs, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TNumurs, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*
+            <div class="form-group">
             @Html.LabelFor(model => model.Simptomi, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Simptomi, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Simptomi, "", new { @class = "text-danger" })
             </div>
         </div>
+        *@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Nodala, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -66,7 +84,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IerasanasDatums, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.EditorFor(model => model.IerasanasDatums, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.IerasanasDatums, new { htmlAttributes = new { @class = "form-control datepicker" } })
                 @Html.ValidationMessageFor(model => model.IerasanasDatums, "", new { @class = "text-danger" })
             </div>
         </div>

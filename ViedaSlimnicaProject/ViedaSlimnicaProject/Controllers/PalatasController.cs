@@ -48,6 +48,7 @@ namespace ViedaSlimnicaProject.Controllers
         {
             try
             {
+                
                 if (ModelState.IsValid)
                 {
                     db.Palatas.Add(palata);

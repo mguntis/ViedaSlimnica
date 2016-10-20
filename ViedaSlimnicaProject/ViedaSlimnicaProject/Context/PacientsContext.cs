@@ -12,4 +12,5 @@ namespace ViedaSlimnicaProject.Context
     {
         public DbSet<Pacients> Pacienti { get; set; }
     }
+
 }

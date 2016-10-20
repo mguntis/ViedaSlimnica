@@ -1,15 +1,16 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using ViedaSlimnicaProject.Models;
 
-namespace ContosoSite.Models
+namespace ViedaSlimnicaProject.Models
 {
-    [MetadataType(typeof(Palata))]
-    public partial class Student
+    [MetadataType(typeof(PalataMetaData))]
+    public partial class Palata
     {
     }
 
-   /* [MetadataType(typeof(PacientsM))]
-    public partial class Enrollment
+   [MetadataType(typeof(PacientsMetaDati))]
+    public partial class Pacients
     {
-    }*/
+    }
 }
