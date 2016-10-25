@@ -455,22 +455,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\PacientsMigration\201610181035357_InitialCreate.cs" />
-    <Compile Include="Migrations\PacientsMigration\201610181035357_InitialCreate.Designer.cs">
-      <DependentUpon>201610181035357_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\PacientsMigration\201610251634375_InitialPacients.cs" />
-    <Compile Include="Migrations\PacientsMigration\201610251634375_InitialPacients.Designer.cs">
-      <DependentUpon>201610251634375_InitialPacients.cs</DependentUpon>
+    <Compile Include="Migrations\PacientsMigration\201610251725479_InitialPacients.cs" />
+    <Compile Include="Migrations\PacientsMigration\201610251725479_InitialPacients.Designer.cs">
+      <DependentUpon>201610251725479_InitialPacients.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\PacientsMigration\Configuration.cs" />
-    <Compile Include="Migrations\PalataMigration\201610181140466_InitialCreate.cs" />
-    <Compile Include="Migrations\PalataMigration\201610181140466_InitialCreate.Designer.cs">
-      <DependentUpon>201610181140466_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\PalataMigration\201610251636123_InitialPalata.cs" />
-    <Compile Include="Migrations\PalataMigration\201610251636123_InitialPalata.Designer.cs">
-      <DependentUpon>201610251636123_InitialPalata.cs</DependentUpon>
+    <Compile Include="Migrations\PalataMigration\201610251726529_InitialPalata.cs" />
+    <Compile Include="Migrations\PalataMigration\201610251726529_InitialPalata.Designer.cs">
+      <DependentUpon>201610251726529_InitialPalata.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\PalataMigration\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -510,17 +502,11 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\PacientsMigration\201610181035357_InitialCreate.resx">
-      <DependentUpon>201610181035357_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\PacientsMigration\201610251725479_InitialPacients.resx">
+      <DependentUpon>201610251725479_InitialPacients.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\PacientsMigration\201610251634375_InitialPacients.resx">
-      <DependentUpon>201610251634375_InitialPacients.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\PalataMigration\201610181140466_InitialCreate.resx">
-      <DependentUpon>201610181140466_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\PalataMigration\201610251636123_InitialPalata.resx">
-      <DependentUpon>201610251636123_InitialPalata.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\PalataMigration\201610251726529_InitialPalata.resx">
+      <DependentUpon>201610251726529_InitialPalata.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
