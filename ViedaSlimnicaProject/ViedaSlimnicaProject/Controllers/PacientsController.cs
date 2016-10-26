@@ -17,7 +17,16 @@ namespace ViedaSlimnicaProject.Controllers
         {
             return View(db.Pacienti.ToList());
         }
- 
+        public ActionResult Palata(int id)
+        {
+
+            var pacients = from p in db.Pacienti
+                           where id == p.PalatasID
+                           select p ; 
+
+            return View(pacients.ToList());
+        }
+
         // GET: Pacients/Details/5
         public ActionResult Details(int? id)
         {
