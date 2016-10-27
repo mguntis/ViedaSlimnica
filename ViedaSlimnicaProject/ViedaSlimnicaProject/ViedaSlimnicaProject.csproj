@@ -287,7 +287,9 @@
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Bundle.config" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
@@ -441,8 +443,12 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Context\PacientsContext.cs" />
-    <Compile Include="Context\PalataContext.cs" />
+    <Compile Include="Migrations\201610271604075_InitialCreate.cs" />
+    <Compile Include="Migrations\201610271604075_InitialCreate.Designer.cs">
+      <DependentUpon>201610271604075_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="SmartHospitalDatabaseContext.cs" />
     <Compile Include="Controllers\PacientsController.cs" />
     <Compile Include="Controllers\PalatasController.cs" />
     <Compile Include="Default.aspx.cs">
@@ -455,24 +461,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\PacientsMigration\201610181035357_InitialCreate.cs" />
-    <Compile Include="Migrations\PacientsMigration\201610181035357_InitialCreate.Designer.cs">
-      <DependentUpon>201610181035357_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\PacientsMigration\201610251634375_InitialPacients.cs" />
-    <Compile Include="Migrations\PacientsMigration\201610251634375_InitialPacients.Designer.cs">
-      <DependentUpon>201610251634375_InitialPacients.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\PacientsMigration\Configuration.cs" />
-    <Compile Include="Migrations\PalataMigration\201610181140466_InitialCreate.cs" />
-    <Compile Include="Migrations\PalataMigration\201610181140466_InitialCreate.Designer.cs">
-      <DependentUpon>201610181140466_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\PalataMigration\201610251636123_InitialPalata.cs" />
-    <Compile Include="Migrations\PalataMigration\201610251636123_InitialPalata.Designer.cs">
-      <DependentUpon>201610251636123_InitialPalata.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\PalataMigration\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\keyAttribute.cs" />
     <Compile Include="Models\MetaDati.cs" />
@@ -495,6 +483,7 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\PacientsEditViewModel.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -510,17 +499,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\PacientsMigration\201610181035357_InitialCreate.resx">
-      <DependentUpon>201610181035357_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\PacientsMigration\201610251634375_InitialPacients.resx">
-      <DependentUpon>201610251634375_InitialPacients.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\PalataMigration\201610181140466_InitialCreate.resx">
-      <DependentUpon>201610181140466_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\PalataMigration\201610251636123_InitialPalata.resx">
-      <DependentUpon>201610251636123_InitialPalata.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610271604075_InitialCreate.resx">
+      <DependentUpon>201610271604075_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

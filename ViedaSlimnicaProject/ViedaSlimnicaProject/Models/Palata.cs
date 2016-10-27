@@ -19,7 +19,7 @@ namespace ViedaSlimnicaProject.Models
         public int PalatasIetilpiba { get; set; }
         [DisplayName("Gultas Nr.")]
         public int GultasNr { get; set; }
-        public int[] PacientaID { get; set; }
+        public virtual IList<Pacients> Pacienti { get; set; }
 
         // const
         /*
