@@ -309,6 +309,7 @@
     <Content Include="Views\Palatas\Details.cshtml" />
     <Content Include="Views\Palatas\Edit.cshtml" />
     <Content Include="Views\Palatas\Index.cshtml" />
+    <Content Include="Views\Pacients\Palata.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

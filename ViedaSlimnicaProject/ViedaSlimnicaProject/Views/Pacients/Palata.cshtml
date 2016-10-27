@@ -1,24 +1,14 @@
 ﻿@model IEnumerable<ViedaSlimnicaProject.Models.Pacients>
 
 @{
-    ViewBag.Title = "Pacientu saraksts";
+    ViewBag.Title = "Palata";
 }
 
-<h1>Pacientu saraksts</h1>
+<h2>Palata</h2>
 
 <p>
-   Apskatīt palātu:
-    @Html.ActionLink("1", "Palata", new { id = 1 }) |
-    @Html.ActionLink("2", "Palata", new { id = 2 }) |
-    @Html.ActionLink("3", "Palata", new { id = 3 }) |
-    @Html.ActionLink("4", "Palata", new { id = 4 }) |
-    @Html.ActionLink("5", "Palata", new { id = 5 })
+    @Html.ActionLink("Create New", "Create")
 </p>
-<p>
-    @Html.ActionLink("Reģistrēt jaunu pacientu", "Create") 
-    
-</p>
-
 <table class="table">
     <tr>
         <th>
@@ -36,14 +26,11 @@
         <th>
             @Html.DisplayNameFor(model => model.TNumurs)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Simptomi)
-        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Nodala)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Palata)
+            @Html.DisplayNameFor(model => model.PalatasID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IerasanasDatums)
@@ -68,23 +55,19 @@
         <td>
             @Html.DisplayFor(modelItem => item.TNumurs)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Simptomi)
-        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Nodala)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Palata)
+            @Html.DisplayFor(modelItem => item.PalatasID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IerasanasDatums)
         </td>
         <td>
-            @Html.ActionLink("Labot", "Edit", new { id=item.PacientaID }) |
-            @Html.ActionLink("Detaļas", "Details", new { id=item.PacientaID }) |
-            @Html.ActionLink("Dzēst", "Delete", new { id = item.PacientaID })|
-            @Html.ActionLink("Apskatit palatu", "Palata", new { id = item.PalatasID }) 
+            @Html.ActionLink("Edit", "Edit", new { id=item.PacientaID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PacientaID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PacientaID })
         </td>
     </tr>
 }
