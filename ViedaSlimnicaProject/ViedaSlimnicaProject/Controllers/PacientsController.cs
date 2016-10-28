@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ViedaSlimnicaProject.Context;
 using ViedaSlimnicaProject.Models;
+using ViedaSlimnicaProject.ViewModel;
 
 namespace ViedaSlimnicaProject.Controllers
 {
     public class PacientsController : Controller
     {
-        private PacientsContext db = new PacientsContext();
+        private SmartHospitalDatabaseContext db = new SmartHospitalDatabaseContext();
         // GET: Pacients
         public ActionResult Index()
         {
             return View(db.Pacienti.ToList());
         }
- 
+
         // GET: Pacients/Details/5
         public ActionResult Details(int? id)
         {
@@ -64,24 +66,54 @@ namespace ViedaSlimnicaProject.Controllers
             Pacients pacients = db.Pacienti.Find(id);
             if (pacients == null)
                 return HttpNotFound();
-            return View(pacients);
+            
+            var listOfRoomsToSelectFrom = new List<SelectListItem>();
+            foreach (var room in db.Palatas.ToList())
+            {
+                var selection = new SelectListItem();
+                if (room.PalatasIetilpiba < room.Pacienti.Count)
+                {
+                    // if the room is full
+                    selection.Disabled = true;
+                }
+                
+                selection.Text = "Palāta #" + room.PalatasID;
+                selection.Value = room.PalatasID.ToString();
+                listOfRoomsToSelectFrom.Add(selection);
+            }
+            var patientEditVm = new PacientsEditViewModel()
+            {
+                Patient = pacients,
+                RoomsFromWhichToSelect = listOfRoomsToSelectFrom
+            };
+
+            if (pacients.Palata != null)
+            {
+                patientEditVm.SelectedRoomId = pacients.Palata.PalatasID;
+            }
+
+            return View(patientEditVm);
         }
 
         // POST: Pacients/Edit/5
         [HttpPost]
-        public ActionResult Edit(Pacients pacients)
+        public ActionResult Edit(PacientsEditViewModel patientEditVm)
         {
             try
             {
+                var selectedRoom = db.Palatas.Single(room => room.PalatasID == patientEditVm.SelectedRoomId);
+                patientEditVm.Patient.Palata = selectedRoom;
                 // TODO: Add update logic here
                 if (ModelState.IsValid)
                 {
-                    db.Entry(pacients).State = System.Data.Entity.EntityState.Modified;
+                    db.Palatas.Attach(selectedRoom);
+                    db.Entry(patientEditVm.Patient).State = EntityState.Modified;
+                    db.Entry(selectedRoom).State = EntityState.Modified;
                     db.SaveChanges();
-                  
+
                     return RedirectToAction("Index");
                 }
-                return View(pacients);
+                return View(patientEditVm);
             }
             catch
             {
@@ -102,7 +134,7 @@ namespace ViedaSlimnicaProject.Controllers
 
         // POST: Pacients/Delete/5
         [HttpPost]
-        public ActionResult Delete(int? id,Pacients pacients )
+        public ActionResult Delete(int? id, Pacients pacients)
         {
             try
             {

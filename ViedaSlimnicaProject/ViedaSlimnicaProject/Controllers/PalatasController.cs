@@ -6,19 +6,19 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ViedaSlimnicaProject.Context;
 using ViedaSlimnicaProject.Models;
 
 namespace ViedaSlimnicaProject.Controllers
 {
     public class PalatasController : Controller
     {
-        private PalataContext db = new PalataContext();
+        private SmartHospitalDatabaseContext db = new SmartHospitalDatabaseContext();
 
         // GET: Palatas
         public ActionResult Index()
         {
-            return View(db.Palatas.ToList());
+            var rooms = db.Palatas.ToList();
+            return View(rooms);
         }
 
         // GET: Palatas/Details/5
@@ -28,7 +28,7 @@ namespace ViedaSlimnicaProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Palata palata = db.Palatas.Find(id);
+            Palata palata =  db.Palatas.Find(id);
             if (palata == null)
             {
                 return HttpNotFound();
@@ -69,7 +69,7 @@ namespace ViedaSlimnicaProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Palata palata = db.Palatas.Find(id);
+            Palata palata =  db.Palatas.Find(id);
             if (palata == null)
             {
                 return HttpNotFound();
