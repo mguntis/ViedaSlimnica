@@ -133,18 +133,22 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // POST: Pacients/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int? id, Pacients pacients)
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int? id)
         {
             try
             {
+                Pacients pacients = db.Pacienti.Find(id);
                 if (ModelState.IsValid)
                 {
                     if (id == null)
+                    {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                    pacients = db.Pacienti.Find(id);
+                    }
                     if (pacients == null)
+                    {
                         return HttpNotFound();
+                    }
                     db.Pacienti.Remove(pacients);
                     db.SaveChanges();
                     return RedirectToAction("Index");

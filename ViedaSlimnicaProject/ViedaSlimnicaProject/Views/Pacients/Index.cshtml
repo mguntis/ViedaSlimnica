@@ -75,7 +75,7 @@
             @Html.DisplayFor(modelItem => item.Nodala)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Palata)
+            @Html.DisplayFor(modelItem => item.Palata.PalatasID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IerasanasDatums)
@@ -84,7 +84,7 @@
             @Html.ActionLink("Labot", "Edit", new { id=item.PacientaID }) |
             @Html.ActionLink("Detaļas", "Details", new { id=item.PacientaID }) |
             @Html.ActionLink("Dzēst", "Delete", new { id = item.PacientaID })|
-            @Html.ActionLink("Apskatit palatu", "Palata", new { id = item.PalatasID }) 
+            @Html.ActionLink("Apskatit palatu", "Palata", new { id = item.Palata.PalatasID }) 
         </td>
     </tr>
 }

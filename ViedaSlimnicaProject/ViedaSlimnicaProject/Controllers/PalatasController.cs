@@ -109,18 +109,22 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // POST: Palatas/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int? id,Palata palata)
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int? id)
         {
             try
             {
+                Palata palata = db.Palatas.Find(id);
                 if (ModelState.IsValid)
                 {
                     if (id == null)
+                    {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                    palata = db.Palatas.Find(id);
+                    }
                     if (palata == null)
+                    {
                         return HttpNotFound();
+                    }
                     db.Palatas.Remove(palata);
                     db.SaveChanges();
                     return RedirectToAction("Index");
