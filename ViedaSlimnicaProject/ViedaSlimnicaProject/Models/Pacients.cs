@@ -24,8 +24,8 @@ namespace ViedaSlimnicaProject.Models
         public string TNumurs { get; set; }
         /*[DisplayName("Simptomi")]
         public string Simptomi { get; set; }*/
-        [DisplayName("Nodaļa")]
-        public string Nodala { get; set; } //Tas arī ir definēts klassē palātā bet nevar izmantot to pašu? 
+        //[DisplayName("Nodaļa")]
+       // public string Nodala { get; set; } //Tas arī ir definēts klassē palātā bet nevar izmantot to pašu? 
         [DisplayName("Pālātas Nr.")]
         public virtual Palata Palata { get; set; }
         [DisplayName("Ierašanās datums")]

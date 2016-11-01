@@ -448,6 +448,10 @@
     <Compile Include="Migrations\201610271604075_InitialCreate.Designer.cs">
       <DependentUpon>201610271604075_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611012055125_UpdatedClasses.cs" />
+    <Compile Include="Migrations\201611012055125_UpdatedClasses.Designer.cs">
+      <DependentUpon>201611012055125_UpdatedClasses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="SmartHospitalDatabaseContext.cs" />
     <Compile Include="Controllers\PacientsController.cs" />
@@ -502,6 +506,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201610271604075_InitialCreate.resx">
       <DependentUpon>201610271604075_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611012055125_UpdatedClasses.resx">
+      <DependentUpon>201611012055125_UpdatedClasses.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

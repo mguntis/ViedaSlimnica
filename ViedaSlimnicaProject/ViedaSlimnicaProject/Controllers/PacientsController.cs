@@ -35,18 +35,40 @@ namespace ViedaSlimnicaProject.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            var listOfRoomsToSelectFrom = new List<SelectListItem>();
+            foreach (var room in db.Palatas.ToList())
+            {
+                var selection = new SelectListItem();
+                if (room.PalatasIetilpiba < room.Pacienti.Count)
+                {
+                    // if the room is full
+                    selection.Disabled = true;
+                }
+
+                selection.Text = "Palāta #" + room.PalatasID;
+                selection.Value = room.PalatasID.ToString();
+                listOfRoomsToSelectFrom.Add(selection);
+            }
+            var patientEditVm = new PacientsEditViewModel()
+            {
+                RoomsFromWhichToSelect = listOfRoomsToSelectFrom
+            };
+            
+
+            return View(patientEditVm);
         }
 
         // POST: Pacients/Create
         [HttpPost]
-        public ActionResult Create(Pacients pacients)
+        public ActionResult Create(PacientsEditViewModel pacients)
         {
             try
             {
+                pacients.Patient.Palata = db.Palatas.Find(pacients.SelectedRoomId);
+               // pacients.Patient.Nodala = pacients.Patient.Palata.Nodala;
                 if (ModelState.IsValid)
                 {
-                    db.Pacienti.Add(pacients);
+                    db.Pacienti.Add(pacients.Patient);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -101,8 +123,10 @@ namespace ViedaSlimnicaProject.Controllers
         {
             try
             {
+
                 var selectedRoom = db.Palatas.Single(room => room.PalatasID == patientEditVm.SelectedRoomId);
                 patientEditVm.Patient.Palata = selectedRoom;
+                //patientEditVm.Patient.Nodala = selectedRoom.Nodala;
                 // TODO: Add update logic here
                 if (ModelState.IsValid)
                 {

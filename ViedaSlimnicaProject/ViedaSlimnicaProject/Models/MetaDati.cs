@@ -7,6 +7,7 @@ namespace ViedaSlimnicaProject.Models
 {
     public partial class PalataMetaData
     {
+
         [Required(ErrorMessage = "*Lauks 'Nodaļa' nedrīkst būt tukšs")]
         [StringLength(30, MinimumLength = 3, ErrorMessage = "*Nodaļas nosaukumam jābūt minimums 3 rakstzīmēm un maksimums 30")]
         public string Nodala;
@@ -59,9 +60,9 @@ namespace ViedaSlimnicaProject.Models
         [Display(Name = "Simptomi")]
         public string Simptomi;*/
 
-        [Required(ErrorMessage = "*Lauks 'Nodaļa' nedrīkst būt tukšs")]
-        [StringLength(30, MinimumLength = 3, ErrorMessage = "*Nodaļas nosaukumam jābūt minimums 3 rakstzīmēm un maksimums 30")]
-        public string Nodala;
+      //  [Required(ErrorMessage = "*Lauks 'Nodaļa' nedrīkst būt tukšs")]
+       // [StringLength(30, MinimumLength = 3, ErrorMessage = "*Nodaļas nosaukumam jābūt minimums 3 rakstzīmēm un maksimums 30")]
+       // public string Nodala;
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString =
@@ -70,4 +71,5 @@ namespace ViedaSlimnicaProject.Models
         [Required(ErrorMessage = "*Lauks 'Ierašanās datums' nedrīkst būt tukšs")]
         public Nullable<System.DateTime> IerasanasDatums;
     }
+
 }

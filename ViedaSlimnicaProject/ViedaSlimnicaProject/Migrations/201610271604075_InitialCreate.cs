@@ -17,7 +17,7 @@ namespace ViedaSlimnicaProject.Migrations
                         PersKods = c.String(nullable: false, maxLength: 12),
                         Epasts = c.String(nullable: false, maxLength: 20),
                         TNumurs = c.String(nullable: false, maxLength: 8),
-                        Nodala = c.String(nullable: false, maxLength: 30),
+                        //Nodala = c.String(nullable: false, maxLength: 30),
                         IerasanasDatums = c.DateTime(nullable: false),
                         Palata_PalatasID = c.Int(),
                     })
