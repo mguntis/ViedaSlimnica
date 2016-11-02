@@ -46,7 +46,7 @@ namespace ViedaSlimnicaProject.Controllers
             foreach (var room in db.Palatas.ToList())
             {
                 var selection = new SelectListItem();
-                if (room.PalatasIetilpiba < room.Pacienti.Count)
+                if (room.PalatasIetilpiba <= room.Pacienti.Count)
                 {
                     // if the room is full
                     selection.Disabled = true;
