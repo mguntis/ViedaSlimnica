@@ -20,6 +20,13 @@ namespace ViedaSlimnicaProject.Controllers
             return View(db.Pacienti.ToList());
         }
 
+        public ActionResult Palata(int id)
+        {
+            
+
+            return View(db.Pacienti.Where(q => q.Palata.PalatasID == id).Take(4).ToList());
+        }
+
         // GET: Pacients/Details/5
         public ActionResult Details(int? id)
         {
