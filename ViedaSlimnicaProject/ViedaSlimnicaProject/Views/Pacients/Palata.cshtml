@@ -3,8 +3,15 @@
 @{
     ViewBag.Title = "Palata";
 }
+@* Don't judge please *@
+ @foreach (var item in Model)
+ {
+    <h2>@Html.DisplayFor(modelItem => item.Palata.PalatasID). palāta </h2>
+    <h4>@Html.DisplayFor(modelItem => item.Palata.Nodala) nodaļa</h4>
+    <h4>@Html.DisplayFor(modelItem => item.Palata.Stavs). stāvs</h4>
+    break;
+ }
 
-<h2>Palata</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -61,9 +68,9 @@
             @Html.DisplayFor(modelItem => item.IerasanasDatums)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PacientaID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PacientaID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PacientaID })
+            @Html.ActionLink("Labot", "Edit", new { id=item.PacientaID }) |
+            @Html.ActionLink("Detaļas", "Details", new { id=item.PacientaID }) |
+            @Html.ActionLink("Dzēst", "Delete", new { id=item.PacientaID })
         </td>
     </tr>
 }

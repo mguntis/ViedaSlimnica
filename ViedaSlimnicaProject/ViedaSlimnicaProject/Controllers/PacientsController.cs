@@ -46,7 +46,7 @@ namespace ViedaSlimnicaProject.Controllers
             foreach (var room in db.Palatas.ToList())
             {
                 var selection = new SelectListItem();
-                if (room.PalatasIetilpiba < room.Pacienti.Count)
+                if (room.PalatasIetilpiba <= room.Pacienti.Count)
                 {
                     // if the room is full
                     selection.Disabled = true;
@@ -100,7 +100,7 @@ namespace ViedaSlimnicaProject.Controllers
             foreach (var room in db.Palatas.ToList())
             {
                 var selection = new SelectListItem();
-                if (room.PalatasIetilpiba < room.Pacienti.Count)
+                if (room.PalatasIetilpiba <= room.Pacienti.Count)
                 {
                     // if the room is full
                     selection.Disabled = true;
@@ -133,7 +133,6 @@ namespace ViedaSlimnicaProject.Controllers
 
                 var selectedRoom = db.Palatas.Single(room => room.PalatasID == patientEditVm.SelectedRoomId);
                 patientEditVm.Patient.Palata = selectedRoom;
-                //patientEditVm.Patient.Nodala = selectedRoom.Nodala;
                 // TODO: Add update logic here
                 if (ModelState.IsValid)
                 {
