@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace ViedaSlimnicaProject.Models
 {
@@ -31,13 +32,13 @@ namespace ViedaSlimnicaProject.Models
 
    public class PacientsMetaDati
     {
-        [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$", ErrorMessage = "*Ievadīts neatbilstošs vārds")]
-        [StringLength(30, MinimumLength = 3, ErrorMessage = "*Vārdam jābūt minimums 3 rakstzīmēm un maksimums 30")]
+        [RegularExpression(@"^[a-zA-Z\u0410-\u042F\u0430-\u044F\u0401\u0451\u0101\u0100\u010c\u010d\u0112\u0113\u011E\u011F\u012A\u012B\u0136\u0137\u013b\u013C\u0145\u0146\u0160\u0161\u016A\u016B\u017D\u017E]+$", ErrorMessage = "*Ievadīts neatbilstošs vārds")]
+        [StringLength(30, ErrorMessage = "*Vārdam jābūt minimums 3 rakstzīmēm un maksimums 30")]
         [Required(ErrorMessage = "*Lauks 'Vārds' nedrīkst būt tukšs")]
         public string Vards;
 
-        [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$", ErrorMessage = "*Ievadīts neatbilstošs uzvārds")]
-        [StringLength(30, MinimumLength = 3, ErrorMessage = "*Uzvārdam jābūt minimums 3 rakstzīmēm un maksimums 30")]
+        [RegularExpression(@"^[a-zA-Z\u0410-\u042F\u0430-\u044F\u0401\u0451\u0101\u0100\u010c\u010d\u0112\u0113\u011E\u011F\u012A\u012B\u0136\u0137\u013b\u013C\u0145\u0146\u0160\u0161\u016A\u016B\u017D\u017E]+$", ErrorMessage = "*Ievadīts neatbilstošs uzvārds")]
+        [StringLength(30, ErrorMessage = "*Uzvārdam jābūt minimums 3 rakstzīmēm un maksimums 30")]
         [Required(ErrorMessage = "*Lauks 'Uzvārds' nedrīkst būt tukšs")]
         public string Uzvards;
 
