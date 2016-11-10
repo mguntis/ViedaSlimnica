@@ -224,10 +224,6 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
-    <Content Include="App_Data\DataBaseViedaSlimnica.mdf" />
-    <Content Include="App_Data\DataBaseViedaSlimnica_log.ldf">
-      <DependentUpon>DataBaseViedaSlimnica.mdf</DependentUpon>
-    </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -499,6 +495,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Content\images\" />
   </ItemGroup>
   <ItemGroup>
