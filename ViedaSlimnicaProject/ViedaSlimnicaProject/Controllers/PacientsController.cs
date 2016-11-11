@@ -131,14 +131,14 @@ namespace ViedaSlimnicaProject.Controllers
             try
             {
 
-                var selectedRoom = db.Palatas.Single(room => room.PalatasID == patientEditVm.SelectedRoomId);
-                patientEditVm.Patient.Palata = selectedRoom;
+                //var selectedRoom = db.Palatas.Single(room => room.PalatasID == patientEditVm.SelectedRoomId);
+                //patientEditVm.Patient.Palata = selectedRoom;
                 // TODO: Add update logic here
                 if (ModelState.IsValid)
                 {
-                    db.Palatas.Attach(selectedRoom);
+                    //db.Palatas.Attach(selectedRoom);
                     db.Entry(patientEditVm.Patient).State = EntityState.Modified;
-                    db.Entry(selectedRoom).State = EntityState.Modified;
+                    //db.Entry(selectedRoom).State = EntityState.Modified;
                     db.SaveChanges();
 
                     return RedirectToAction("Index");

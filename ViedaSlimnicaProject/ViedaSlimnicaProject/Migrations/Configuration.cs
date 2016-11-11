@@ -12,7 +12,7 @@ namespace ViedaSlimnicaProject.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(SmartHospitalDatabaseContext context)

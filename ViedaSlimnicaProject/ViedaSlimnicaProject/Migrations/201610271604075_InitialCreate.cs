@@ -15,7 +15,7 @@ namespace ViedaSlimnicaProject.Migrations
                         Vards = c.String(nullable: false, maxLength: 30),
                         Uzvards = c.String(nullable: false, maxLength: 30),
                         PersKods = c.String(nullable: false, maxLength: 12),
-                        Epasts = c.String(nullable: false, maxLength: 20),
+                        Epasts = c.String(nullable: false, maxLength: 50),
                         TNumurs = c.String(nullable: false, maxLength: 8),
                         //Nodala = c.String(nullable: false, maxLength: 30),
                         IerasanasDatums = c.DateTime(nullable: false),

@@ -9,6 +9,7 @@ using System.Web.SessionState;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Optimization;
+using System.Data.Entity;
 
 namespace ViedaSlimnicaProject
 {
@@ -23,6 +24,7 @@ namespace ViedaSlimnicaProject
             RouteConfig2.RegisterRoutes(RouteTable.Routes);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             BundleConfig2.RegisterBundles(BundleTable.Bundles);
+            Database.SetInitializer<SmartHospitalDatabaseContext>(null);
         }
     }
 }

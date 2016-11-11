@@ -49,7 +49,7 @@ namespace ViedaSlimnicaProject.Models
 
         [RegularExpression(@"^(?("")("".+?""@)|(([0-9a-zA-Z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-zA-Z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$", ErrorMessage = "*Lūdzu ievadiet pareizu epastu")]
         [Required(ErrorMessage = "*Lauks E-pasts' nedrīkst būt tukšs")]
-        [StringLength(20, MinimumLength = 3)]
+        [StringLength(50, MinimumLength = 3)]
         public string Epasts { get; set; }
 
         [RegularExpression(@"^\d{8}$", ErrorMessage = "*Lūdzu ievadiet pareizu telefona numuru")]
