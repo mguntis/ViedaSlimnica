@@ -15,9 +15,51 @@ namespace ViedaSlimnicaProject.Controllers
     {
         private SmartHospitalDatabaseContext db = new SmartHospitalDatabaseContext();
         // GET: Pacients
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return View(db.Pacienti.ToList());
+
+            
+
+            //Pievienoju kaartosanu pec datuma, uzvarda un nodalas
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "nod_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var pacienti = from s in db.Pacienti
+                           select s;
+
+            //Mekleesana peec varda, uzvarda, personas koda, telefona
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                pacienti = pacienti.Where(s => s.Uzvards.Contains(searchString)
+                                       || s.Vards.Contains(searchString) || s.TNumurs.Contains(searchString) || s.PersKods.Contains(searchString));
+            }
+
+
+            //Šī daļa ir prieķš kārtošanas
+           switch (sortOrder)
+            {
+                case "nod_desc":
+                    pacienti = pacienti.OrderByDescending(s => s.Palata.Nodala);
+                    break;
+                case "Date":
+                    pacienti = pacienti.OrderBy(s => s.IerasanasDatums);
+                    break;
+                case "date_desc":
+                    pacienti = pacienti.OrderByDescending(s => s.IerasanasDatums);
+                    break;
+                default:
+                    pacienti = pacienti.OrderBy(s => s.Uzvards);
+                    break;
+            }
+
+
+            return View(pacienti.ToList());
+
+
+
+
+
+
+
         }
 
         public ActionResult Palata(int id)
