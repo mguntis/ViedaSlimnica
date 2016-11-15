@@ -42,10 +42,10 @@ input[type="select"] {
     }
 }
 .navbar-inverse {
-    background-image: url(images/site_master_image2.png);
+    /*background-image: url(images/site_master_image2.png);
     background-repeat: no-repeat;
-    background-position: top;
-    background-color: #c1c0c0;
+    background-position: top;*/
+    background: linear-gradient(to right,#cecece,#efefef)
 }
 .navbar-inverse {
    /* background-image: url(images/site_master_image2.png);
@@ -209,4 +209,22 @@ body {
     background-color: #f1f1f1}
 .drop {
     display: inline-block;
+}
+/*Navigacijas poga small screen*/
+.navbar-toggle.collapsed{
+    background-color:#484848
+}
+/*logo lauks*/
+.navbarlogo {
+    margin-left:25px;
+}
+.navbarlogo a{
+    color:#080808;
+    font-family: Gabriola;
+    font-style: oblique;
+    font-size:24px;
+    text-decoration: none
+}
+.navbarlogo a:hover{
+    color:#ffffff
 }
