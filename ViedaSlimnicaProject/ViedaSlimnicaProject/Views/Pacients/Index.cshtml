@@ -35,7 +35,7 @@
         <th>
             @*Uzlikeu Hiperlinkus tiem atributime pec kurim notiek kartosana*@
            @*@Html.DisplayNameFor(model => model.Uzvards)*@
-            @Html.ActionLink("Uzvārds", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @style = "color:#555555" })
+            @Html.ActionLink("Uzvārds", "Index", new { sortOrder = "uzvards" }, new { @style = "color:#555555" })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PersKods)
@@ -51,14 +51,14 @@
         </th>*@
         <th>
             @*@Html.DisplayNameFor(model => model.Palata.Nodala)*@
-            @Html.ActionLink("Nodaļa", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @style = "color:#555555" })
+            @Html.ActionLink("Nodaļa", "Index", new { sortOrder = "nod_desc" }, new { @style = "color:#555555" })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Palata)
         </th>
         <th>
            @* @Html.DisplayNameFor(model => model.IerasanasDatums)*@
-            @Html.ActionLink("Ierašanās datums", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @style = "color:#555555" })
+            @Html.ActionLink("Ierašanās datums", "Index", new { sortOrder = "date" }, new { @style = "color:#555555" })
         </th>
         <th></th>
     </tr>
