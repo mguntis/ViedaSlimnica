@@ -173,3 +173,40 @@ body {
   .validation-summary-errors.text-danger ul{
       list-style-type:none;
   }
+ .dropbtn {
+    background:url("images/dropdownicon.png");
+    background-size:18px 18px;
+    background-repeat:no-repeat;
+    background-position: center;
+    padding: 15px 30px;
+    font-size: 15px;
+    color:#080808;
+    border: none;
+    cursor: pointer;
+    border-radius:2px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+.drop:hover .dropdown-content {
+    display: block;
+}
+.drop:hover .dropbtn {
+    background-color: #ebebeb;
+}
+.dropdown-content a {
+    color: black;
+    padding: 5px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {
+    background-color: #f1f1f1}
+.drop {
+    display: inline-block;
+}
