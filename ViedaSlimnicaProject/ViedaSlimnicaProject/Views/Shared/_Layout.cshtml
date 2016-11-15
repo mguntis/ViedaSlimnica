@@ -24,20 +24,17 @@
                 </ul>
                 <AnonymousTemplate>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a runat="server" href="~/Palatas/Index">Palātas(temp)</a></li>
-                        <li><a runat="server" href="~/Pacients/Index">Reģistrēt</a></li>
-                        <li>
-                            @{
-                                if (Request.IsAuthenticated)
-                                {
-                                    @Html.ActionLink("Iziet", "LogOf", "Pacients");
-                                }
-                                else
-                                {
-                                    @Html.ActionLink("Autorizēties", "LoginAc", "Pacients");
-                                }
+                        
+                        @{if (Request.IsAuthenticated) {
+                                <li><a runat="server" href="~/Palatas/Index">Palātas(temp)</a></li>
+                                <li><a runat="server" href="~/Pacients/Index">Pacienti</a></li>
+                                <li>@Html.ActionLink("Iziet", "LogOf", "Pacients")</li>
                             }
-                        </li>
+                            else
+                            {
+                                <li>@Html.ActionLink("Autorizēties", "LoginAc", "Pacients")</li>
+                            }
+                        }
                     </ul>
                 </AnonymousTemplate>
             </div>

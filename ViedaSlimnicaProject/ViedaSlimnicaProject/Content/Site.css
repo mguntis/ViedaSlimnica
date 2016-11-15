@@ -41,14 +41,23 @@ input[type="select"] {
         padding-top: 30px;
     }
 }
-
 .navbar-inverse {
     background-image: url(images/site_master_image2.png);
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: top;
     background-color: #c1c0c0;
+}
+.navbar-inverse {
+   /* background-image: url(images/site_master_image2.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #c1c0c0;*/
     border-color: #080808;
+    color: #000000;
     }
+.navbar-inverse .navbar-brand{
+    color:#000000;
+}
 
 .form-control {
   display: block;
@@ -137,4 +146,30 @@ body {
 
   .navbar-collapse .navbar-nav.navbar-right:last-child {
     margin-right: 40px;
+  }
+
+  .navbar-inverse .navbar-nav > li > a {
+      color:#000000;
+  }
+  .form-control.meklet{
+      display:inline;
+      height:29px;
+      width:auto;
+  }
+  .btn.btn-default.btn-meklet{
+      width:100px;
+      padding:0px;
+      color:#212121;
+      height:29px;
+  }
+  .btn.btn-default{
+      color:#080808;
+      padding-left:20px;
+      padding-top:4px;
+      padding-right:20px;
+      padding-bottom:4px;
+      height:30px;
+  }
+  .validation-summary-errors.text-danger ul{
+      list-style-type:none;
   }

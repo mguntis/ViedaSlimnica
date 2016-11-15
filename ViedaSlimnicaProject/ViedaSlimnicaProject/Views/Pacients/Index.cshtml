@@ -6,14 +6,14 @@
 
 <h1>Pacientu saraksts</h1>
 
-<p>
+@*<p>
    Apskatīt palātu:
     @Html.ActionLink("1", "Palata", new { id = 1 }) |
     @Html.ActionLink("2", "Palata", new { id = 2 }) |
     @Html.ActionLink("3", "Palata", new { id = 3 }) |
     @Html.ActionLink("4", "Palata", new { id = 4 }) |
     @Html.ActionLink("5", "Palata", new { id = 5 })
-</p>
+</p>*@
 <p>
     @Html.ActionLink("Reģistrēt jaunu pacientu", "Create") 
     
@@ -22,8 +22,8 @@
 @using (Html.BeginForm())
 {
     <p>
-        Meklēt: @Html.TextBox("SearchString")
-        <input type="submit" value="Meklēt" />
+        @Html.TextBox("SearchString",null, htmlAttributes: new { @class = "form-control meklet", @placeholder="Meklēt"})
+        <input class="btn btn-default btn-meklet" type="submit" value="Meklēt" />
     </p>
 }
 

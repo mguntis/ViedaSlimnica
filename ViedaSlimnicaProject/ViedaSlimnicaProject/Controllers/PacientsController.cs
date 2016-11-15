@@ -85,6 +85,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Create
+        [Authorize]
         [HttpGet]
         public ActionResult Create()
         {
@@ -112,7 +113,6 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // POST: Pacients/Create
-        [Authorize]
         [HttpPost]
         public ActionResult Create(PacientsEditViewModel pacients)
         {
@@ -124,7 +124,7 @@ namespace ViedaSlimnicaProject.Controllers
                 {
                     db.Pacienti.Add(pacients.Patient);
                     db.SaveChanges();
-                    return View("Pacients");
+                    return RedirectToAction("Index");
                 }
                 return View(pacients);
             }

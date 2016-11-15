@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Optimization;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 
 namespace ViedaSlimnicaProject
 {
@@ -24,7 +25,10 @@ namespace ViedaSlimnicaProject
             RouteConfig2.RegisterRoutes(RouteTable.Routes);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             BundleConfig2.RegisterBundles(BundleTable.Bundles);
-            Database.SetInitializer<SmartHospitalDatabaseContext>(null);
+            var configuration = new Migrations.Configuration();
+            var migrator = new DbMigrator(configuration);
+            migrator.Update();
+            //SDatabase.SetInitializer<SmartHospitalDatabaseContext>(null);
         }
     }
 }

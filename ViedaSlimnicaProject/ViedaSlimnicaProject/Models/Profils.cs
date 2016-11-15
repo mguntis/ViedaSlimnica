@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,9 @@ namespace ViedaSlimnicaProject.Models
     {
             [Key]
             public int ProfileID { get; set; }
+            [DisplayName("Lietotājvārds")]
             public string UserName { get; set; }
+            [DisplayName("Parole")]
             public string Password { get; set; }
             public UserRoles URole { get; set; }
             public virtual IList<Pacients> Pacienti { get; set; }
