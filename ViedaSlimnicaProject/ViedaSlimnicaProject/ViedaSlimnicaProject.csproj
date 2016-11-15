@@ -17,7 +17,7 @@
     <AssemblyName>ViedaSlimnicaProject</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44369</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -313,6 +313,7 @@
     <Content Include="Views\Palatas\Edit.cshtml" />
     <Content Include="Views\Palatas\Index.cshtml" />
     <Content Include="Views\Pacients\Palata.cshtml" />
+    <Content Include="Views\Pacients\LoginAc.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -456,6 +457,8 @@
       <DependentUpon>201611012055125_UpdatedClasses.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Profils.cs" />
+    <Compile Include="Models\UserRoles.cs" />
     <Compile Include="SmartHospitalDatabaseContext.cs" />
     <Compile Include="Controllers\PacientsController.cs" />
     <Compile Include="Controllers\PalatasController.cs" />

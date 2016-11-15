@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using ViedaSlimnicaProject.Models;
 using ViedaSlimnicaProject.ViewModel;
 
@@ -15,6 +16,8 @@ namespace ViedaSlimnicaProject.Controllers
     {
         private SmartHospitalDatabaseContext db = new SmartHospitalDatabaseContext();
         // GET: Pacients
+        //(Roles ="Admin")]
+        [Authorize]
         public ActionResult Index(string sortOrder, string searchString)
         {
 
@@ -61,7 +64,7 @@ namespace ViedaSlimnicaProject.Controllers
 
 
         }
-
+        [Authorize]
         public ActionResult Palata(int id)
         {
             
@@ -70,6 +73,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -108,6 +112,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // POST: Pacients/Create
+        [Authorize]
         [HttpPost]
         public ActionResult Create(PacientsEditViewModel pacients)
         {
@@ -119,7 +124,7 @@ namespace ViedaSlimnicaProject.Controllers
                 {
                     db.Pacienti.Add(pacients.Patient);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return View("Pacients");
                 }
                 return View(pacients);
             }
@@ -130,6 +135,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
             if (id == null)
@@ -194,6 +200,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -231,6 +238,38 @@ namespace ViedaSlimnicaProject.Controllers
             {
                 return View();
             }
+
+        }
+        public ActionResult LoginAc()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult LoginAc(Profils log, string returnUrl)
+        {
+            //System.Web.Security.Roles.AddUsersToRole(roleuser, "Admin");
+                var user = db.Accounts.Where(a => a.UserName == log.UserName && a.Password == log.Password).FirstOrDefault();
+                if (user != null)
+                {
+                FormsAuthentication.SetAuthCookie(user.UserName, true);
+                return RedirectToAction("Index");
+
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Nepareiza parole vai lietotājvārds");
+                }
+            ModelState.Remove("Password");
+            return View();
+        }
+        [Authorize]
+        public ActionResult LogOf()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("LoginAc");
         }
     }
 }

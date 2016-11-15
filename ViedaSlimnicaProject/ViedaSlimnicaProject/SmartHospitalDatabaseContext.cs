@@ -7,7 +7,8 @@ namespace ViedaSlimnicaProject
     {
         public DbSet<Pacients> Pacienti { get; set; }
         public DbSet<Palata> Palatas { get; set; }
-
+        public DbSet<Profils> Accounts { get; set; }
+        public DbSet<UserRoles> Profili { get; set; }
         public SmartHospitalDatabaseContext() : base("SmartHospitalDatabaseContext")
         {
             

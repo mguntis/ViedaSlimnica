@@ -15,6 +15,7 @@ namespace ViedaSlimnicaProject.Controllers
         private SmartHospitalDatabaseContext db = new SmartHospitalDatabaseContext();
 
         // GET: Palatas
+        [Authorize]
         public ActionResult Index()
         {
             var rooms = db.Palatas.ToList();
@@ -37,6 +38,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Palatas/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -63,6 +65,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Palatas/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
             if (id == null)
@@ -98,6 +101,7 @@ namespace ViedaSlimnicaProject.Controllers
 
 
         // GET: Palatas/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
