@@ -25,7 +25,6 @@ namespace ViedaSlimnicaProject.Controllers
 
             //Pievienoju kaartosanu pec datuma, uzvarda un nodalas
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "nod_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             var pacienti = from s in db.Pacienti
                            select s;
 
@@ -43,7 +42,7 @@ namespace ViedaSlimnicaProject.Controllers
                 case "nod_desc":
                     pacienti = pacienti.OrderByDescending(s => s.Palata.Nodala);
                     break;
-                case "Date":
+                case "date":
                     pacienti = pacienti.OrderBy(s => s.IerasanasDatums);
                     break;
                 case "date_desc":
