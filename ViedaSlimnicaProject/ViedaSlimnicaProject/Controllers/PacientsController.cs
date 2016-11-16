@@ -254,7 +254,7 @@ namespace ViedaSlimnicaProject.Controllers
             if (user != null)
             {
                 FormsAuthentication.SetAuthCookie(user.UserName, true);
-                if (user.RoleStart == "Admin" || user.RoleStart == "SuperAdmin")
+                if (user.RoleStart == "Employee" || user.RoleStart == "SuperAdmin")
                 {
                     return RedirectToAction("Index");
                 }

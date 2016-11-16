@@ -85,7 +85,7 @@
     </dl>
 </div>
 
-        @if (this.User.IsInRole("Admin") || this.User.IsInRole("SuperAdmin"))
+        @if (this.User.IsInRole("Employee") || this.User.IsInRole("SuperAdmin"))
         {
         <p>
             @Html.ActionLink("Labot", "Edit", new { id = Model.PacientaID }) |
