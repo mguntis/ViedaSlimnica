@@ -17,7 +17,7 @@ namespace ViedaSlimnicaProject.Controllers
         private SmartHospitalDatabaseContext db = new SmartHospitalDatabaseContext();
         // GET: Pacients
         //(Roles ="Admin")]
-        [Authorize(Roles = "Admin, SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Index(string sortOrder, string searchString)
         {
 
@@ -64,7 +64,7 @@ namespace ViedaSlimnicaProject.Controllers
 
 
         }
-        [Authorize(Roles = "Admin, SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Palata(int id)
         {
             
@@ -73,7 +73,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Details/5
-        [Authorize(Roles = "SuperAdmin, Admin, User")]
+        [Authorize(Roles = "SuperAdmin, Employee, User")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -85,7 +85,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Create
-        [Authorize(Roles = "Admin, SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin, Employee")]
         [HttpGet]
         public ActionResult Create()
         {   
@@ -135,7 +135,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Edit/5
-        [Authorize(Roles = "Admin, SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Edit(int id)
         {
             if (id == null)
@@ -200,7 +200,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Delete/5
-        [Authorize(Roles = "Admin, SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

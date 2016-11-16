@@ -15,7 +15,7 @@ namespace ViedaSlimnicaProject.Controllers
         private SmartHospitalDatabaseContext db = new SmartHospitalDatabaseContext();
 
         // GET: Palatas
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        [Authorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Index()
         {
             var rooms = db.Palatas.ToList();
@@ -38,7 +38,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Palatas/Create
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        [Authorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Create()
         {
             return View();
@@ -65,7 +65,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Palatas/Edit/5
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        [Authorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Edit(int id)
         {
             if (id == null)
@@ -101,7 +101,7 @@ namespace ViedaSlimnicaProject.Controllers
 
 
         // GET: Palatas/Delete/5
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        [Authorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
