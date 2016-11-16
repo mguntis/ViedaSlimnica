@@ -30,7 +30,7 @@ namespace ViedaSlimnicaProject.Models
         public virtual Palata Palata { get; set; }
         [DisplayName("Ierašanās datums")]
         public DateTime IerasanasDatums { get; set; }
-        public virtual Profils ProfileAcc { get; set; }
+        //public virtual Profils ProfileAcc { get; set; }
         //Test
         /* public Pacients(int pacID, string vard, string uzvar, string perskod, string simp, string nod, int palID, DateTime ier)
          {

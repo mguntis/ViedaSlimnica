@@ -17,7 +17,7 @@ namespace ViedaSlimnicaProject.Controllers
         private SmartHospitalDatabaseContext db = new SmartHospitalDatabaseContext();
         // GET: Pacients
         //(Roles ="Admin")]
-        [Authorize]
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public ActionResult Index(string sortOrder, string searchString)
         {
 
@@ -64,7 +64,7 @@ namespace ViedaSlimnicaProject.Controllers
 
 
         }
-        [Authorize]
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public ActionResult Palata(int id)
         {
             
@@ -73,7 +73,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Details/5
-        [Authorize]
+        [Authorize(Roles = "SuperAdmin, Admin, User")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -85,31 +85,31 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Create
-        [Authorize]
+        [Authorize(Roles = "Admin, SuperAdmin")]
         [HttpGet]
         public ActionResult Create()
-        {
+        {   
             var listOfRoomsToSelectFrom = new List<SelectListItem>();
-            foreach (var room in db.Palatas.ToList())
-            {
-                var selection = new SelectListItem();
-                if (room.PalatasIetilpiba <= room.Pacienti.Count)
+                foreach (var room in db.Palatas.ToList())
                 {
-                    // if the room is full
-                    selection.Disabled = true;
-                }
-
-                selection.Text = "Palāta #" + room.PalatasID;
-                selection.Value = room.PalatasID.ToString();
-                listOfRoomsToSelectFrom.Add(selection);
+                    var selection = new SelectListItem();
+                    if (room.PalatasIetilpiba <= room.Pacienti.Count)
+                    {
+                        // if the room is full
+                        selection.Disabled = true;
+                    }
+                    //if (listOfRoomsToSelectFrom != null)
+                    //{
+                    selection.Text = "Palāta #" + room.PalatasID;
+                    selection.Value = room.PalatasID.ToString();
+                    listOfRoomsToSelectFrom.Add(selection);
+                    //}
             }
-            var patientEditVm = new PacientsEditViewModel()
-            {
-                RoomsFromWhichToSelect = listOfRoomsToSelectFrom
-            };
-            
-
-            return View(patientEditVm);
+                var patientEditVm = new PacientsEditViewModel()
+                {
+                    RoomsFromWhichToSelect = listOfRoomsToSelectFrom
+                };
+                return View(patientEditVm);
         }
 
         // POST: Pacients/Create
@@ -135,7 +135,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Edit/5
-        [Authorize]
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public ActionResult Edit(int id)
         {
             if (id == null)
@@ -200,7 +200,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -250,18 +250,27 @@ namespace ViedaSlimnicaProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LoginAc(Profils log, string returnUrl)
         {
-            //System.Web.Security.Roles.AddUsersToRole(roleuser, "Admin");
-                var user = db.Accounts.Where(a => a.UserName == log.UserName && a.Password == log.Password).FirstOrDefault();
-                if (user != null)
-                {
+            var user = db.Accounts.Where(a => a.UserName == log.UserName && a.Password == log.Password).FirstOrDefault();
+            if (user != null)
+            {
                 FormsAuthentication.SetAuthCookie(user.UserName, true);
-                return RedirectToAction("Index");
-
+                if (user.RoleStart == "Admin" || user.RoleStart == "SuperAdmin")
+                {
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Nepareiza parole vai lietotājvārds");
+                    int returnID = user.Patient.PacientaID;
+                    if (ModelState.IsValid)
+                    {
+                        return RedirectToAction("Details", new { id = returnID });
+                    }
                 }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Nepareiza parole vai lietotājvārds");
+            }
             ModelState.Remove("Password");
             return View();
         }

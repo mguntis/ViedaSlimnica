@@ -25,10 +25,24 @@
                 <AnonymousTemplate>
                     <ul class="nav navbar-nav navbar-right">
                         
-                        @{if (Request.IsAuthenticated) {
-                                <li><a runat="server" href="~/Palatas/Index">Palātas(temp)</a></li>
+                        @{if (Request.IsAuthenticated)
+                            {
+                                if (this.User.IsInRole("User"))
+                                {
+                                    <li>@Html.ActionLink("Iziet", "LogOf", "Pacients")</li>
+                                }
+                                else
+                                {
+                                    if (this.User.IsInRole("Admin") || this.User.IsInRole("SuperAdmin"))
+                                    {
+                                        <li><a runat="server" href="~/Palatas/Index">Palātas(temp)</a></li>
+                                        <li><a runat="server" href="~/Pacients/Index">Pacienti</a></li>
+                                        <li>@Html.ActionLink("Iziet", "LogOf", "Pacients")</li>
+                                    }
+                                }
+                                @*<li><a runat="server" href="~/Palatas/Index">Palātas(temp)</a></li>
                                 <li><a runat="server" href="~/Pacients/Index">Pacienti</a></li>
-                                <li>@Html.ActionLink("Iziet", "LogOf", "Pacients")</li>
+                                <li>@Html.ActionLink("Iziet", "LogOf", "Pacients")</li>*@
                             }
                             else
                             {

@@ -28,7 +28,7 @@ namespace ViedaSlimnicaProject
             var configuration = new Migrations.Configuration();
             var migrator = new DbMigrator(configuration);
             migrator.Update();
-            //SDatabase.SetInitializer<SmartHospitalDatabaseContext>(null);
+            //    SDatabase.SetInitializer<SmartHospitalDatabaseContext>(null);
         }
     }
 }

@@ -15,8 +15,8 @@ namespace ViedaSlimnicaProject.Models
             public string UserName { get; set; }
             [DisplayName("Parole")]
             public string Password { get; set; }
-            public UserRoles URole { get; set; }
-            public virtual IList<Pacients> Pacienti { get; set; }
+            public string RoleStart { get; set; }
+            public virtual Pacients Patient { get; set; }
     }
 
 }

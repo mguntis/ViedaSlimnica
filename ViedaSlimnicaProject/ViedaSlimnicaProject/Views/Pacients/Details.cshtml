@@ -84,7 +84,11 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Labot", "Edit", new { id = Model.PacientaID }) |
-    @Html.ActionLink("Atpakaļ uz sarakstu", "Index")
-</p>
+
+        @if (this.User.IsInRole("Admin") || this.User.IsInRole("SuperAdmin"))
+        {
+        <p>
+            @Html.ActionLink("Labot", "Edit", new { id = Model.PacientaID }) |
+            @Html.ActionLink("Atpakaļ uz sarakstu", "Index")
+        </p>
+        }

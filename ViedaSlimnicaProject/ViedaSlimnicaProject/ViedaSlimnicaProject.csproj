@@ -453,7 +453,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Profils.cs" />
-    <Compile Include="Models\UserRoles.cs" />
+    <Compile Include="Security\SiteRoles.cs" />
     <Compile Include="SmartHospitalDatabaseContext.cs" />
     <Compile Include="Controllers\PacientsController.cs" />
     <Compile Include="Controllers\PalatasController.cs" />
