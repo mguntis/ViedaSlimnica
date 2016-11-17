@@ -14,6 +14,29 @@ namespace ViedaSlimnicaProject.Controllers
 {
     public class PacientsController : Controller
     {
+        public List<SelectListItem> availableRooms()
+        {
+            // atrodam visas palātas, kurās ir brīvas vietas
+            var listOfRoomsToSelectFrom = new List<SelectListItem>();
+            foreach (var room in db.Palatas.ToList())
+            {
+                var selection = new SelectListItem();
+                if (room.PalatasIetilpiba <= room.Pacienti.Count)
+                {
+                    // if the room is full
+                    selection.Disabled = true;
+                }
+                if (listOfRoomsToSelectFrom != null)
+                {
+                selection.Text = "Palāta #" + room.PalatasID;
+                selection.Value = room.PalatasID.ToString();
+                listOfRoomsToSelectFrom.Add(selection);
+                }
+            }
+            return listOfRoomsToSelectFrom;
+        }
+
+
         private SmartHospitalDatabaseContext db = new SmartHospitalDatabaseContext();
         // GET: Pacients
         //(Roles ="Admin")]
@@ -88,27 +111,11 @@ namespace ViedaSlimnicaProject.Controllers
         [Authorize(Roles = "SuperAdmin, Employee")]
         [HttpGet]
         public ActionResult Create()
-        {   
-            var listOfRoomsToSelectFrom = new List<SelectListItem>();
-                foreach (var room in db.Palatas.ToList())
-                {
-                    var selection = new SelectListItem();
-                    if (room.PalatasIetilpiba <= room.Pacienti.Count)
-                    {
-                        // if the room is full
-                        selection.Disabled = true;
-                    }
-                    //if (listOfRoomsToSelectFrom != null)
-                    //{
-                    selection.Text = "Palāta #" + room.PalatasID;
-                    selection.Value = room.PalatasID.ToString();
-                    listOfRoomsToSelectFrom.Add(selection);
-                    //}
-            }
-                var patientEditVm = new PacientsEditViewModel()
-                {
-                    RoomsFromWhichToSelect = listOfRoomsToSelectFrom
-                };
+        {
+            var patientEditVm = new PacientsEditViewModel()
+            {
+                RoomsFromWhichToSelect = availableRooms()
+            };
                 return View(patientEditVm);
         }
 
@@ -118,14 +125,25 @@ namespace ViedaSlimnicaProject.Controllers
         {
             try
             {
-                pacients.Patient.Palata = db.Palatas.Find(pacients.SelectedRoomId);
-               // pacients.Patient.Nodala = pacients.Patient.Palata.Nodala;
+                var selectedRoom = db.Palatas.Find(pacients.SelectedRoomId);
+                pacients.Patient.Palata = selectedRoom;
+                if (selectedRoom.PalatasIetilpiba <= selectedRoom.Pacienti.Count())
+                {
+                    // mēģinājums ievietot pilnā palātā vēlvienu pacientu
+                    pacients.RoomsFromWhichToSelect = availableRooms();
+                    ModelState.AddModelError("SelectedRoomId", "Palāta jau ir pilna!");
+                    return View(pacients);
+                }
                 if (ModelState.IsValid)
                 {
                     db.Pacienti.Add(pacients.Patient);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
+                // validācija parāda kļūdas
+                // Atgriežam view, bet tā kā GET metode netiek palaista šajā gadījumā un šai metodei netika nodots
+                // pieejamo palātu saraksts pievienojam tās atkal šim objektam/entitijai (nezinu kā pareizi viņu sauc)
+                pacients.RoomsFromWhichToSelect = availableRooms();
                 return View(pacients);
             }
             catch
@@ -136,37 +154,23 @@ namespace ViedaSlimnicaProject.Controllers
 
         // GET: Pacients/Edit/5
         [Authorize(Roles = "SuperAdmin, Employee")]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             Pacients pacients = db.Pacienti.Find(id);
             if (pacients == null)
                 return HttpNotFound();
-            
-            var listOfRoomsToSelectFrom = new List<SelectListItem>();
-            foreach (var room in db.Palatas.ToList())
-            {
-                var selection = new SelectListItem();
-                if (room.PalatasIetilpiba <= room.Pacienti.Count)
-                {
-                    // if the room is full
-                    selection.Disabled = true;
-                }
-                
-                selection.Text = "Palāta #" + room.PalatasID;
-                selection.Value = room.PalatasID.ToString();
-                listOfRoomsToSelectFrom.Add(selection);
-            }
             var patientEditVm = new PacientsEditViewModel()
             {
                 Patient = pacients,
-                RoomsFromWhichToSelect = listOfRoomsToSelectFrom
+                RoomsFromWhichToSelect = availableRooms()
             };
 
             if (pacients.Palata != null)
             {
                 patientEditVm.SelectedRoomId = pacients.Palata.PalatasID;
+                patientEditVm.Patient.Palata = pacients.Palata;
             }
 
             return View(patientEditVm);
@@ -176,27 +180,19 @@ namespace ViedaSlimnicaProject.Controllers
         [HttpPost]
         public ActionResult Edit(PacientsEditViewModel patientEditVm)
         {
-            try
+            //var selectedRoom = db.Palatas.Single(room => room.PalatasID == patientEditVm.SelectedRoomId);
+            //patientEditVm.Patient.Palata = selectedRoom;
+            // TODO: Add update logic here
+            if (ModelState.IsValid)
             {
-
-                //var selectedRoom = db.Palatas.Single(room => room.PalatasID == patientEditVm.SelectedRoomId);
-                //patientEditVm.Patient.Palata = selectedRoom;
-                // TODO: Add update logic here
-                if (ModelState.IsValid)
-                {
-                    //db.Palatas.Attach(selectedRoom);
-                    db.Entry(patientEditVm.Patient).State = EntityState.Modified;
-                    //db.Entry(selectedRoom).State = EntityState.Modified;
-                    db.SaveChanges();
-
-                    return RedirectToAction("Index");
-                }
-                return View(patientEditVm);
+                //db.Palatas.Attach(selectedRoom);
+                db.Entry(patientEditVm.Patient).State = EntityState.Modified;
+                //db.Entry(selectedRoom).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(patientEditVm);
+
         }
 
         // GET: Pacients/Delete/5
