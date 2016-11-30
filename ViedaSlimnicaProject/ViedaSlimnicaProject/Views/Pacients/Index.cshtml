@@ -1,5 +1,11 @@
-﻿@model IEnumerable<ViedaSlimnicaProject.Models.Pacients>
+﻿
+@model PagedList.IPagedList<ViedaSlimnicaProject.Models.Pacients>
 
+ @*@model IEnumerable<ViedaSlimnicaProject.Models.Pacients>*@
+
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Pacientu saraksts";
 }
@@ -19,10 +25,10 @@
     
 </p>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "P", FormMethod.Get))
 {
     <p>
-        @Html.TextBox("SearchString",null, htmlAttributes: new { @class = "form-control meklet", @placeholder="Meklēt"})
+        @Html.TextBox("SearchString",null, ViewBag.CurrentFilter as string, htmlAttributes: new { @class = "form-control meklet", @placeholder="Meklēt"})
         <input class="btn btn-default btn-meklet" type="submit" value="Meklēt" />
     </p>
 }
@@ -30,35 +36,40 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Vards)
+           @* @Html.DisplayNameFor(model => model.Vards)*@
+            Vārds
         </th>
         <th>
             @*Uzlikeu Hiperlinkus tiem atributime pec kurim notiek kartosana*@
            @*@Html.DisplayNameFor(model => model.Uzvards)*@
-            @Html.ActionLink("Uzvārds", "Index", new { sortOrder = "uzvards" }, new { @style = "color:#555555" })
+            @Html.ActionLink("Uzvārds", "Index", new { sortOrder = "uzvards", currentFilter = ViewBag.CurrentFilter }, new { @style = "color:#555555" })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PersKods)
+          @*  @Html.DisplayNameFor(model => model.PersKods)*@
+            Personas kods
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Epasts)
+           @* @Html.DisplayNameFor(model => model.Epasts)*@
+            E-pasts
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TNumurs)
+          @*  @Html.DisplayNameFor(model => model.TNumurs)*@
+            Telefona nr.
         </th>
         @*<th>
             @Html.DisplayNameFor(model => model.Simptomi)
         </th>*@
         <th>
             @*@Html.DisplayNameFor(model => model.Palata.Nodala)*@
-            @Html.ActionLink("Nodaļa", "Index", new { sortOrder = "nod_desc" }, new { @style = "color:#555555" })
+            @Html.ActionLink("Nodaļa", "Index", new { sortOrder = "nod_desc", currentFilter = ViewBag.CurrentFilter }, new { @style = "color:#555555" })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Palata)
+           @* @Html.DisplayNameFor(model => model.Palata)*@
+            Palāta
         </th>
         <th>
            @* @Html.DisplayNameFor(model => model.IerasanasDatums)*@
-            @Html.ActionLink("Ierašanās datums", "Index", new { sortOrder = "date" }, new { @style = "color:#555555" })
+            @Html.ActionLink("Ierašanās datums", "Index", new { sortOrder = "date", currentFilter = ViewBag.CurrentFilter }, new { @style = "color:#555555" })
         </th>
         <th></th>
     </tr>
@@ -111,3 +122,8 @@
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

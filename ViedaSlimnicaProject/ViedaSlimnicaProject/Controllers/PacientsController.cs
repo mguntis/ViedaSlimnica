@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using System.Web.Security;
 using ViedaSlimnicaProject.Models;
 using ViedaSlimnicaProject.ViewModel;
+using PagedList;
+using PagedList.Mvc;
 
 namespace ViedaSlimnicaProject.Controllers
 {
@@ -41,14 +43,29 @@ namespace ViedaSlimnicaProject.Controllers
         // GET: Pacients
         //(Roles ="Admin")]
         [Authorize(Roles = "SuperAdmin, Employee")]
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
 
-            
 
+            ViewBag.CurrentSort = sortOrder;
             //Pievienoju kaartosanu pec datuma, uzvarda un nodalas
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "nod_desc" : "";
             ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
+            //lapošana
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+
+
             var pacienti = from s in db.Pacienti
                            select s;
 
@@ -76,9 +93,11 @@ namespace ViedaSlimnicaProject.Controllers
                     pacienti = pacienti.OrderBy(s => s.Uzvards);
                     break;
             }
-
-
-            return View(pacienti.ToList());
+            //lapošanas atributi
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(pacienti.ToPagedList(pageNumber, pageSize));
+            
 
 
 
