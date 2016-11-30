@@ -33,8 +33,15 @@
                                 }
                                 else
                                 {
-                                    if (this.User.IsInRole("Employee") || this.User.IsInRole("SuperAdmin"))
+                                    if (this.User.IsInRole("Employee"))
                                     {
+                                        <li><a runat="server" href="~/Pacients/NewMsg">Jauna ziņa</a></li>
+                                        <li><a runat="server" href="~/Pacients/Index">Pacienti</a></li>
+                                        <li>@Html.ActionLink("Iziet", "LogOf", "Pacients")</li>
+                                    }
+                                    if (this.User.IsInRole("SuperAdmin"))
+                                    {
+                                        <li><a runat="server" href="~/Pacients/NewMsg">Jauna ziņa</a></li>
                                         <li><a runat="server" href="~/Palatas/Index">Palātas(temp)</a></li>
                                         <li><a runat="server" href="~/Pacients/Index">Pacienti</a></li>
                                         <li>@Html.ActionLink("Iziet", "LogOf", "Pacients")</li>

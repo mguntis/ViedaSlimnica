@@ -8,10 +8,13 @@ namespace ViedaSlimnicaProject
         public DbSet<Pacients> Pacienti { get; set; }
         public DbSet<Palata> Palatas { get; set; }
         public DbSet<Profils> Accounts { get; set; }
+        public DbSet<Zinojumi> Zinojumi { get; set; }
         public SmartHospitalDatabaseContext() : base("SmartHospitalDatabaseContext")
         {
             
         }
+
+        public System.Data.Entity.DbSet<ViedaSlimnicaProject.ViewModel.PacientsView> PacientsViews { get; set; }
     }
 
 }

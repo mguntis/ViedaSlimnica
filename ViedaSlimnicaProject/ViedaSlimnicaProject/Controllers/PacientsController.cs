@@ -107,6 +107,22 @@ namespace ViedaSlimnicaProject.Controllers
             return View(pacients);
         }
 
+        // GET: Pacients/PatientView
+        [Authorize(Roles ="User")]
+        public ActionResult PatientView(int id)
+        {
+            var msglist = db.Zinojumi.ToList();
+            var pacients = new PacientsView() {
+                id = id,
+                Pacients = db.Pacienti.Find(id),
+                Msg = msglist
+            };
+
+            if (pacients == null)
+                return HttpNotFound();
+            return View(pacients);
+        }
+
         // GET: Pacients/Create
         [Authorize(Roles = "SuperAdmin, Employee")]
         [HttpGet]
@@ -150,6 +166,25 @@ namespace ViedaSlimnicaProject.Controllers
             {
                 return View();
             }
+        }
+        
+        // GET: Pacients/NewMsg
+        [Authorize(Roles = "SuperAdmin, Employee")]
+        [HttpGet]
+        public ActionResult NewMsg(){
+            return View();
+        }
+        [HttpPost]
+        public ActionResult NewMsg(Zinojumi message){
+            Profils user = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
+            message.profils = user;
+            if (ModelState.IsValid)
+            {
+                db.Zinojumi.Add(message);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
         }
 
         // GET: Pacients/Edit/5
@@ -259,7 +294,7 @@ namespace ViedaSlimnicaProject.Controllers
                     int returnID = user.Patient.PacientaID;
                     if (ModelState.IsValid)
                     {
-                        return RedirectToAction("Details", new { id = returnID });
+                        return RedirectToAction("PatientView", new { id = returnID });
                     }
                 }
             }

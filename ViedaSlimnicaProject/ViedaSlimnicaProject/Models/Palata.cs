@@ -10,6 +10,7 @@ namespace ViedaSlimnicaProject.Models
     public partial class Palata
     {
         [Key]
+        [DisplayName("Palātas Nr.")]
         public int PalatasID { get; set; }
         [DisplayName("Nodaļa")]
         public string Nodala { get; set; }//Nosakam ka kopā mums ir pieci stāvi lai nevar ievadit nepareizus skaitļus
@@ -20,17 +21,6 @@ namespace ViedaSlimnicaProject.Models
         [DisplayName("Gultas Nr.")]
         public int GultasNr { get; set; }
         public virtual IList<Pacients> Pacienti { get; set; }
-
-        // const
-        /*
-        public Palata(int palID, string nod, int sta, int palaIet, Nullable<decimal> gulNr, int[] pacID)
-        {
-            PalatasID = palID;
-            Nodala = nod;
-            Stavs = sta;
-            GultasNr = gulNr;
-            PalatasIetilpiba = palaIet;
-            PacientaID = pacID;
-        }*/
+        
     }
 }

@@ -1,0 +1,90 @@
+﻿@model ViedaSlimnicaProject.ViewModel.PacientsView
+
+@{
+    ViewBag.Title = "PatientView";
+}
+
+<h2>Sveicināti, @Html.DisplayFor(model => model.Pacients.Vards)! </h2>
+
+<div>
+    <div class="patientViewLeft">
+        <h4>Jūsu dati</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Pacients.Vards)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Pacients.Vards)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Pacients.Uzvards)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Pacients.Uzvards)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Pacients.PersKods)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Pacients.PersKods)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Pacients.Epasts)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Pacients.Epasts)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Pacients.TNumurs)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Pacients.TNumurs)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Pacients.Palata.Nodala)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Pacients.Palata.Nodala)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Pacients.Palata.PalatasID)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Pacients.Palata.PalatasID)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Pacients.IerasanasDatums)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Pacients.IerasanasDatums)
+            </dd>
+
+        </dl>
+    </div>
+    <div class="patientViewRight">
+        <h4>Ziņojumi</h4>
+        <hr />
+        <dl>
+            @foreach (var item in Model.Msg)
+            {
+                <dt>by @Html.DisplayFor(ModelItem => item.profils.Vards) @Html.DisplayFor(ModelItem => item.profils.Uzvards)</dt>
+                <dd>@Html.DisplayFor(ModelItem => item.msg)</dd>
+            }
+        </dl>
+    </div>
+</div>

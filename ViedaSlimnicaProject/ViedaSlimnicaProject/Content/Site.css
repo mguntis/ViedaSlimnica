@@ -228,3 +228,38 @@ body {
 .navbarlogo a:hover{
     color:#ffffff
 }
+/*pacienta detalas*/
+.patientViewLeft {
+        display:inline-block;
+}
+/*zinojumu bloks*/
+.patientViewRight {
+    display: inline-block;
+    vertical-align:top;
+    margin-left:20px;
+    width:400px;
+    float:right;
+
+}
+/*msg title*/
+.patientViewRight dt{
+    background:linear-gradient(to right,#cecece,#efefef);
+    border:solid;
+    border-width:1px;
+    border-radius:5px;
+    height:25px;
+    padding:5px;
+    padding-right:10px;
+    text-align:right;
+    font-size:10px;
+
+}
+/*msg body*/
+.patientViewRight dd{
+    padding:5px;
+    background: #FFFFFF;
+}
+/*zinojumu virsraksts*/
+.patientViewRight h4{
+    text-align:center;
+}
