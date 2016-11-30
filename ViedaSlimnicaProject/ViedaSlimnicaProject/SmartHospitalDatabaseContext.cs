@@ -13,8 +13,7 @@ namespace ViedaSlimnicaProject
         {
             
         }
-
-        public System.Data.Entity.DbSet<ViedaSlimnicaProject.ViewModel.PacientsView> PacientsViews { get; set; }
+       
     }
 
 }

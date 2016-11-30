@@ -113,7 +113,6 @@ namespace ViedaSlimnicaProject.Controllers
         {
             var msglist = db.Zinojumi.ToList();
             var pacients = new PacientsView() {
-                id = id,
                 Pacients = db.Pacienti.Find(id),
                 Msg = msglist
             };
