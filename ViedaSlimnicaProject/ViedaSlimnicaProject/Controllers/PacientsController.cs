@@ -130,10 +130,11 @@ namespace ViedaSlimnicaProject.Controllers
         [Authorize(Roles ="User")]
         public ActionResult PatientView(int id)
         {
+            var userid = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault().Patient.PacientaID;
             var msglist = db.Zinojumi.ToList();
             var pacients = new PacientsView() {
-                Pacients = db.Pacienti.Find(id),
-                Msg = msglist
+                Pacients = db.Pacienti.Find(userid),
+                Msg = msglist.OrderByDescending(e => e.date)
             };
 
             if (pacients == null)
@@ -196,6 +197,8 @@ namespace ViedaSlimnicaProject.Controllers
         public ActionResult NewMsg(Zinojumi message){
             Profils user = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
             message.profils = user;
+            message.date = DateTime.Now;
+            message.dateString = message.date.ToString("d MMM HH:mm");
             if (ModelState.IsValid)
             {
                 db.Zinojumi.Add(message);

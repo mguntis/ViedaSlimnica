@@ -25,7 +25,7 @@
     
 </p>
 
-@using (Html.BeginForm("Index", "P", FormMethod.Get))
+@using (Html.BeginForm())
 {
     <p>
         @Html.TextBox("SearchString",null, ViewBag.CurrentFilter as string, htmlAttributes: new { @class = "form-control meklet", @placeholder="Meklēt"})

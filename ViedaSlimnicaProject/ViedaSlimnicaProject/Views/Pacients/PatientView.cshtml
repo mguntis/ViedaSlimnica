@@ -82,7 +82,7 @@
         <dl>
             @foreach (var item in Model.Msg)
             {
-                <dt>by @Html.DisplayFor(ModelItem => item.profils.Vards) @Html.DisplayFor(ModelItem => item.profils.Uzvards)</dt>
+                <dt>@Html.DisplayFor(ModelItem => item.dateString) by @Html.DisplayFor(ModelItem => item.profils.Vards) @Html.DisplayFor(ModelItem => item.profils.Uzvards)</dt>
                 <dd>@Html.DisplayFor(ModelItem => item.msg)</dd>
             }
         </dl>
