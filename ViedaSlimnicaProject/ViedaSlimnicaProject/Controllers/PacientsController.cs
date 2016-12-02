@@ -130,10 +130,12 @@ namespace ViedaSlimnicaProject.Controllers
         [Authorize(Roles ="User")]
         public ActionResult PatientView(int id)
         {
-            var userid = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault().Patient.PacientaID;
-            var msglist = db.Zinojumi.ToList();
+            var user = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
+            var msglist = db.Zinojumi
+                .Where(a => a.msgTo.PacientaID == user.Patient.PacientaID || a.msgTo.Vards == null)
+                .ToList();
             var pacients = new PacientsView() {
-                Pacients = db.Pacienti.Find(userid),
+                Pacients = db.Pacienti.Find(user.Patient.PacientaID),
                 Msg = msglist.OrderByDescending(e => e.date)
             };
 
@@ -331,6 +333,21 @@ namespace ViedaSlimnicaProject.Controllers
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("LoginAc");
+        }
+        public ActionResult SendMsgToPatient(int patientID, string MsgToPatient)
+        {
+            Profils user = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
+            var message = new Zinojumi() {
+                msg = MsgToPatient,
+                profils = user,
+                date = DateTime.Now,
+                dateString = DateTime.Now.ToString("d MMM HH:mm"),
+                msgTo = db.Pacienti.Find(patientID)
+        };
+            db.Zinojumi.Add(message);
+            db.SaveChanges();
+           
+            return RedirectToAction("Index");
         }
     }
 }
