@@ -119,7 +119,7 @@ namespace ViedaSlimnicaProject.Controllers
         public ActionResult Details(int? id)
         {
             var finduser = db.Pacienti.Find(id);
-            var user = db.Accounts.Where(a => a.UserName == finduser.Epasts).FirstOrDefault();
+            var user = db.Accounts.Where(a => a.Patient.PacientaID == finduser.PacientaID).FirstOrDefault();
             if (id == null || user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var pacients = new DetailsView()
