@@ -352,3 +352,13 @@ body {
     overflow:auto;
     overflow-y:hidden;
 }
+.table-container .glyphicon{
+    color:#555555;
+}
+.table-container .glyphicon:hover {
+    color:#8d0d0d;
+}
+.tablecontrols{
+    display:inline-block;
+    width:80px;
+}

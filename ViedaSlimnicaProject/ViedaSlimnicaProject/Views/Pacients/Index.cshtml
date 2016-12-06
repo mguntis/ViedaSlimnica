@@ -95,20 +95,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.IerasanasDatums)
         </td>
-        <td style="padding:2px 0px">
-            <div class="drop">
-                <button class="dropbtn">@*<img src="https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-down-01-128.png" width="18" height="18"/>*@</button>
-                <div class="dropdown-content">
-                    @Html.ActionLink("Labot", "Edit", new { id = item.PacientaID })
-                    @Html.ActionLink("Detaļas", "Details", new { id = item.PacientaID })
-                    @Html.ActionLink("Dzēst", "Delete", new { id = item.PacientaID })
-                    @Html.ActionLink("Apskatit palatu", "Palata", new { id = item.Palata.PalatasID })
-                </div>
-            </div>
-            @*@Html.ActionLink("Labot", "Edit", new { id=item.PacientaID }) |
-            @Html.ActionLink("Detaļas", "Details", new { id=item.PacientaID }) |
-            @Html.ActionLink("Dzēst", "Delete", new { id = item.PacientaID })|
-            @Html.ActionLink("Apskatit palatu", "Palata", new { id = item.Palata.PalatasID })*@ 
+        <td>
+            <div class="tablecontrols">
+             <a href="@Url.Action("Edit","Pacients", new {id = item.PacientaID})" class="icon"><span title="Labot" class="glyphicon glyphicon-edit"></span></a>
+             <a href="@Url.Action("Details","Pacients", new {id = item.PacientaID})" class="icon"><span title="Detaļas" class="glyphicon glyphicon-th-list"></span></a>
+             <a href="@Url.Action("Delete","Pacients", new {id = item.PacientaID})" class="icon"><span title="Izrakstīt" class="glyphicon glyphicon-trash"></span></a>
+             <a href="@Url.Action("Delete","Pacients", new {id = item.PacientaID})" class="icon"><span title="Apskatīt palātu" class="glyphicon glyphicon-home"></span></a>
+        </div>
         </td>
     </tr>
 }
