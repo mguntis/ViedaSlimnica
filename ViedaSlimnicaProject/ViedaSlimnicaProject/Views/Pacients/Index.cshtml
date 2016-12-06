@@ -24,7 +24,7 @@
         <input class="btn btn-default btn-meklet" type="submit" value="Meklēt" />
     </p>
 }
-
+<div class="table-container">
 <table class="table">
     <tr>
         <th>
@@ -114,6 +114,7 @@
 }
 
 </table>
+    </div>
 <br />
 @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

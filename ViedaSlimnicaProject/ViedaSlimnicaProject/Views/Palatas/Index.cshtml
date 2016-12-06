@@ -9,49 +9,52 @@
 <p>
     @Html.ActionLink("Izveidot jaunu palātu", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PalatasID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nodala)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Stavs)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PalatasIetilpiba)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GultasNr)
-        </th>
-        <th></th>
-    </tr>
+<div class="table-container">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PalatasID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nodala)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stavs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PalatasIetilpiba)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GultasNr)
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.PalatasID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nodala)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Stavs)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PalatasIetilpiba)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GultasNr)
-        </td>
-        <td>
-            @Html.ActionLink("Labot", "Edit", new { id=item.PalatasID }) |
-            @Html.ActionLink("Detaļas", "Details", new { id=item.PalatasID }) |
-            @Html.ActionLink("Dzēst", "Delete", new { id=item.PalatasID })
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PalatasID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nodala)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stavs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PalatasIetilpiba)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GultasNr)
+                </td>
+                <td>
+                    @Html.ActionLink("Labot", "Edit", new { id = item.PalatasID }) |
+                    @Html.ActionLink("Detaļas", "Details", new { id = item.PalatasID }) |
+                    @Html.ActionLink("Dzēst", "Delete", new { id = item.PalatasID })
+                </td>
+            </tr>
+        }
 
-</table>
+    </table>
+    </div>

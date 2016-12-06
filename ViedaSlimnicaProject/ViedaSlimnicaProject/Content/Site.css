@@ -345,5 +345,10 @@ body {
     margin-left:0px;
 }
 .table {
-    margin-bottom:0px
+    margin-bottom:0px;
+}
+.table-container{
+    
+    overflow:auto;
+    overflow-y:hidden;
 }
