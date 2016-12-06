@@ -86,7 +86,7 @@
     @using (Html.BeginForm("SendMsgToPatient", "Pacients", FormMethod.Get))
     {
     @Html.TextBox("MsgToPatient", null, htmlAttributes: new { @class = "form-control meklet" })
-    @Html.TextBox("patientID",Model.PacientaID, htmlAttributes: new { @type = "hidden"}) /*būtu labi ja kāds atrastu labāku veidu kā iedot controller pacienta ID*/
+    @Html.TextBox("patientID",Model.PacientaID, htmlAttributes: new { @type = "hidden"})
     <input class="btn btn-default btn-meklet" type="submit" value="Send"/>
     }
 </div>

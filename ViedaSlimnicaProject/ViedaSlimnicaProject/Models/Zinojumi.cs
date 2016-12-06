@@ -16,6 +16,6 @@ namespace ViedaSlimnicaProject.Models
         public virtual Profils profils { get; set; }  // kas izsūtīja šo ziņojumu
         public DateTime date { get; set; } // datums 
         public string dateString { get; set; } // datums noformatesanai
-        public Pacients msgTo { get; set; }
+        public virtual Pacients msgTo { get; set; }
     }
 }

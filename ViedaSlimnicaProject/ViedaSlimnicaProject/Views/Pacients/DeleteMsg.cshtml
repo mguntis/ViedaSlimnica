@@ -1,0 +1,30 @@
+﻿@model ViedaSlimnicaProject.Models.Zinojumi
+
+@{
+    ViewBag.Title = "Dzēst ziņu";
+}
+
+<h3>Vai esiet pārliecināts?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.msg):
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.msg)
+        </dd>
+        <dt>Adresēts:</dt>
+        @if (Model.msgTo != null) { <dd>@Html.DisplayFor(model => model.msgTo.Vards) @Html.DisplayFor(model => model.msgTo.Uzvards)</dd>}
+        else { <dd>Visiem pacientiem</dd>}
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Dzēst" class="btn btn-default" /> 
+               @Html.ActionLink("Atpakaļ", "Zinojumi", null, htmlAttributes: new { @class = "FontSize14"  })
+        </div>
+    }
+</div>

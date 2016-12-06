@@ -189,15 +189,12 @@ namespace ViedaSlimnicaProject.Controllers
             }
         }
         
-        // GET: Pacients/NewMsg
-        [Authorize(Roles = "SuperAdmin, Employee")]
-        [HttpGet]
-        public ActionResult NewMsg(){
-            return View();
-        }
         [HttpPost]
-        public ActionResult NewMsg(Zinojumi message){
+        public ActionResult NewMsg(string text)
+        {
+            Zinojumi message = new Zinojumi();
             Profils user = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
+            message.msg = text;
             message.profils = user;
             message.date = DateTime.Now;
             message.dateString = message.date.ToString("d MMM HH:mm");
@@ -205,7 +202,7 @@ namespace ViedaSlimnicaProject.Controllers
             {
                 db.Zinojumi.Add(message);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Zinojumi");
             }
             return View();
         }
@@ -349,5 +346,73 @@ namespace ViedaSlimnicaProject.Controllers
            
             return RedirectToAction("Index");
         }
+        
+
+        [Authorize(Roles = "SuperAdmin,Employee")]
+        public ActionResult Zinojumi()
+        {
+            var msgList = db.Zinojumi.ToList();
+           for (int i=0; i < msgList.Count(); i++)
+            {
+                // to list negrib iedot ziņojuma saņēmēja datus 
+                msgList[i].msgTo = db.Zinojumi.Find(msgList[i].zinojumaID).msgTo;
+            }
+            return View(msgList);
+        }
+
+        [Authorize(Roles = "SuperAdmin, Employee")]
+        public ActionResult DeleteMsg(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Zinojumi zinojums = db.Zinojumi.Find(id);
+            if (zinojums == null)
+                return HttpNotFound();
+            return View(zinojums);
+        }
+
+        // POST: 
+        [HttpPost, ActionName("DeleteMsg")]
+        public ActionResult DeleteMsgConfirm(int? id)
+        {
+            try
+            {
+                Zinojumi zinojums = db.Zinojumi.Find(id);
+                if (ModelState.IsValid)
+                {
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    if (zinojums == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    db.Zinojumi.Remove(zinojums);
+                    db.SaveChanges();
+                    return RedirectToAction("Zinojumi");
+                }
+                return View(zinojums);
+            }
+            catch
+            {
+                return View();
+            }
+
+        }
+        [HttpGet]
+        [Authorize(Roles = "SuperAdmin, Employee")]
+        public ActionResult EditMsg(int? id)
+        {
+            return View(db.Zinojumi.Find(id));
+        }
+        [HttpPost,ActionName("EditMsg")]
+        public ActionResult EditMsgConfirm(Zinojumi zinojumi)
+        {
+            db.Entry(zinojumi).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Zinojumi");
+        }
+
     }
 }

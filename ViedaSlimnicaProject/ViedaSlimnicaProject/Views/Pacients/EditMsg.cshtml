@@ -1,0 +1,41 @@
+﻿@model ViedaSlimnicaProject.Models.Zinojumi
+
+@{
+    ViewBag.Title = "EditMsg";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h2>Ziņa no @Html.DisplayFor(m => m.profils.Vards) @Html.DisplayFor(m => m.profils.Uzvards)</h2>
+    <h4>Adresāts @if (Model.msgTo != null)
+    {@Html.ActionLink(Model.msgTo.Vards + " " + Model.msgTo.Uzvards, "Details", new { id = Model.msgTo.PacientaID })}
+    else
+    { <text>Visiem pacientiem</text> } </h4>
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.zinojumaID)
+        @Html.HiddenFor(model => model.msgTo)
+        @Html.HiddenFor(model => model.date)
+        @Html.HiddenFor(model => model.dateString)
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.msg, new {@class = "form-control newmsg edit", @rows = "5", @cols = "10" })
+                @Html.ValidationMessageFor(model => model.msg, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+                <input type="submit" style="margin-left:14px" value="Labot" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Atpakaļ", "Zinojumi")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

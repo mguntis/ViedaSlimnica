@@ -327,7 +327,9 @@
     <Content Include="Views\Pacients\Palata.cshtml" />
     <Content Include="Views\Pacients\LoginAc.cshtml" />
     <Content Include="Views\Pacients\PatientView.cshtml" />
-    <Content Include="Views\Pacients\NewMsg.cshtml" />
+    <Content Include="Views\Pacients\Zinojumi.cshtml" />
+    <Content Include="Views\Pacients\DeleteMsg.cshtml" />
+    <Content Include="Views\Pacients\EditMsg.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
