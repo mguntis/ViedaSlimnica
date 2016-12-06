@@ -247,7 +247,6 @@
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\Update DataBase.txt" />
     <Content Include="Content\favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

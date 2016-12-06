@@ -98,12 +98,29 @@
         </dd>
 
     </dl>
-    @using (Html.BeginForm("SendMsgToPatient", "Pacients", FormMethod.Get))
-    {
-    @Html.TextBox("MsgToPatient", null, htmlAttributes: new { @class = "form-control meklet" })
-    @Html.TextBox("patientID",Model.Pacients.PacientaID, htmlAttributes: new { @type = "hidden"}) /*būtu labi ja kāds atrastu labāku veidu kā iedot controller pacienta ID*/
-    <input class="btn btn-default btn-meklet" type="submit" value="Send"/>
-    }
+    
+    <button type="button" class="btn btn-info btn-lg details" data-toggle="modal" data-target="#myModal">Jauna Ziņa</button>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Jauns ziņojums @Html.DisplayFor(m => m.Pacients.Vards) @Html.DisplayFor(m => m.Pacients.Uzvards)</h4>
+                </div>
+                @using (Html.BeginForm("SendMsgToPatient", "Pacients", FormMethod.Post))
+                {
+
+                    <div class="modal-body">
+                        @Html.TextArea("MsgToPatient", null, htmlAttributes: new { @class = "form-control newmsg", @rows = "5", @resize = "none" })
+                        @Html.TextBox("patientID", Model.Pacients.PacientaID, htmlAttributes: new { @type = "hidden" })
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Izsūtīt" class="btn btn-default" /> <button type="button" class="btn btn-default" data-dismiss="modal">Aizvērt</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
 
         @if (this.User.IsInRole("Employee") || this.User.IsInRole("SuperAdmin"))

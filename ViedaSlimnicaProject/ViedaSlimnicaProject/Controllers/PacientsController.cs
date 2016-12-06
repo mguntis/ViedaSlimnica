@@ -127,6 +127,7 @@ namespace ViedaSlimnicaProject.Controllers
                 Pacients = db.Pacienti.Find(id),
                 Profils = db.Accounts.Find(user.ProfileID)
             };
+            pacients.Pacients.Palata = finduser.Palata;
             if (pacients == null)
                 return HttpNotFound();
             return View(pacients);
