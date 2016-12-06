@@ -100,7 +100,7 @@
              <a href="@Url.Action("Edit","Pacients", new {id = item.PacientaID})" class="icon"><span title="Labot" class="glyphicon glyphicon-edit"></span></a>
              <a href="@Url.Action("Details","Pacients", new {id = item.PacientaID})" class="icon"><span title="Detaļas" class="glyphicon glyphicon-th-list"></span></a>
              <a href="@Url.Action("Delete","Pacients", new {id = item.PacientaID})" class="icon"><span title="Izrakstīt" class="glyphicon glyphicon-trash"></span></a>
-             <a href="@Url.Action("Delete","Pacients", new {id = item.PacientaID})" class="icon"><span title="Apskatīt palātu" class="glyphicon glyphicon-home"></span></a>
+             <a href="@Url.Action("Palata","Pacients", new {id = item.Palata.PalatasID})" class="icon"><span title="Apskatīt palātu" class="glyphicon glyphicon-home"></span></a>
         </div>
         </td>
     </tr>
