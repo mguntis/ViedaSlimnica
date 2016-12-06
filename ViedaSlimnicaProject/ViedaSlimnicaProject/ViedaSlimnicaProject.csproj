@@ -503,6 +503,7 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\DetailsView.cs" />
     <Compile Include="ViewModel\PacientsEditViewModel.cs" />
     <Compile Include="ViewModel\PacientsView.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">

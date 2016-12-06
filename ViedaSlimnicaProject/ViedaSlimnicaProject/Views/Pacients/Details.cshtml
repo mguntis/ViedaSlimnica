@@ -1,6 +1,6 @@
-﻿@model ViedaSlimnicaProject.Models.Pacients
+﻿@model ViedaSlimnicaProject.ViewModel.DetailsView
 
-@{
+@{ 
     ViewBag.Title = "Pacienta detaļas";
 }
 
@@ -11,43 +11,43 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Vards)
+            @Html.DisplayNameFor(model => model.Pacients.Vards)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Vards)
+            @Html.DisplayFor(model => model.Pacients.Vards)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Uzvards)
+            @Html.DisplayNameFor(model => model.Pacients.Uzvards)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Uzvards)
+            @Html.DisplayFor(model => model.Pacients.Uzvards)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PersKods)
+            @Html.DisplayNameFor(model => model.Pacients.PersKods)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PersKods)
+            @Html.DisplayFor(model => model.Pacients.PersKods)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Epasts)
+            @Html.DisplayNameFor(model => model.Pacients.Epasts)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Epasts)
+            @Html.DisplayFor(model => model.Pacients.Epasts)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TNumurs)
+            @Html.DisplayNameFor(model => model.Pacients.TNumurs)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TNumurs)
+            @Html.DisplayFor(model => model.Pacients.TNumurs)
         </dd>
 
         @*<dt>
@@ -59,34 +59,49 @@
             </dd>*@
 
         <dt>
-            @Html.DisplayNameFor(model => model.Palata.Nodala)
+            @Html.DisplayNameFor(model => model.Pacients.Palata.Nodala)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Palata.Nodala)
+            @Html.DisplayFor(model => model.Pacients.Palata.Nodala)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Palata.PalatasID)
+            @Html.DisplayNameFor(model => model.Pacients.Palata.PalatasID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Palata.PalatasID)
+            @Html.DisplayFor(model => model.Pacients.Palata.PalatasID)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.IerasanasDatums)
+            @Html.DisplayNameFor(model => model.Pacients.IerasanasDatums)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IerasanasDatums)
+            @Html.DisplayFor(model => model.Pacients.IerasanasDatums)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Profils.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Profils.UserName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Profils.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Profils.Password)
         </dd>
 
     </dl>
     @using (Html.BeginForm("SendMsgToPatient", "Pacients", FormMethod.Get))
     {
     @Html.TextBox("MsgToPatient", null, htmlAttributes: new { @class = "form-control meklet" })
-    @Html.TextBox("patientID",Model.PacientaID, htmlAttributes: new { @type = "hidden"})
+    @Html.TextBox("patientID",Model.Pacients.PacientaID, htmlAttributes: new { @type = "hidden"}) /*būtu labi ja kāds atrastu labāku veidu kā iedot controller pacienta ID*/
     <input class="btn btn-default btn-meklet" type="submit" value="Send"/>
     }
 </div>
@@ -94,7 +109,7 @@
         @if (this.User.IsInRole("Employee") || this.User.IsInRole("SuperAdmin"))
         {
         <p>
-            @Html.ActionLink("Labot", "Edit", new { id = Model.PacientaID }) |
+            @Html.ActionLink("Labot", "Edit", new { id = Model.Pacients.PacientaID }) |
             @Html.ActionLink("Atpakaļ uz sarakstu", "Index")
         </p>
         }

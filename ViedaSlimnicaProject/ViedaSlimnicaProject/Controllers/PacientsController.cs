@@ -118,9 +118,15 @@ namespace ViedaSlimnicaProject.Controllers
         [Authorize(Roles = "SuperAdmin, Employee, User")]
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            var finduser = db.Pacienti.Find(id);
+            var user = db.Accounts.Where(a => a.UserName == finduser.Epasts).FirstOrDefault();
+            if (id == null || user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Pacients pacients = db.Pacienti.Find(id);
+            var pacients = new DetailsView()
+            {
+                Pacients = db.Pacienti.Find(id),
+                Profils = db.Accounts.Find(user.ProfileID)
+            };
             if (pacients == null)
                 return HttpNotFound();
             return View(pacients);
@@ -148,14 +154,21 @@ namespace ViedaSlimnicaProject.Controllers
         [Authorize(Roles = "SuperAdmin, Employee")]
         [HttpGet]
         public ActionResult Create()
-        {
+        {  
             var patientEditVm = new PacientsEditViewModel()
             {
                 RoomsFromWhichToSelect = availableRooms()
             };
                 return View(patientEditVm);
         }
-
+        //Random function
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
         // POST: Pacients/Create
         [HttpPost]
         public ActionResult Create(PacientsEditViewModel pacients)
@@ -164,6 +177,15 @@ namespace ViedaSlimnicaProject.Controllers
             {
                 var selectedRoom = db.Palatas.Find(pacients.SelectedRoomId);
                 pacients.Patient.Palata = selectedRoom;
+
+                var password = RandomString(6);
+                var insertprofile = new Profils
+                {
+                    Patient = pacients.Patient,
+                    UserName = pacients.Patient.Epasts,
+                    Password = password,
+                    RoleStart = "User"
+                };
                 if (selectedRoom.PalatasIetilpiba <= selectedRoom.Pacienti.Count())
                 {
                     // mēģinājums ievietot pilnā palātā vēlvienu pacientu
@@ -174,6 +196,7 @@ namespace ViedaSlimnicaProject.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Pacienti.Add(pacients.Patient);
+                    db.Accounts.Add(insertprofile);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -268,7 +291,11 @@ namespace ViedaSlimnicaProject.Controllers
         {
             try
             {
+                var finduser = db.Pacienti.Find(id);
+                var user = db.Accounts.Where(a => a.UserName == finduser.Epasts).FirstOrDefault();
                 Pacients pacients = db.Pacienti.Find(id);
+                Profils profile = db.Accounts.Find(user.ProfileID);
+
                 if (ModelState.IsValid)
                 {
                     if (id == null)
@@ -280,6 +307,7 @@ namespace ViedaSlimnicaProject.Controllers
                         return HttpNotFound();
                     }
                     db.Pacienti.Remove(pacients);
+                    db.Accounts.Remove(profile);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
