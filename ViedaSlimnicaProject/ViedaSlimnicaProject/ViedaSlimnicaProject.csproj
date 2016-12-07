@@ -256,6 +256,10 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\smartslimnica - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\smartslimnica - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\smartslimnica - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\smartslimnica - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ViedaSlimnica.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="fonts\TextFile1.txt" />
