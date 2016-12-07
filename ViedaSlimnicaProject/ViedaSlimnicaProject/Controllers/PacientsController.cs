@@ -406,12 +406,8 @@ namespace ViedaSlimnicaProject.Controllers
         [Authorize(Roles = "SuperAdmin,Employee")]
         public ActionResult Zinojumi()
         {
-            var msgList = db.Zinojumi.ToList();
-           for (int i=0; i < msgList.Count(); i++)
-            {
-                // to list negrib iedot ziņojuma saņēmēja datus 
-                msgList[i].msgTo = db.Zinojumi.Find(msgList[i].zinojumaID).msgTo;
-            }
+            var msgList = db.Zinojumi.ToList().OrderByDescending(e => e.date);
+          //      msgList.OrderByDescending(e => e.date);
             return View(msgList);
         }
 
