@@ -41,8 +41,9 @@
                                     }
                                     if (this.User.IsInRole("SuperAdmin"))
                                     {
+                                        <li><a runat="server" href="~/Pacients/Register">Reģistrēt</a></li>
                                         <li><a runat="server" href="~/Pacients/Zinojumi">Ziņojumi</a></li>
-                                        <li><a runat="server" href="~/Palatas/Index">Palātas(temp)</a></li>
+                                        <li><a runat="server" href="~/Palatas/Index">Palātas</a></li>
                                         <li><a runat="server" href="~/Pacients/Index">Pacienti</a></li>
                                         <li>@Html.ActionLink("Iziet", "LogOf", "Pacients")</li>
                                     }
@@ -66,12 +67,22 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Viedā Slimnīca | Ielogojies kā @Html.ViewContext.HttpContext.User.Identity.Name</p>
+            <p>&copy; @DateTime.Now.Year - Viedā Slimnīca 
+            @if (this.User.Identity.Name != "") {<text>| Ielogojies kā @Html.ViewContext.HttpContext.User.Identity.Name </text>}</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @if (ViewBag.Message != null)
+    {
+        <script>
+        $(document).ready(function () {
+            alert('@ViewBag.Message');
+        });
+        </script>
+    }
+
 </body>
 </html>

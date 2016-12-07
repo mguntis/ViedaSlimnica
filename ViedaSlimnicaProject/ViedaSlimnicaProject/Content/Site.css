@@ -340,6 +340,10 @@ body {
     width:200px;
     padding:7px 5px;
     margin-left:20px;
+    margin-top:10px;
+}
+.btn-info:hover, .btn-info:focus, .btn-info:active {
+    border-color:#790202;
 }
 .btn.btn-info.btn-lg.details {
     margin-left:0px;
@@ -361,4 +365,8 @@ body {
 .tablecontrols{
     display:inline-block;
     width:80px;
+}
+.mailText a  {
+    color:#1a1a1a;
+    font-weight:500;
 }

@@ -78,7 +78,7 @@
             @Html.DisplayFor(modelItem => item.PersKods)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Epasts)
+            <div class="mailText"> @Html.DisplayFor(modelItem => item.Epasts, "EmailAddress")</div>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TNumurs)

@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.PalatasIetilpiba)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GultasNr)
+                Aizņemtās gultas
             </th>
             <th></th>
         </tr>
@@ -46,7 +46,7 @@
                     @Html.DisplayFor(modelItem => item.PalatasIetilpiba)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.GultasNr)
+                    @item.Pacienti.Count
                 </td>
                 <td>
                     @Html.ActionLink("Labot", "Edit", new { id = item.PalatasID }) |

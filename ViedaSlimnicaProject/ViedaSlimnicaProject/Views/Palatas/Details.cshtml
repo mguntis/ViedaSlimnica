@@ -32,15 +32,14 @@
         <dd>
             @Html.DisplayFor(model => model.PalatasIetilpiba)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.GultasNr)
+            Aizņemtās gultas
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.GultasNr)
+            @Model.Pacienti.Count
         </dd>
-
+        <br />
+        @Html.ActionLink("Apskatīt palātu","Palata", "Pacients", new { id = Model.PalatasID},null)
     </dl>
 </div>
 <p>

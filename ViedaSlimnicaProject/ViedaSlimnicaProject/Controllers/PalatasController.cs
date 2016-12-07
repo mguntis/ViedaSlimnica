@@ -19,6 +19,7 @@ namespace ViedaSlimnicaProject.Controllers
         public ActionResult Index()
         {
             var rooms = db.Palatas.ToList();
+            
             return View(rooms);
         }
 

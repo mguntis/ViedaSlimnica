@@ -16,63 +16,67 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Vards)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Uzvards)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PersKods)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Epasts)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TNumurs)
-        </th>
-        
-        <th>
-            @Html.DisplayNameFor(model => model.Palata.PalatasID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IerasanasDatums)
-        </th>
-        <th></th>
-    </tr>
+<div class="table-container">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Vards)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Uzvards)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersKods)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Epasts)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TNumurs)
+            </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Vards)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Uzvards)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PersKods)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Epasts)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TNumurs)
-        </td>
-       
-        <td>
-            @Html.DisplayFor(modelItem => item.Palata.PalatasID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IerasanasDatums)
-        </td>
-        <td>
-            @Html.ActionLink("Labot", "Edit", new { id=item.PacientaID }) |
-            @Html.ActionLink("Detaļas", "Details", new { id=item.PacientaID }) |
-            @Html.ActionLink("Dzēst", "Delete", new { id=item.PacientaID })
-        </td>
-    </tr>
-}
+            <th>
+                @Html.DisplayNameFor(model => model.Palata.PalatasID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IerasanasDatums)
+            </th>
+            <th></th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vards)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Uzvards)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersKods)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Epasts)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TNumurs)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Palata.PalatasID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IerasanasDatums)
+                </td>
+                <td>
+                    @Html.ActionLink("Labot", "Edit", new { id = item.PacientaID }) |
+                    @Html.ActionLink("Detaļas", "Details", new { id = item.PacientaID }) |
+                    @Html.ActionLink("Dzēst", "Delete", new { id = item.PacientaID })
+                </td>
+            </tr>
+        }
+
+    </table>
+    </div>
+

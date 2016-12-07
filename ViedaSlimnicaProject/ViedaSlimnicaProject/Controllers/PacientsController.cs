@@ -194,6 +194,19 @@ namespace ViedaSlimnicaProject.Controllers
                     ModelState.AddModelError("SelectedRoomId", "Palāta jau ir pilna!");
                     return View(pacients);
                 }
+                if (pacients.Patient.IerasanasDatums>DateTime.Now) {
+                    // mēģinājums ievietot nākotnes datumu
+                    pacients.RoomsFromWhichToSelect = availableRooms();
+                    ModelState.AddModelError("Patient.IerasanasDatums", "Ievietots nākotnes datums!");
+                    return View(pacients);
+                }
+                if (pacients.Patient.IerasanasDatums < DateTime.Now.AddDays(-3))
+                {
+                    // Mēģinājums ievietot pacientu palātā ar vairāk kā 3 dienu kavēšanos
+                    pacients.RoomsFromWhichToSelect = availableRooms();
+                    ModelState.AddModelError("Patient.IerasanasDatums", "Nokavētas vairāk kā 3 dienas!");
+                    return View(pacients);
+                }
                 if (ModelState.IsValid)
                 {
                     db.Pacienti.Add(pacients.Patient);
@@ -293,7 +306,7 @@ namespace ViedaSlimnicaProject.Controllers
             try
             {
                 var finduser = db.Pacienti.Find(id);
-                var user = db.Accounts.Where(a => a.UserName == finduser.Epasts).FirstOrDefault();
+                var user = db.Accounts.Where(a => a.Patient.PacientaID == finduser.PacientaID).FirstOrDefault();
                 Pacients pacients = db.Pacienti.Find(id);
                 Profils profile = db.Accounts.Find(user.ProfileID);
 
@@ -322,6 +335,19 @@ namespace ViedaSlimnicaProject.Controllers
         }
         public ActionResult LoginAc()
         {
+            if (User.Identity.Name != "")
+            {
+                var user = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
+                switch (user.RoleStart)
+                {
+                    case "User":
+                        return RedirectToAction("PatientView", new { id = user.Patient.PacientaID });
+                    case "Employee":
+                    case "SuperAdmin":
+                        return RedirectToAction("Index");
+                }
+
+            }
             return View();
         }
 
@@ -442,6 +468,36 @@ namespace ViedaSlimnicaProject.Controllers
             db.SaveChanges();
             return RedirectToAction("Zinojumi");
         }
-
+        [HttpGet]
+        [Authorize(Roles = "SuperAdmin")]
+        public ActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost,ActionName("Register")]
+        public ActionResult RegisterConfirm (Profils userData)
+        {
+            var userTest = db.Accounts.Where(a => a.UserName == userData.UserName).FirstOrDefault();
+            if (userTest != null)
+            {
+                // users ar šādu username jau atrodas db
+                ModelState.AddModelError("", "Lietotājs " + userData.UserName + " jau atrodas sistēmā!");
+                ModelState.Remove("Password");
+                return View();
+            }
+            var newProfile = new Profils()
+            {
+                UserName = userData.UserName,
+                Password = userData.Password,
+                RoleStart = userData.RoleStart,
+                Vards = userData.Vards,
+                Uzvards = userData.Uzvards
+            };
+            db.Accounts.Add(newProfile);
+            db.SaveChanges();
+            ModelState.Clear();
+            ViewBag.Message = "Lietotājs izveidots";
+            return View();
+        }
     }
 }
