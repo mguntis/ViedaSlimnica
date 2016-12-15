@@ -11,11 +11,138 @@ using ViedaSlimnicaProject.Models;
 using ViedaSlimnicaProject.ViewModel;
 using PagedList;
 using PagedList.Mvc;
+using System.Text;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace ViedaSlimnicaProject.Controllers
 {
     public class PacientsController : Controller
     {
+
+        public static string strKey = "U2A9/R*41FD412+4-123";
+
+        public static string Encrypt(string strData)
+        {
+            string strValue = "";
+            if (!string.IsNullOrEmpty(strKey))
+            {
+                if (strKey.Length < 16)
+                {
+                    char c = "XXXXXXXXXXXXXXXX"[16];
+                    strKey = strKey + strKey.Substring(0, 16 - strKey.Length);
+                }
+
+                if (strKey.Length > 16)
+                {
+                    strKey = strKey.Substring(0, 16);
+                }
+
+                // create encryption keys
+                byte[] byteKey = Encoding.UTF8.GetBytes(strKey.Substring(0, 8));
+                byte[] byteVector = Encoding.UTF8.GetBytes(strKey.Substring(strKey.Length - 8, 8));
+
+                // convert data to byte array
+                byte[] byteData = Encoding.UTF8.GetBytes(strData);
+
+                // encrypt 
+                DESCryptoServiceProvider objDES = new DESCryptoServiceProvider();
+                MemoryStream objMemoryStream = new MemoryStream();
+                CryptoStream objCryptoStream = new CryptoStream(objMemoryStream, objDES.CreateEncryptor(byteKey, byteVector), CryptoStreamMode.Write);
+                objCryptoStream.Write(byteData, 0, byteData.Length);
+                objCryptoStream.FlushFinalBlock();
+
+                // convert to string and Base64 encode
+                strValue = Convert.ToBase64String(objMemoryStream.ToArray());
+            }
+            else
+            {
+                strValue = strData;
+            }
+
+            return strValue;
+        }
+        public static string Decrypt(string strData)
+        {
+            string strValue = "";
+            if (!string.IsNullOrEmpty(strKey))
+            {
+                // convert key to 16 characters for simplicity
+                if (strKey.Length < 16)
+                {
+                    strKey = strKey + strKey.Substring(0, 16 - strKey.Length);
+
+                }
+
+                if (strKey.Length > 16)
+                {
+                    strKey = strKey.Substring(0, 16);
+
+                }
+
+                // create encryption keys
+                byte[] byteKey = Encoding.UTF8.GetBytes(strKey.Substring(0, 8));
+                byte[] byteVector = Encoding.UTF8.GetBytes(strKey.Substring(strKey.Length - 8, 8));
+
+                // convert data to byte array and Base64 decode
+                byte[] byteData = new byte[strData.Length + 1];
+                try
+                {
+                    byteData = Convert.FromBase64String(strData);
+                }
+                catch
+                {
+                    strValue = strData;
+                }
+
+
+                if (string.IsNullOrEmpty(strValue))
+                {
+                    // decrypt
+                    DESCryptoServiceProvider objDES = new DESCryptoServiceProvider();
+                    MemoryStream objMemoryStream = new MemoryStream();
+                    CryptoStream objCryptoStream = new CryptoStream(objMemoryStream, objDES.CreateDecryptor(byteKey, byteVector), CryptoStreamMode.Write);
+                    objCryptoStream.Write(byteData, 0, byteData.Length);
+                    objCryptoStream.FlushFinalBlock();
+
+                    // convert to string
+                    System.Text.Encoding objEncoding = System.Text.Encoding.UTF8;
+                    strValue = objEncoding.GetString(objMemoryStream.ToArray());
+
+                }
+            }
+            else
+            {
+                strValue = strData;
+            }
+
+            return strValue;
+        }
+
+        public static string HashSaltStore(string password)
+        {
+            // hash and salt, izveidojam hasho ko glabat
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 5000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+            return Convert.ToBase64String(hashBytes);
+        }
+        public static bool HashSaltVerify(string password, string dbpassword)
+        {
+            // parbauda vai ievadiita parole ir pareiza
+            byte[] hashBytes = Convert.FromBase64String(dbpassword);
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 5000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            for (int i = 0; i < 20; i++)
+                if (hashBytes[i + 16] != hash[i]) return false;
+            return true;
+        }
         public List<SelectListItem> availableRooms()
         {
             // atrodam visas palātas, kurās ir brīvas vietas
@@ -122,10 +249,12 @@ namespace ViedaSlimnicaProject.Controllers
             var user = db.Accounts.Where(a => a.Patient.PacientaID == finduser.PacientaID).FirstOrDefault();
             if (id == null || user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var profils = db.Accounts.Find(user.ProfileID);
+            profils.Password = Decrypt(profils.Password);
             var pacients = new DetailsView()
             {
                 Pacients = db.Pacienti.Find(id),
-                Profils = db.Accounts.Find(user.ProfileID)
+                Profils = profils
             };
             pacients.Pacients.Palata = finduser.Palata;
             if (pacients == null)
@@ -184,7 +313,7 @@ namespace ViedaSlimnicaProject.Controllers
                 {
                     Patient = pacients.Patient,
                     UserName = pacients.Patient.Epasts,
-                    Password = password,
+                    Password = Encrypt(password),
                     RoleStart = "User"
                 };
                 if (selectedRoom.PalatasIetilpiba <= selectedRoom.Pacienti.Count())
@@ -356,8 +485,8 @@ namespace ViedaSlimnicaProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LoginAc(Profils log, string returnUrl)
         {
-            var user = db.Accounts.Where(a => a.UserName == log.UserName && a.Password == log.Password).FirstOrDefault();
-            if (user != null)
+            var user = db.Accounts.Where(a => a.UserName == log.UserName).FirstOrDefault();
+            if (Decrypt(user.Password) == log.Password  && user!=null)
             {
                 FormsAuthentication.SetAuthCookie(user.UserName, true);
                 if (user.RoleStart == "Employee" || user.RoleStart == "SuperAdmin")
@@ -465,7 +594,7 @@ namespace ViedaSlimnicaProject.Controllers
             return RedirectToAction("Zinojumi");
         }
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin")]
+        //[Authorize(Roles = "SuperAdmin")]
         public ActionResult Register()
         {
             return View();
@@ -484,7 +613,7 @@ namespace ViedaSlimnicaProject.Controllers
             var newProfile = new Profils()
             {
                 UserName = userData.UserName,
-                Password = userData.Password,
+                Password = Encrypt(userData.Password),
                 RoleStart = userData.RoleStart,
                 Vards = userData.Vards,
                 Uzvards = userData.Uzvards
