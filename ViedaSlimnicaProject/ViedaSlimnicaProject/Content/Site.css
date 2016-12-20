@@ -49,6 +49,11 @@ input[type="select"] {
         display:flex;
         justify-content:space-between;
     }
+    .patientViewRight{
+        display: inline-block;
+        vertical-align:top;
+        min-width:400px;
+    }
 }
 .navbar-inverse {
     /*background-image: url(images/site_master_image2.png);
@@ -243,11 +248,9 @@ body {
 }
 /*zinojumu bloks*/
 .patientViewRight {
-    display: inline-block;
+    display:block;
     vertical-align:top;
-    margin-left:20px;
-    width:400px;
-
+    width:auto;
 }
 /*msg title*/
 .patientViewRight dt{
