@@ -9,13 +9,11 @@
     <h2>@Html.DisplayFor(modelItem => item.Palata.PalatasID). palāta </h2>
     <h4>@Html.DisplayFor(modelItem => item.Palata.Nodala) nodaļa</h4>
     <h4>@Html.DisplayFor(modelItem => item.Palata.Stavs). stāvs</h4>
-    break;
+    <p>
+        @Html.ActionLink("Pievienot palātai pacientu", "Create", new { roomID = item.Palata.PalatasID })
+    </p>
+     break;
  }
-
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <div class="table-container">
     <table class="table">
         <tr>

@@ -39,7 +39,8 @@
             @Model.Pacienti.Count
         </dd>
         <br />
-        @Html.ActionLink("Apskatīt palātu","Palata", "Pacients", new { id = Model.PalatasID},null)
+        @if (Model.Pacienti.Count != 0) {
+        @Html.ActionLink("Apskatīt palātu", "Palata", "Pacients", new { id = Model.PalatasID }, null)}
     </dl>
 </div>
 <p>

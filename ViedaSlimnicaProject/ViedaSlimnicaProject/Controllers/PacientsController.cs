@@ -236,6 +236,7 @@ namespace ViedaSlimnicaProject.Controllers
         [Authorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Palata(int id)
         {
+
             return View(db.Pacienti.Where(q => q.Palata.PalatasID == id).Take(4).ToList());
         }
 
@@ -281,12 +282,18 @@ namespace ViedaSlimnicaProject.Controllers
         // GET: Pacients/Create
         [Authorize(Roles = "SuperAdmin, Employee")]
         [HttpGet]
-        public ActionResult Create()
-        {  
-            var patientEditVm = new PacientsEditViewModel()
+        public ActionResult Create(int? roomID)
+        {
+            var patientEditVm = new PacientsEditViewModel();
+            if (roomID == null) {
+                patientEditVm.RoomsFromWhichToSelect = availableRooms();
+            }
+            else
             {
-                RoomsFromWhichToSelect = availableRooms()
-            };
+                patientEditVm.SelectedRoomId = roomID.GetValueOrDefault();
+                patientEditVm.RoomsFromWhichToSelect = availableRooms();
+                
+            }
                 return View(patientEditVm);
         }
         //Random function
