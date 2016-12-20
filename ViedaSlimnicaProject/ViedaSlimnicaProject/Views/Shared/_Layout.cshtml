@@ -37,6 +37,7 @@
                                     {
                                         <li><a runat="server" href="~/Pacients/Zinojumi">Ziņojumi</a></li>
                                         <li><a runat="server" href="~/Pacients/Index">Pacienti</a></li>
+                                        <li><a runat="server" href="~/Palatas/Index">Palātas</a></li>
                                         <li>@Html.ActionLink("Iziet", "LogOf", "Pacients")</li>
                                     }
                                     if (this.User.IsInRole("SuperAdmin"))
@@ -54,7 +55,7 @@
                             }
                             else
                             {
-                                <li><a runat="server" href="~/Pacients/Register">Reģistrēt</a></li>
+                                @*<li><a runat="server" href="~/Pacients/Register">Reģistrēt</a></li>*@
                                 <li>@Html.ActionLink("Autorizēties", "LoginAc", "Pacients")</li>
                             }
                         }

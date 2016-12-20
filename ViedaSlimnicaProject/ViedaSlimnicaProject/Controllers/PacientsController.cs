@@ -236,8 +236,6 @@ namespace ViedaSlimnicaProject.Controllers
         [Authorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Palata(int id)
         {
-            
-
             return View(db.Pacienti.Where(q => q.Palata.PalatasID == id).Take(4).ToList());
         }
 
