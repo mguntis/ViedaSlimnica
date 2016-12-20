@@ -126,7 +126,11 @@
     function showPass() {
         var elems = document.getElementsByClassName('hide-password');
         for (var i = 0; i < elems.length; i += 1) {
-            elems[i].style.display = 'block';
+            if (elems[i].style.display == 'none') {
+                elems[i].style.display = 'block';
+            }
+            else
+                elems[i].style.display = 'none';
         }
     }
 </script>

@@ -28,6 +28,11 @@ input[type="select"] {
     max-width: 280px;
 }
 
+.patientView-container {
+    display: block;
+
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .jumbotron {
@@ -39,6 +44,10 @@ input[type="select"] {
         padding-right: 60px;
         padding-bottom: 30px;
         padding-top: 30px;
+    }
+    .patientView-container{
+        display:flex;
+        justify-content:space-between;
     }
 }
 .navbar-inverse {
@@ -238,7 +247,6 @@ body {
     vertical-align:top;
     margin-left:20px;
     width:400px;
-    float:right;
 
 }
 /*msg title*/
@@ -335,6 +343,7 @@ body {
 
 .btn.btn-info.btn-lg {
     background:#b60c0c;
+    border-color:#5c0303;
     font-weight:bold;
     font-size:12px;
     width:200px;
@@ -347,6 +356,8 @@ body {
 }
 .btn.btn-info.btn-lg.details {
     margin-left:0px;
+    margin-top:5px;
+    margin-bottom:10px;
 }
 .table {
     margin-bottom:0px;
