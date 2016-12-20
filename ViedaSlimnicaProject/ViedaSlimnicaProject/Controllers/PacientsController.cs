@@ -432,11 +432,17 @@ namespace ViedaSlimnicaProject.Controllers
         {
             try
             {
+
                 var finduser = db.Pacienti.Find(id);
                 var user = db.Accounts.Where(a => a.Patient.PacientaID == finduser.PacientaID).FirstOrDefault();
                 Pacients pacients = db.Pacienti.Find(id);
                 Profils profile = db.Accounts.Find(user.ProfileID);
 
+                var userMsgs = db.Zinojumi.Where(a => a.msgTo.PacientaID == finduser.PacientaID).ToList();
+                    foreach (var i in userMsgs)
+                    {
+                        db.Zinojumi.Remove(i);
+                    }
                 if (ModelState.IsValid)
                 {
                     if (id == null)

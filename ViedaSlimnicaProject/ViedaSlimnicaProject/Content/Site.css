@@ -370,3 +370,9 @@ body {
     color:#1a1a1a;
     font-weight:500;
 }
+.hide-password {
+    display:none;
+}
+.btn.btn-default.btn-line {
+    display:block
+}

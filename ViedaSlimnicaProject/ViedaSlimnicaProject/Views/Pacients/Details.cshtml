@@ -1,6 +1,6 @@
 ﻿@model ViedaSlimnicaProject.ViewModel.DetailsView
 
-@{ 
+@{
     ViewBag.Title = "Pacienta detaļas";
 }
 
@@ -89,44 +89,51 @@
         <dd>
             @Html.DisplayFor(model => model.Profils.UserName)
         </dd>
-        <dt>
+        
+        <dt class="hide-password">
             @Html.DisplayNameFor(model => model.Profils.Password)
         </dt>
 
-        <dd>
+        <dd class="hide-password">
             @Html.DisplayFor(model => model.Profils.Password)
         </dd>
-
     </dl>
-    
-    <button type="button" class="btn btn-info btn-lg details" data-toggle="modal" data-target="#myModal">Jauna Ziņa</button>
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Jauns ziņojums @Html.DisplayFor(m => m.Pacients.Vards) @Html.DisplayFor(m => m.Pacients.Uzvards)</h4>
-                </div>
-                @using (Html.BeginForm("SendMsgToPatient", "Pacients", FormMethod.Post))
-                {
+<button id="passShow" onclick="showPass()" class="btn btn-default btn-line">Parole</button>
+<button type="button" class="btn btn-info btn-lg details" data-toggle="modal" data-target="#myModal">Jauna Ziņa</button>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Jauns ziņojums @Html.DisplayFor(m => m.Pacients.Vards) @Html.DisplayFor(m => m.Pacients.Uzvards)</h4>
+            </div>
+            @using (Html.BeginForm("SendMsgToPatient", "Pacients", FormMethod.Post))
+            {
 
-                    <div class="modal-body">
-                        @Html.TextArea("MsgToPatient", null, htmlAttributes: new { @class = "form-control newmsg", @rows = "5", @resize = "none" })
-                        @Html.TextBox("patientID", Model.Pacients.PacientaID, htmlAttributes: new { @type = "hidden" })
-                    </div>
+                <div class="modal-body">
+                    @Html.TextArea("MsgToPatient", null, htmlAttributes: new { @class = "form-control newmsg", @rows = "5", @resize = "none" })
+                    @Html.TextBox("patientID", Model.Pacients.PacientaID, htmlAttributes: new { @type = "hidden" })
+                </div>
                     <div class="modal-footer">
                         <input type="submit" value="Izsūtīt" class="btn btn-default" /> <button type="button" class="btn btn-default" data-dismiss="modal">Aizvērt</button>
                     </div>
-                }
-            </div>
+            }
         </div>
     </div>
 </div>
-
-        @if (this.User.IsInRole("Employee") || this.User.IsInRole("SuperAdmin"))
-        {
-        <p>
-            @Html.ActionLink("Labot", "Edit", new { id = Model.Pacients.PacientaID }) |
-            @Html.ActionLink("Atpakaļ uz sarakstu", "Index")
-        </p>
+</div>
+<script>
+    function showPass() {
+        var elems = document.getElementsByClassName('hide-password');
+        for (var i = 0; i < elems.length; i += 1) {
+            elems[i].style.display = 'block';
         }
+    }
+</script>
+@if (this.User.IsInRole("Employee") || this.User.IsInRole("SuperAdmin"))
+{
+    <p>
+        @Html.ActionLink("Labot", "Edit", new { id = Model.Pacients.PacientaID }) |
+        @Html.ActionLink("Atpakaļ uz sarakstu", "Index")
+    </p>
+}
