@@ -356,7 +356,9 @@ namespace ViedaSlimnicaProject.Controllers
             }
             catch
             {
-                return View();
+                var patientEditVm = new PacientsEditViewModel();
+                patientEditVm.RoomsFromWhichToSelect = availableRooms();
+                return View(patientEditVm);
             }
         }
         
@@ -496,29 +498,36 @@ namespace ViedaSlimnicaProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LoginAc(Profils log, string returnUrl)
         {
-            var user = db.Accounts.Where(a => a.UserName == log.UserName).FirstOrDefault();
-            if (Decrypt(user.Password) == log.Password  && user!=null)
+            try
             {
-                FormsAuthentication.SetAuthCookie(user.UserName, true);
-                if (user.RoleStart == "Employee" || user.RoleStart == "SuperAdmin")
+                var user = db.Accounts.Where(a => a.UserName == log.UserName).FirstOrDefault();
+                if (Decrypt(user.Password) == log.Password && user != null)
                 {
-                    return RedirectToAction("Index");
+                    FormsAuthentication.SetAuthCookie(user.UserName, true);
+                    if (user.RoleStart == "Employee" || user.RoleStart == "SuperAdmin")
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        int returnID = user.Patient.PacientaID;
+                        if (ModelState.IsValid)
+                        {
+                            return RedirectToAction("PatientView", new { id = returnID });
+                        }
+                    }
                 }
                 else
                 {
-                    int returnID = user.Patient.PacientaID;
-                    if (ModelState.IsValid)
-                    {
-                        return RedirectToAction("PatientView", new { id = returnID });
-                    }
+                    ModelState.AddModelError("", "Nepareiza parole vai lietotājvārds");
                 }
+                ModelState.Remove("Password");
+                return View();
             }
-            else
+            catch
             {
-                ModelState.AddModelError("", "Nepareiza parole vai lietotājvārds");
+                return View();
             }
-            ModelState.Remove("Password");
-            return View();
         }
         [Authorize]
         public ActionResult LogOf()
