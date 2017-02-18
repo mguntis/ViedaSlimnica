@@ -249,7 +249,7 @@ namespace ViedaSlimnicaProject.Controllers
             if (id == null || user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var profils = db.Accounts.Find(user.ProfileID);
-            profils.Password = Decrypt(profils.Password);
+            //profils.Password = Decrypt(profils.Password);
             var pacients = new DetailsView()
             {
                 Pacients = db.Pacienti.Find(id),
@@ -313,12 +313,12 @@ namespace ViedaSlimnicaProject.Controllers
                 var selectedRoom = db.Palatas.Find(pacients.SelectedRoomId);
                 pacients.Patient.Palata = selectedRoom;
 
-                var password = RandomString(6);
+                var password = "qwerty123"; // temporary
                 var insertprofile = new Profils
                 {
                     Patient = pacients.Patient,
                     UserName = pacients.Patient.Epasts,
-                    Password = Encrypt(password),
+                    Password = HashSaltStore(password),
                     RoleStart = "User"
                 };
                 if (selectedRoom.PalatasIetilpiba <= selectedRoom.Pacienti.Count())
@@ -501,7 +501,7 @@ namespace ViedaSlimnicaProject.Controllers
             try
             {
                 var user = db.Accounts.Where(a => a.UserName == log.UserName).FirstOrDefault();
-                if (Decrypt(user.Password) == log.Password && user != null)
+                if (HashSaltVerify(log.Password,user.Password))
                 {
                     FormsAuthentication.SetAuthCookie(user.UserName, true);
                     if (user.RoleStart == "Employee" || user.RoleStart == "SuperAdmin")
@@ -526,6 +526,7 @@ namespace ViedaSlimnicaProject.Controllers
             }
             catch
             {
+                ModelState.AddModelError("", "Nepareiza parole vai lietotājvārds");
                 return View();
             }
         }
@@ -633,7 +634,7 @@ namespace ViedaSlimnicaProject.Controllers
             var newProfile = new Profils()
             {
                 UserName = userData.UserName,
-                Password = Encrypt(userData.Password),
+                Password = HashSaltStore(userData.Password),
                 RoleStart = userData.RoleStart,
                 Vards = userData.Vards,
                 Uzvards = userData.Uzvards
