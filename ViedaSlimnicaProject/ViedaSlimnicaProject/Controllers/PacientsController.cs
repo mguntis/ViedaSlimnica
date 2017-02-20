@@ -14,6 +14,8 @@ using PagedList.Mvc;
 using System.Text;
 using System.Security.Cryptography;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Web.Security.AntiXss;
 
 namespace ViedaSlimnicaProject.Controllers
 {
@@ -169,8 +171,8 @@ namespace ViedaSlimnicaProject.Controllers
         private SmartHospitalDatabaseContext db = new SmartHospitalDatabaseContext();
         // GET: Pacients
         //(Roles ="Admin")]
-        [Authorize(Roles = "SuperAdmin, Employee")]
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        [Authorize(Roles = "SuperAdmin, Employee"), ValidateInput(false)]
+        public ActionResult Index(string sortOrder, string currentFilter, string searchStringin, int? page)
         {
 
 
@@ -179,8 +181,9 @@ namespace ViedaSlimnicaProject.Controllers
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "nod_desc" : "";
             ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
             //lapošana
-
-            if (searchString != null)
+            var searchString = AntiXssEncoder.HtmlEncode(searchStringin, false);
+            var regexItem = new Regex("[a-zA-Z0-9-]");
+            if (searchString != null && regexItem.IsMatch(searchString))
             {
                 page = 1;
             }
@@ -188,24 +191,23 @@ namespace ViedaSlimnicaProject.Controllers
             {
                 searchString = currentFilter;
             }
-
+            
             ViewBag.CurrentFilter = searchString;
 
 
 
             var pacienti = from s in db.Pacienti
-                           select s;
-
+            select s;
             //Mekleesana peec varda, uzvarda, personas koda, telefona
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                pacienti = pacienti.Where(s => s.Uzvards.Contains(searchString)
-                                       || s.Vards.Contains(searchString) || s.TNumurs.Contains(searchString) || s.PersKods.Contains(searchString));
-            }
+            if (!String.IsNullOrEmpty(searchString) && ModelState.IsValid && regexItem.IsMatch(searchString))
+                {
 
+                    pacienti = pacienti.Where(s => s.Uzvards.Contains(searchString)
+                                           || s.Vards.Contains(searchString) || s.TNumurs.Contains(searchString) || s.PersKods.Contains(searchString));
+                } 
 
             //Šī daļa ir prieķš kārtošanas
-           switch (sortOrder)
+            switch (sortOrder)
             {
                 case "nod_desc":
                     pacienti = pacienti.OrderByDescending(s => s.Palata.Nodala);
@@ -244,21 +246,21 @@ namespace ViedaSlimnicaProject.Controllers
         [Authorize(Roles = "SuperAdmin, Employee, User")]
         public ActionResult Details(int? id)
         {
-            var finduser = db.Pacienti.Find(id);
-            var user = db.Accounts.Where(a => a.Patient.PacientaID == finduser.PacientaID).FirstOrDefault();
-            if (id == null || user == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var profils = db.Accounts.Find(user.ProfileID);
-            //profils.Password = Decrypt(profils.Password);
-            var pacients = new DetailsView()
-            {
-                Pacients = db.Pacienti.Find(id),
-                Profils = profils
-            };
-            pacients.Pacients.Palata = finduser.Palata;
-            if (pacients == null)
-                return HttpNotFound();
-            return View(pacients);
+                var finduser = db.Pacienti.Find(id);
+                var user = db.Accounts.Where(a => a.Patient.PacientaID == finduser.PacientaID).FirstOrDefault();
+                if (id == null || user == null)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var profils = db.Accounts.Find(user.ProfileID);
+                //profils.Password = Decrypt(profils.Password);
+                var pacients = new DetailsView()
+                {
+                    Pacients = db.Pacienti.Find(id),
+                    Profils = profils
+                };
+                pacients.Pacients.Palata = finduser.Palata;
+                if (pacients == null)
+                    return HttpNotFound();
+                return View(pacients);
         }
 
         // GET: Pacients/PatientView
@@ -483,10 +485,10 @@ namespace ViedaSlimnicaProject.Controllers
                 switch (user.RoleStart)
                 {
                     case "User":
-                        return RedirectToAction("PatientView", new { id = user.Patient.PacientaID });
+                    return RedirectToAction("PatientView", new { id = user.Patient.PacientaID });
                     case "Employee":
                     case "SuperAdmin":
-                        return RedirectToAction("Index");
+                    return RedirectToAction("Index");
                 }
 
             }

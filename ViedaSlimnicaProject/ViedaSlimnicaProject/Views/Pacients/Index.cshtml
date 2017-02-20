@@ -20,7 +20,7 @@
 @using (Html.BeginForm())
 {
     <p>
-        @Html.TextBox("SearchString",null, ViewBag.CurrentFilter as string, htmlAttributes: new { @class = "form-control meklet", @placeholder="Meklēt"})
+        @Html.TextBox("searchStringin",null, ViewBag.CurrentFilter as string, htmlAttributes: new { @class = "form-control meklet", @placeholder="Meklēt"})
         <input class="btn btn-default btn-meklet" type="submit" value="Meklēt" />
     </p>
 }
