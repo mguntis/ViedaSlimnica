@@ -314,7 +314,13 @@ namespace ViedaSlimnicaProject.Controllers
             {
                 var selectedRoom = db.Palatas.Find(pacients.SelectedRoomId);
                 pacients.Patient.Palata = selectedRoom;
-
+                var emailExist = db.Accounts.Where(a => a.UserName == pacients.Patient.Epasts).FirstOrDefault();
+                if (emailExist != null)
+                {
+                    pacients.RoomsFromWhichToSelect = availableRooms();
+                    ModelState.AddModelError("Patient.Epasts", "Pacients ar šādu e-pastu jau ir reģistrēts!");
+                    return View(pacients);
+                }
                 var password = "qwerty123"; // temporary
                 var insertprofile = new Profils
                 {
