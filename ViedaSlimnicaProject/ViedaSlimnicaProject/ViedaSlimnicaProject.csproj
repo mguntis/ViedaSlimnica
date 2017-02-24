@@ -276,6 +276,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\PasswordPass.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
@@ -334,6 +335,7 @@
     <Content Include="Views\Pacients\DeleteMsg.cshtml" />
     <Content Include="Views\Pacients\EditMsg.cshtml" />
     <Content Include="Views\Pacients\Register.cshtml" />
+    <Content Include="Views\Pacients\ResetPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

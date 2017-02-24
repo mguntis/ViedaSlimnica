@@ -19,6 +19,7 @@ namespace ViedaSlimnicaProject.Models
             public virtual Pacients Patient { get; set; }
             public string Vards { get; set; }
             public string Uzvards { get; set; } 
+            public bool ToReset { get; set; }
     }
 
 }

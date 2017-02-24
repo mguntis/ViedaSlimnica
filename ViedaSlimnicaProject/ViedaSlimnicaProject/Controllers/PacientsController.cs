@@ -175,7 +175,7 @@ namespace ViedaSlimnicaProject.Controllers
         public ActionResult Index(string sortOrder, string currentFilter, string searchStringin, int? page)
         {
 
-
+            if (TempData["AlertMessage"] != null) ViewBag.Message = TempData["AlertMessage"];
             ViewBag.CurrentSort = sortOrder;
             //Pievienoju kaartosanu pec datuma, uzvarda un nodalas
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "nod_desc" : "";
@@ -321,13 +321,14 @@ namespace ViedaSlimnicaProject.Controllers
                     ModelState.AddModelError("Patient.Epasts", "Pacients ar šādu e-pastu jau ir reģistrēts!");
                     return View(pacients);
                 }
-                var password = "qwerty123"; // temporary
+                var password = "VS" + DateTime.Now.ToString("ddmm");
                 var insertprofile = new Profils
                 {
                     Patient = pacients.Patient,
                     UserName = pacients.Patient.Epasts,
                     Password = HashSaltStore(password),
-                    RoleStart = "User"
+                    RoleStart = "User",
+                    ToReset = true
                 };
                 if (selectedRoom.PalatasIetilpiba <= selectedRoom.Pacienti.Count())
                 {
@@ -354,6 +355,7 @@ namespace ViedaSlimnicaProject.Controllers
                     db.Pacienti.Add(pacients.Patient);
                     db.Accounts.Add(insertprofile);
                     db.SaveChanges();
+                    TempData["AlertMessage"] = "Lietotājvārds: " + pacients.Patient.Epasts +  " parole: " + password;
                     return RedirectToAction("Index");
                 }
                 // validācija parāda kļūdas
@@ -511,6 +513,7 @@ namespace ViedaSlimnicaProject.Controllers
                 var user = db.Accounts.Where(a => a.UserName == log.UserName).FirstOrDefault();
                 if (HashSaltVerify(log.Password,user.Password))
                 {
+                    if (user.ToReset) return RedirectToAction("ResetPassword", new { id = user.ProfileID });
                     FormsAuthentication.SetAuthCookie(user.UserName, true);
                     if (user.RoleStart == "Employee" || user.RoleStart == "SuperAdmin")
                     {
@@ -652,6 +655,31 @@ namespace ViedaSlimnicaProject.Controllers
             ModelState.Clear();
             ViewBag.Message = "Lietotājs izveidots";
             return View();
+        }
+        // GET: ResetPassword
+        [HttpGet]
+        public ActionResult ResetPassword(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var account = db.Accounts.Find(id);
+            if (account.ToReset)
+            {
+                return View(account);
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+        // POST: ResetPassword
+        [HttpPost,ActionName("ResetPassword")]
+        public ActionResult ResetPasswordConfirm(int? profileID,string newPassword, string testingPassword)
+        {
+            if (profileID == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (newPassword != testingPassword) return View();
+            var account = db.Accounts.Find(profileID);
+            account.Password = HashSaltStore(newPassword);
+            account.ToReset = false;
+            db.Entry(account).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("LoginAc");
         }
     }
 }
