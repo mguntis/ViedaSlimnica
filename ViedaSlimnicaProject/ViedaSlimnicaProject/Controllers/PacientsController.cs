@@ -327,6 +327,8 @@ namespace ViedaSlimnicaProject.Controllers
                     Patient = pacients.Patient,
                     UserName = pacients.Patient.Epasts,
                     Password = HashSaltStore(password),
+                    Vards = pacients.Patient.Vards,
+                    Uzvards = pacients.Patient.Uzvards,
                     RoleStart = "User",
                     ToReset = true
                 };
