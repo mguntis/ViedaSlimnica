@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ViedaSlimnicaProject.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace ViedaSlimnicaProject.Controllers
 {
@@ -16,11 +18,27 @@ namespace ViedaSlimnicaProject.Controllers
 
         // GET: Palatas
         [Authorize(Roles = "SuperAdmin, Employee")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, int? page)
         {
-            var rooms = db.Palatas.ToList();
-            
-            return View(rooms);
+
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "nod_asc" : "";
+
+            var rooms = from p in db.Palatas
+                         select p;
+            switch (sortOrder)
+            {
+                case "nod_asc":
+                    rooms = rooms.OrderBy(p => p.Nodala);
+                    break;
+                default:
+                    rooms = rooms.OrderBy(p => p.PalatasID);
+                    break;
+            }
+            page = 1;
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(rooms.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Palatas/Details/5
