@@ -514,31 +514,57 @@ namespace ViedaSlimnicaProject.Controllers
             try
             {
                 var user = db.Accounts.Where(a => a.UserName == log.UserName).FirstOrDefault();
-                if (HashSaltVerify(log.Password,user.Password))
+                if (user.AccountBlocked == false)
                 {
+                    if (HashSaltVerify(log.Password, user.Password))
+                    {
                     if (user.ToReset) return RedirectToAction("ResetPassword", new { id = user.ProfileID });
                     FormsAuthentication.SetAuthCookie(user.UserName, true);
-                    if (user.RoleStart == "Employee" || user.RoleStart == "SuperAdmin")
-                    {
-                        return RedirectToAction("Index");
+                        if (user.RoleStart == "Employee" || user.RoleStart == "SuperAdmin")
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                                int returnID = user.Patient.PacientaID;
+                                if (ModelState.IsValid)
+                                {
+                                    return RedirectToAction("PatientView", new { id = returnID });
+                                }
+                        }
                     }
                     else
                     {
-                        int returnID = user.Patient.PacientaID;
-                        if (ModelState.IsValid)
+                        if (Session["loginclient"] != null)
                         {
-                            return RedirectToAction("PatientView", new { id = returnID });
+                            if (Convert.ToInt32(Session["loginclient"]) >= 3)
+                            {
+                                user.AccountBlocked = true;
+                                db.SaveChanges();
+                                ModelState.AddModelError("", "Jūsu konts ir bloķēts. Veiciet paroles atjaunināšanu");
+                                return View();
+                            }
+                            else
+                            {
+                                Session["loginclient"] = Convert.ToInt32(Session["loginclient"]) + 1;
+                                int atempt = 3 - Convert.ToInt32(Session["loginclient"]);
+                                ModelState.AddModelError("", "Nepareiza parole. Atlikušie mēģinājumi: " + atempt);
+                                return View();
+                            }
+                        }
+                        else
+                        {
+                            Session["loginclient"] = 1;
+                            int atempt = 3 - Convert.ToInt32(Session["loginclient"]);
+                            ModelState.AddModelError("", "Nepareiza parole. Atlikušie mēģinājumi: " + atempt);
+                            return View();
                         }
                     }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Nepareiza parole vai lietotājvārds");
-                }
-                ModelState.Remove("Password");
+                ModelState.AddModelError("", "Jūsu konts ir bloķēts, veiciet paroles atjaunināšanu");
                 return View();
             }
-            catch (Exception ex)
+            catch
             {
                 ModelState.AddModelError("", "Nepareiza parole vai lietotājvārds");
                 return View();

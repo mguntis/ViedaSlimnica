@@ -20,6 +20,8 @@ namespace ViedaSlimnicaProject.Models
             public string Vards { get; set; }
             public string Uzvards { get; set; } 
             public bool ToReset { get; set; }
+            public bool AccountBlocked { get; set; }
+            //public int Attempts { get; set; }
     }
 
 }
