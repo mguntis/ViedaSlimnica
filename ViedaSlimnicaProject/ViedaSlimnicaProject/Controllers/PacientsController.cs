@@ -498,6 +498,7 @@ namespace ViedaSlimnicaProject.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult LoginAc(Profils log, string returnUrl)
         {
             try
@@ -526,7 +527,7 @@ namespace ViedaSlimnicaProject.Controllers
                 ModelState.Remove("Password");
                 return View();
             }
-            catch
+            catch (Exception ex)
             {
                 ModelState.AddModelError("", "Nepareiza parole vai lietotājvārds");
                 return View();
