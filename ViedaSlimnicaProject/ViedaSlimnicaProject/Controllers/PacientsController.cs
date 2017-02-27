@@ -16,6 +16,7 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Web.Security.AntiXss;
+using System.Xml.Linq;
 
 namespace ViedaSlimnicaProject.Controllers
 {
@@ -633,6 +634,46 @@ namespace ViedaSlimnicaProject.Controllers
         {
             return View();
         }
+
+        internal string GetPasswordRegex()
+        {
+            XDocument xmlDoc = XDocument.Load(Request.MapPath("~/xml/PasswordPolicy.xml"));
+
+            var passwordSetting = (from p in xmlDoc.Descendants("Password")
+                                   select new PasswordSetting
+                                   {
+                                       Duration = int.Parse(p.Element("duration").Value),
+                                       MinLength = int.Parse(p.Element("minLength").Value),
+                                       MaxLength = int.Parse(p.Element("maxLength").Value),
+                                       NumsLength = int.Parse(p.Element("numsLength").Value),
+                                       SpecialLength = int.Parse(p.Element("specialLength").Value),
+                                       UpperLength = int.Parse(p.Element("upperLength").Value),
+                                       SpecialChars = p.Element("specialChars").Value
+                                   }).First();
+
+            StringBuilder sbPasswordRegx = new StringBuilder(string.Empty);
+            //min and max
+            sbPasswordRegx.Append(@"(?=^.{" + passwordSetting.MinLength + "," + passwordSetting.MaxLength + "}$)");
+
+            //numbers length
+            sbPasswordRegx.Append(@"(?=(?:.*?\d){" + passwordSetting.NumsLength + "})");
+
+            //a-z characters
+            sbPasswordRegx.Append(@"(?=.*[a-z])");
+
+            //A-Z length
+            sbPasswordRegx.Append(@"(?=(?:.*?[A-Z]){" + passwordSetting.UpperLength + "})");
+
+            //special characters length
+            sbPasswordRegx.Append(@"(?=(?:.*?[" + passwordSetting.SpecialChars + "]){" + passwordSetting.SpecialLength + "})");
+
+            //(?!.*\s) - no spaces
+            //[0-9a-zA-Z!@#$%*()_+^&] -- valid characters
+            sbPasswordRegx.Append(@"(?!.*\s)[0-9a-zA-Z" + passwordSetting.SpecialChars + "]*$");
+
+            return sbPasswordRegx.ToString();
+        }
+
         [HttpPost,ActionName("Register")]
         public ActionResult RegisterConfirm (Profils userData)
         {
@@ -643,6 +684,13 @@ namespace ViedaSlimnicaProject.Controllers
                 ModelState.AddModelError("", "Lietotājs " + userData.UserName + " jau atrodas sistēmā!");
                 ModelState.Remove("Password");
                 return View();
+            }
+            if (!string.IsNullOrEmpty(userData.Password))
+            {
+                if (!Regex.IsMatch(userData.Password, GetPasswordRegex()))
+                {
+                    ModelState.AddModelError("Password", "Parole neatbilst drošības prasībām!");
+                }
             }
             var newProfile = new Profils()
             {
@@ -683,5 +731,16 @@ namespace ViedaSlimnicaProject.Controllers
             db.SaveChanges();
             return RedirectToAction("LoginAc");
         }
+    }
+
+    public class PasswordSetting
+    {
+        public int Duration { get; set; }
+        public int MinLength { get; set; }
+        public int MaxLength { get; set; }
+        public int NumsLength { get; set; }
+        public int SpecialLength { get; set; }
+        public int UpperLength { get; set; }
+        public string SpecialChars { get; set; }
     }
 }

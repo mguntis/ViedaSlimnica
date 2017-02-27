@@ -14,7 +14,9 @@ namespace ViedaSlimnicaProject.Models
             [DisplayName("Lietotājvārds")]
             public string UserName { get; set; }
             [DisplayName("Parole")]
-            public string Password { get; set; }
+        [DataType(DataType.Password)]
+        [Required]
+        public string Password { get; set; }
             public string RoleStart { get; set; }
             public virtual Pacients Patient { get; set; }
             public string Vards { get; set; }
