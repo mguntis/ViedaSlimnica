@@ -16,6 +16,9 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Web.Security.AntiXss;
+using System.Diagnostics;
+using System.Data.Entity.Validation;
+using System.Xml.Linq;
 
 namespace ViedaSlimnicaProject.Controllers
 {
@@ -434,7 +437,51 @@ namespace ViedaSlimnicaProject.Controllers
             return View(patientEditVm);
 
         }
+        // GET: Pacients/Rekins/5
+        [Authorize(Roles = "SuperAdmin, Employee")]
+        public ActionResult Rekins(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Pacients pacients = db.Pacienti.Find(id);
+            if (pacients == null)
+                return HttpNotFound();
+            var patientEditVm = new PacientsEditViewModel()
+            {
+                Patient = pacients,
+                RoomsFromWhichToSelect = availableRooms()
+            };
 
+            if (pacients.Palata != null)
+            {
+                patientEditVm.SelectedRoomId = pacients.Palata.PalatasID;
+                patientEditVm.Patient.Palata = pacients.Palata;
+            }
+
+            return View(patientEditVm);
+        }
+
+        // POST: Pacients/Rekins/5
+        [HttpPost]
+        public ActionResult Rekins(PacientsEditViewModel patientEditVm)
+        {
+            //var selectedRoom = db.Palatas.Single(room => room.PalatasID == patientEditVm.SelectedRoomId);
+            //patientEditVm.Patient.Palata = selectedRoom;
+            // TODO: Add update logic here
+            
+                if (ModelState.IsValid)
+            {
+                //db.Palatas.Attach(selectedRoom);
+                db.Entry(patientEditVm.Patient).State = EntityState.Modified;
+                //db.Entry(selectedRoom).State = EntityState.Modified;
+                
+                db.SaveChanges();
+               
+                return RedirectToAction("Index");
+            }
+            return View(patientEditVm);
+            
+        }
         // GET: Pacients/Delete/5
         [Authorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Delete(int? id)
@@ -704,6 +751,46 @@ namespace ViedaSlimnicaProject.Controllers
         {
             return View();
         }
+
+        internal string GetPasswordRegex()
+        {
+            XDocument xmlDoc = XDocument.Load(Request.MapPath("~/Content/xml/PasswordPolicy.xml"));
+
+            var passwordSetting = (from p in xmlDoc.Descendants("Password")
+                                   select new PasswordSetting
+                                   {
+                                       Duration = int.Parse(p.Element("duration").Value),
+                                       MinLength = int.Parse(p.Element("minLength").Value),
+                                       MaxLength = int.Parse(p.Element("maxLength").Value),
+                                       NumsLength = int.Parse(p.Element("numsLength").Value),
+                                       SpecialLength = int.Parse(p.Element("specialLength").Value),
+                                       UpperLength = int.Parse(p.Element("upperLength").Value),
+                                       SpecialChars = p.Element("specialChars").Value
+                                   }).First();
+
+            StringBuilder sbPasswordRegx = new StringBuilder(string.Empty);
+            //min and max
+            sbPasswordRegx.Append(@"(?=^.{" + passwordSetting.MinLength + "," + passwordSetting.MaxLength + "}$)");
+
+            //numbers length
+            sbPasswordRegx.Append(@"(?=(?:.*?\d){" + passwordSetting.NumsLength + "})");
+
+            //a-z characters
+            sbPasswordRegx.Append(@"(?=.*[a-z])");
+
+            //A-Z length
+            sbPasswordRegx.Append(@"(?=(?:.*?[A-Z]){" + passwordSetting.UpperLength + "})");
+
+            //special characters length
+            sbPasswordRegx.Append(@"(?=(?:.*?[" + passwordSetting.SpecialChars + "]){" + passwordSetting.SpecialLength + "})");
+
+            //(?!.*\s) - no spaces
+            //[0-9a-zA-Z!@#$%*()_+^&] -- valid characters
+            sbPasswordRegx.Append(@"(?!.*\s)[0-9a-zA-Z" + passwordSetting.SpecialChars + "]*$");
+
+            return sbPasswordRegx.ToString();
+        }
+
         [HttpPost,ActionName("Register")]
         public ActionResult RegisterConfirm (Profils userData)
         {
@@ -714,6 +801,13 @@ namespace ViedaSlimnicaProject.Controllers
                 ModelState.AddModelError("", "Lietotājs " + userData.UserName + " jau atrodas sistēmā!");
                 ModelState.Remove("Password");
                 return View();
+            }
+            if (!string.IsNullOrEmpty(userData.Password))
+            {
+                if (!Regex.IsMatch(userData.Password, GetPasswordRegex()))
+                {
+                    ModelState.AddModelError("Password", "Parole neatbilst drošības prasībām!");
+                }
             }
             var newProfile = new Profils()
             {
@@ -796,5 +890,16 @@ namespace ViedaSlimnicaProject.Controllers
                return RedirectToAction("Index");
             }
         }
+    }
+
+    public class PasswordSetting
+    {
+        public int Duration { get; set; }
+        public int MinLength { get; set; }
+        public int MaxLength { get; set; }
+        public int NumsLength { get; set; }
+        public int SpecialLength { get; set; }
+        public int UpperLength { get; set; }
+        public string SpecialChars { get; set; }
     }
 }

@@ -22,10 +22,12 @@ namespace ViedaSlimnicaProject.Models
         public string Epasts { get; set; }
         [DisplayName("Telefona numurs")]
         public string TNumurs { get; set; }
+        [DisplayName("Rēķins")]
+        public double? Rekins { get; set; }
         /*[DisplayName("Simptomi")]
         public string Simptomi { get; set; }*/
         //[DisplayName("Nodaļa")]
-       // public string Nodala { get; set; } //Tas arī ir definēts klassē palātā bet nevar izmantot to pašu? 
+        // public string Nodala { get; set; } //Tas arī ir definēts klassē palātā bet nevar izmantot to pašu? 
         [DisplayName("Pālātas Nr.")]
         public virtual Palata Palata { get; set; }
         [DisplayName("Ierašanās datums")]

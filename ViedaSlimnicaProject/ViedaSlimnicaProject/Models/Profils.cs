@@ -14,6 +14,9 @@ namespace ViedaSlimnicaProject.Models
             [DisplayName("Lietotājvārds")]
             public string UserName { get; set; }
             [DisplayName("Parole")]
+            [DataType(DataType.Password)]
+            [Required]
+            public string Password { get; set; }
             public string Password { get; set; }
             [DisplayName("Loma")]
             public string RoleStart { get; set; }
