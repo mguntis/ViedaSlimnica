@@ -248,6 +248,8 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\favicon.ico" />
+    <Content Include="Content\xml\PasswordPolicy.xml" />
+    <Content Include="Content\xml\PasswordPolicy.xslt" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -336,6 +338,10 @@
     <Content Include="Views\Pacients\EditMsg.cshtml" />
     <Content Include="Views\Pacients\Register.cshtml" />
     <Content Include="Views\Pacients\ResetPassword.cshtml" />
+
+    <Content Include="Views\Pacients\Rekins.cshtml" />
+    <Content Include="Views\Pacients\ResetPasswordReq.cshtml" />
+    <Content Include="Views\Pacients\BlockedUsers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
