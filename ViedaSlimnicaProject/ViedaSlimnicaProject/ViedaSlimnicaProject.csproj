@@ -248,6 +248,8 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\favicon.ico" />
+    <Content Include="Content\xml\PasswordPolicy.xml" />
+    <Content Include="Content\xml\PasswordPolicy.xslt" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

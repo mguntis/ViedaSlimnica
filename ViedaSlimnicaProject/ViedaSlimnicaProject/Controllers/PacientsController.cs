@@ -18,6 +18,7 @@ using System.Text.RegularExpressions;
 using System.Web.Security.AntiXss;
 using System.Diagnostics;
 using System.Data.Entity.Validation;
+using System.Xml.Linq;
 
 namespace ViedaSlimnicaProject.Controllers
 {
@@ -709,7 +710,7 @@ namespace ViedaSlimnicaProject.Controllers
 
         internal string GetPasswordRegex()
         {
-            XDocument xmlDoc = XDocument.Load(Request.MapPath("~/xml/PasswordPolicy.xml"));
+            XDocument xmlDoc = XDocument.Load(Request.MapPath("~/Content/xml/PasswordPolicy.xml"));
 
             var passwordSetting = (from p in xmlDoc.Descendants("Password")
                                    select new PasswordSetting
