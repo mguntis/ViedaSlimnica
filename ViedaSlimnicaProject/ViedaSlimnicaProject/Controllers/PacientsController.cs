@@ -16,7 +16,8 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Web.Security.AntiXss;
-using System.Xml.Linq;
+using System.Diagnostics;
+using System.Data.Entity.Validation;
 
 namespace ViedaSlimnicaProject.Controllers
 {
@@ -435,7 +436,51 @@ namespace ViedaSlimnicaProject.Controllers
             return View(patientEditVm);
 
         }
+        // GET: Pacients/Rekins/5
+        [Authorize(Roles = "SuperAdmin, Employee")]
+        public ActionResult Rekins(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Pacients pacients = db.Pacienti.Find(id);
+            if (pacients == null)
+                return HttpNotFound();
+            var patientEditVm = new PacientsEditViewModel()
+            {
+                Patient = pacients,
+                RoomsFromWhichToSelect = availableRooms()
+            };
 
+            if (pacients.Palata != null)
+            {
+                patientEditVm.SelectedRoomId = pacients.Palata.PalatasID;
+                patientEditVm.Patient.Palata = pacients.Palata;
+            }
+
+            return View(patientEditVm);
+        }
+
+        // POST: Pacients/Rekins/5
+        [HttpPost]
+        public ActionResult Rekins(PacientsEditViewModel patientEditVm)
+        {
+            //var selectedRoom = db.Palatas.Single(room => room.PalatasID == patientEditVm.SelectedRoomId);
+            //patientEditVm.Patient.Palata = selectedRoom;
+            // TODO: Add update logic here
+            
+                if (ModelState.IsValid)
+            {
+                //db.Palatas.Attach(selectedRoom);
+                db.Entry(patientEditVm.Patient).State = EntityState.Modified;
+                //db.Entry(selectedRoom).State = EntityState.Modified;
+                
+                db.SaveChanges();
+               
+                return RedirectToAction("Index");
+            }
+            return View(patientEditVm);
+            
+        }
         // GET: Pacients/Delete/5
         [Authorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Delete(int? id)
@@ -509,33 +554,60 @@ namespace ViedaSlimnicaProject.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult LoginAc(Profils log, string returnUrl)
         {
             try
             {
                 var user = db.Accounts.Where(a => a.UserName == log.UserName).FirstOrDefault();
-                if (HashSaltVerify(log.Password,user.Password))
+                if (user.AccountBlocked == false)
                 {
+                    if (HashSaltVerify(log.Password, user.Password))
+                    {
                     if (user.ToReset) return RedirectToAction("ResetPassword", new { id = user.ProfileID });
                     FormsAuthentication.SetAuthCookie(user.UserName, true);
-                    if (user.RoleStart == "Employee" || user.RoleStart == "SuperAdmin")
-                    {
-                        return RedirectToAction("Index");
+                        if (user.RoleStart == "Employee" || user.RoleStart == "SuperAdmin")
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                                int returnID = user.Patient.PacientaID;
+                                if (ModelState.IsValid)
+                                {
+                                    return RedirectToAction("PatientView", new { id = returnID });
+                                }
+                        }
                     }
                     else
                     {
-                        int returnID = user.Patient.PacientaID;
-                        if (ModelState.IsValid)
+                        if (Session["loginclient"] != null)
                         {
-                            return RedirectToAction("PatientView", new { id = returnID });
+                            if (Convert.ToInt32(Session["loginclient"]) >= 3)
+                            {
+                                user.AccountBlocked = true;
+                                db.SaveChanges();
+                                ModelState.AddModelError("", "Jūsu konts ir bloķēts. Veiciet paroles atjaunināšanu");
+                                return View();
+                            }
+                            else
+                            {
+                                Session["loginclient"] = Convert.ToInt32(Session["loginclient"]) + 1;
+                                int atempt = 3 - Convert.ToInt32(Session["loginclient"]);
+                                ModelState.AddModelError("", "Nepareiza parole. Atlikušie mēģinājumi: " + atempt);
+                                return View();
+                            }
+                        }
+                        else
+                        {
+                            Session["loginclient"] = 1;
+                            int atempt = 3 - Convert.ToInt32(Session["loginclient"]);
+                            ModelState.AddModelError("", "Nepareiza parole. Atlikušie mēģinājumi: " + atempt);
+                            return View();
                         }
                     }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Nepareiza parole vai lietotājvārds");
-                }
-                ModelState.Remove("Password");
+                ModelState.AddModelError("", "Jūsu konts ir bloķēts, veiciet paroles atjaunināšanu");
                 return View();
             }
             catch

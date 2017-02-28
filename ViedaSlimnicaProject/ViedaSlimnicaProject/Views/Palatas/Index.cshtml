@@ -1,5 +1,10 @@
-﻿@model IEnumerable<ViedaSlimnicaProject.Models.Palata>
+﻿
+@model PagedList.IPagedList<ViedaSlimnicaProject.Models.Palata>
 
+@*@model IEnumerable<ViedaSlimnicaProject.Models.Palata>*@
+
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Palātu saraksts";
 }
@@ -9,20 +14,25 @@
 <p>
     @Html.ActionLink("Izveidot jaunu palātu", "Create")
 </p>
+
 <div class="table-container">
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PalatasID)
+                @*@@Html.DisplayNameFor(model => model.PalatasID)*@
+                Palātas ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nodala)
+                @*@Html.DisplayNameFor(model => model.Nodala)*@
+                @Html.ActionLink("Nodaļa", "Index", new { sortOrder = ViewBag.NameSortParm })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Stavs)
+               @* @Html.DisplayNameFor(model => model.Stavs)*@
+                Stāvs
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PalatasIetilpiba)
+               @* @Html.DisplayNameFor(model => model.PalatasIetilpiba)*@
+                Palātas ietilpība
             </th>
             <th>
                 Aizņemtās gultas
@@ -58,3 +68,6 @@
 
     </table>
     </div>
+    <br />
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page}))
