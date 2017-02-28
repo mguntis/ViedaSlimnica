@@ -55,10 +55,13 @@ namespace ViedaSlimnicaProject.Models
         [StringLength(8, MinimumLength = 8)]
         public string TNumurs { get; set; }
 
+       
+
+
         /*[StringLength(160)]
         [Display(Name = "Simptomi")]
         public string Simptomi;*/
-        
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString =
         "{0:yyyy-MM-dd}",
