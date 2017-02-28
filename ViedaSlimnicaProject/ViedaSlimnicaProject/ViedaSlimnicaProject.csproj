@@ -336,6 +336,8 @@
     <Content Include="Views\Pacients\EditMsg.cshtml" />
     <Content Include="Views\Pacients\Register.cshtml" />
     <Content Include="Views\Pacients\ResetPassword.cshtml" />
+    <Content Include="Views\Pacients\ResetPasswordReq.cshtml" />
+    <Content Include="Views\Pacients\BlockedUsers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

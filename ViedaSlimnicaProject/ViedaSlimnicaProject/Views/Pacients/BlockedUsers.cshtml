@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ViedaSlimnicaProject.Models.Profils>
+
+@{
+    ViewBag.Title = "BlockedUsers";
+}
+
+<h2>Bloķētie lietotāji</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.RoleStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vards)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Uzvards)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.ToReset)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.AccountBlocked)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.RoleStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vards)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Uzvards)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.ToReset)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountBlocked)
+        </td>
+        <td>
+            @Html.ActionLink("Atbloķēt", "UnblockUser", new { id=item.ProfileID},
+           new { onclick = "return modelItem => item.Uzvards" })
+
+        </td>
+    </tr>
+}
+</table>

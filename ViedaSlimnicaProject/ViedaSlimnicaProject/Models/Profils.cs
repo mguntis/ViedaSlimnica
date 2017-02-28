@@ -15,12 +15,17 @@ namespace ViedaSlimnicaProject.Models
             public string UserName { get; set; }
             [DisplayName("Parole")]
             public string Password { get; set; }
+            [DisplayName("Loma")]
             public string RoleStart { get; set; }
             public virtual Pacients Patient { get; set; }
+            [DisplayName("Vārds")]
             public string Vards { get; set; }
+            [DisplayName("Uzvārds")]
             public string Uzvards { get; set; } 
             public bool ToReset { get; set; }
-            public bool AccountBlocked { get; set; }
+            [DisplayName("Statuss")]
+            public string AccountBlocked { get; set; }
+            public bool ResetReq { get; set; }
             //public int Attempts { get; set; }
     }
 
