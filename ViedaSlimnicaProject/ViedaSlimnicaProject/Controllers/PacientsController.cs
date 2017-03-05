@@ -893,6 +893,11 @@ namespace ViedaSlimnicaProject.Controllers
                return RedirectToAction("Index");
             }
         }
+
+        public ActionResult Contact()
+        {
+            return View();
+        }
     }
 
     public class PasswordSetting

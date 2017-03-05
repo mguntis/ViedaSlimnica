@@ -1,0 +1,37 @@
+﻿
+
+
+
+
+
+<h2>Kontakti</h2>
+
+<address>
+    Meža iela 1<br />
+    Zemgales priekšpilsēta, Rīga, LV-1048<br />
+    <abbr title="Tālrunis">T:</abbr>
+    22345678
+</address>
+
+<div id="map" style="height: 400px; width:100%"></div>
+<script>
+    function initMap() {
+        var uluru = {lat: 56.944253, lng: 24.080464};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCI1v5LuhRrAtb0vCZcv7Xc3YDYFbnQ9CU&callback=initMap">
+</script>
+
+<address>
+    <strong>Traumotoloģija:</strong>   <a href="mailto:traumotolgija@viedaslimnica.com">traumotolgija@viedaslimnica.com</a><br />
+    <strong>Bērnu nodaļa:</strong> <a href="mailto:berni@viedaslimnica.com">berni@viedaslimnica.com</a>
+</address>
