@@ -62,9 +62,30 @@
                 </div>
             </div>
         </div>
-
-
+        
+        <!-- contact persons name, surname -->
+        <div class="hide-password">
             <div class="form-group">
+                @Html.LabelFor(model => model.Patient.KontaktpersVardsUzvards, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Patient.KontaktpersVardsUzvards, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Patient.KontaktpersVardsUzvards, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <!-- contact persons phone number -->
+        <div class="hide-password">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Patient.KontaktpersTNumurs, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Patient.KontaktpersTNumurs, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Patient.KontaktpersTNumurs, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
                 @Html.LabelFor(model => model.Patient.Rekins, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Patient.Rekins, new { htmlAttributes = new { @class = "form-control" } })

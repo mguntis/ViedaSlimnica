@@ -228,6 +228,7 @@ namespace ViedaSlimnicaProject.Controllers
             //lapošanas atributi
             int pageSize = 10;
             int pageNumber = (page ?? 1);
+            var patientsAsList = pacienti.ToList();
             return View(pacienti.ToPagedList(pageNumber, pageSize));
             
 
