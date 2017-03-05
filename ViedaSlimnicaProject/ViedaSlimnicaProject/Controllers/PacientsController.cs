@@ -204,7 +204,7 @@ namespace ViedaSlimnicaProject.Controllers
             //Mekleesana peec varda, uzvarda, personas koda, telefona
             if (!String.IsNullOrEmpty(searchString) && ModelState.IsValid && regexItem.IsMatch(searchString))
                 {
-
+                    
                     pacienti = pacienti.Where(s => s.Uzvards.Contains(searchString)
                                            || s.Vards.Contains(searchString) || s.TNumurs.Contains(searchString) || s.PersKods.Contains(searchString));
                 } 
@@ -334,7 +334,9 @@ namespace ViedaSlimnicaProject.Controllers
                     Vards = pacients.Patient.Vards,
                     Uzvards = pacients.Patient.Uzvards,
                     RoleStart = "User",
-                    ToReset = true
+                    ToReset = true,
+                    AccountBlocked = "Aktīvs",
+                    
                 };
                 if (selectedRoom.PalatasIetilpiba <= selectedRoom.Pacienti.Count())
                 {
@@ -562,7 +564,7 @@ namespace ViedaSlimnicaProject.Controllers
             try
             {
                 var user = db.Accounts.Where(a => a.UserName == log.UserName).FirstOrDefault();
-                if (user.AccountBlocked == false)
+                if (user.AccountBlocked == "Aktīvs")
                 {
                     if (HashSaltVerify(log.Password, user.Password))
                     {
@@ -587,9 +589,10 @@ namespace ViedaSlimnicaProject.Controllers
                         {
                             if (Convert.ToInt32(Session["loginclient"]) >= 3)
                             {
-                                user.AccountBlocked = true;
+                                user.AccountBlocked = "Bloķēts";
                                 db.SaveChanges();
                                 ModelState.AddModelError("", "Jūsu konts ir bloķēts. Veiciet paroles atjaunināšanu");
+                                Session["loginclient"] = null;
                                 return View();
                             }
                             else
@@ -618,6 +621,49 @@ namespace ViedaSlimnicaProject.Controllers
                 return View();
             }
         }
+
+        //Http get izskats
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult ResetPasswordReq(int? id)
+        {
+            return View();
+        }
+        //Action Atbloķēt  paroli pieprasījums
+        [HttpPost, ActionName("ResetPasswordReq")]
+        public ActionResult ResetPasswordReqConfirm(Profils log, string returnurl)
+        {
+            try
+            {
+                var user = db.Accounts.Where(a => a.UserName == log.UserName).FirstOrDefault();
+                if (user.UserName != null)
+                {
+                    if (user.AccountBlocked == "Bloķēts")
+                    {
+                        user.ResetReq = true;
+                        db.SaveChanges();
+                        ModelState.AddModelError("", "Pieprasījums veiksmīgi nosūtīts");
+                        return View();
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Jūsu profils nav bloķēts");
+                        return View();
+                    }
+
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Jūsu profils nav atrasts datubāzē");
+                    return View();
+                }
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         [Authorize]
         public ActionResult LogOf()
         {
@@ -772,7 +818,8 @@ namespace ViedaSlimnicaProject.Controllers
                 Password = HashSaltStore(userData.Password),
                 RoleStart = userData.RoleStart,
                 Vards = userData.Vards,
-                Uzvards = userData.Uzvards
+                Uzvards = userData.Uzvards,
+                AccountBlocked = "Aktīvs"
             };
             db.Accounts.Add(newProfile);
             db.SaveChanges();
@@ -804,6 +851,47 @@ namespace ViedaSlimnicaProject.Controllers
             db.Entry(account).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("LoginAc");
+        }
+
+        [Authorize(Roles = "SuperAdmin, Employee")]
+        public ActionResult BlockedUsers()
+        {
+            try {
+                return View(db.Accounts.Where(a => a.ResetReq == true));
+        }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [Authorize(Roles = "SuperAdmin, Employee")]
+        public ActionResult UnblockUser(int? id)
+        {
+            try
+            {
+                var user = db.Accounts.Where(a => a.ProfileID == id).FirstOrDefault();
+                //var password = "VS" + DateTime.Now.ToString("ddmm");
+                if (user.UserName != null)
+                {
+                    if (user.AccountBlocked == "Bloķēts")
+                    {
+                        user.ResetReq = false;
+                        user.AccountBlocked = "Aktīvs";
+                        user.ToReset = true;
+                        //user.Password = HashSaltStore(password);
+                        db.SaveChanges();
+                        //TempData["AlertMessage"] = "Lietotājvārds: " + user.UserName + " parole: " + password;
+                        return RedirectToAction("BlockedUsers");
+                    }
+
+                }
+                return RedirectToAction("BlockedUsers");
+            }
+            catch
+            {
+               return RedirectToAction("Index");
+            }
         }
     }
 

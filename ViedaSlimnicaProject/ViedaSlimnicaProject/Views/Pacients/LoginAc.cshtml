@@ -24,13 +24,17 @@
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
-
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Pieslēgties" class="btn btn-default" />
+                </div>
+            </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Pieslēgties" class="btn btn-default" />
+                @Html.ActionLink("Atjaunot paroli", "ResetPasswordReq")
             </div>
         </div>
-    </div>
+        </div>
 }
 
 
