@@ -7,8 +7,6 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.Optimization;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 
@@ -27,7 +25,7 @@ namespace ViedaSlimnicaProject
             BundleConfig2.RegisterBundles(BundleTable.Bundles);
             var configuration = new Migrations.Configuration();
             var migrator = new DbMigrator(configuration);
-            //migrator.Update();
+            migrator.Update();
             //    SDatabase.SetInitializer<SmartHospitalDatabaseContext>(null);
         }
     }
