@@ -334,7 +334,7 @@ namespace ViedaSlimnicaProject.Controllers
                     Uzvards = pacients.Patient.Uzvards,
                     RoleStart = "User",
                     ToReset = true,
-                    AccountBlocked = "Aktīvs",
+                    AccountBlocked = false
                     
                 };
                 if (selectedRoom.PalatasIetilpiba <= selectedRoom.Pacienti.Count())
@@ -563,57 +563,58 @@ namespace ViedaSlimnicaProject.Controllers
             try
             {
                 var user = db.Accounts.Where(a => a.UserName == log.UserName).FirstOrDefault();
-                if (user.AccountBlocked == "Aktīvs")
+                if (user.AccountBlocked == false)
                 {
                     if (HashSaltVerify(log.Password, user.Password))
                     {
-                    if (user.ToReset) return RedirectToAction("ResetPassword", new { id = user.ProfileID });
-                    FormsAuthentication.SetAuthCookie(user.UserName, true);
+                        if (user.ToReset) return RedirectToAction("ResetPassword", new { id = user.ProfileID });
+                        FormsAuthentication.SetAuthCookie(user.UserName, true);
                         if (user.RoleStart == "Employee" || user.RoleStart == "SuperAdmin")
                         {
                             return RedirectToAction("Index");
                         }
                         else
                         {
-                                int returnID = user.Patient.PacientaID;
-                                if (ModelState.IsValid)
-                                {
-                                    return RedirectToAction("PatientView", new { id = returnID });
-                                }
+                            int returnID = user.Patient.PacientaID;
+                            if (ModelState.IsValid)
+                            {
+                                return RedirectToAction("PatientView", new { id = returnID });
+                            }
                         }
                     }
                     else
                     {
-                        if (Session["loginclient"] != null)
-                        {
-                            if (Convert.ToInt32(Session["loginclient"]) >= 3)
+                            if (Session["loginclient"] != null)
                             {
-                                user.AccountBlocked = "Bloķēts";
-                                db.SaveChanges();
-                                ModelState.AddModelError("", "Jūsu konts ir bloķēts. Veiciet paroles atjaunināšanu");
-                                Session["loginclient"] = null;
-                                return View();
+                                if (Convert.ToInt32(Session["loginclient"]) >= 3)
+                                {
+                                    user.AccountBlocked = true;
+                                    db.SaveChanges();
+                                    ModelState.AddModelError("", "Jūsu konts ir bloķēts. Veiciet paroles atjaunināšanu");
+                                    Session["loginclient"] = null;
+                                    return View();
+                                }
+                                else
+                                {
+                                    Session["loginclient"] = Convert.ToInt32(Session["loginclient"]) + 1;
+                                    int atempt = 3 - Convert.ToInt32(Session["loginclient"]);
+                                    ModelState.AddModelError("", "Nepareiza parole. Atlikušie mēģinājumi: " + atempt);
+                                    return View();
+                                }
                             }
                             else
                             {
-                                Session["loginclient"] = Convert.ToInt32(Session["loginclient"]) + 1;
+                                Session["loginclient"] = 1;
                                 int atempt = 3 - Convert.ToInt32(Session["loginclient"]);
                                 ModelState.AddModelError("", "Nepareiza parole. Atlikušie mēģinājumi: " + atempt);
                                 return View();
                             }
-                        }
-                        else
-                        {
-                            Session["loginclient"] = 1;
-                            int atempt = 3 - Convert.ToInt32(Session["loginclient"]);
-                            ModelState.AddModelError("", "Nepareiza parole. Atlikušie mēģinājumi: " + atempt);
-                            return View();
-                        }
                     }
+
                 }
-                ModelState.AddModelError("", "Jūsu konts ir bloķēts, veiciet paroles atjaunināšanu");
-                return View();
-            }
+                    ModelState.AddModelError("", "Jūsu konts ir bloķēts, veiciet paroles atjaunināšanu");
+                    return View();
+                }
             catch
             {
                 ModelState.AddModelError("", "Nepareiza parole vai lietotājvārds");
@@ -637,19 +638,10 @@ namespace ViedaSlimnicaProject.Controllers
                 var user = db.Accounts.Where(a => a.UserName == log.UserName).FirstOrDefault();
                 if (user.UserName != null)
                 {
-                    if (user.AccountBlocked == "Bloķēts")
-                    {
                         user.ResetReq = true;
                         db.SaveChanges();
                         ModelState.AddModelError("", "Pieprasījums veiksmīgi nosūtīts");
                         return View();
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Jūsu profils nav bloķēts");
-                        return View();
-                    }
-
                 }
                 else
                 {
@@ -818,7 +810,7 @@ namespace ViedaSlimnicaProject.Controllers
                 RoleStart = userData.RoleStart,
                 Vards = userData.Vards,
                 Uzvards = userData.Uzvards,
-                AccountBlocked = "Aktīvs"
+                AccountBlocked = false
             };
             db.Accounts.Add(newProfile);
             db.SaveChanges();
@@ -873,10 +865,10 @@ namespace ViedaSlimnicaProject.Controllers
                 //var password = "VS" + DateTime.Now.ToString("ddmm");
                 if (user.UserName != null)
                 {
-                    if (user.AccountBlocked == "Bloķēts")
+                    if (user.AccountBlocked == true)
                     {
                         user.ResetReq = false;
-                        user.AccountBlocked = "Aktīvs";
+                        user.AccountBlocked = false;
                         user.ToReset = true;
                         //user.Password = HashSaltStore(password);
                         db.SaveChanges();

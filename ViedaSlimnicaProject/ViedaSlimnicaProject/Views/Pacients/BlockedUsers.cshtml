@@ -29,9 +29,9 @@
         @*<th>
             @Html.DisplayNameFor(model => model.ToReset)
         </th>*@
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.AccountBlocked)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -55,9 +55,9 @@
         @*<td>
             @Html.DisplayFor(modelItem => item.ToReset)
         </td>*@
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.AccountBlocked)
-        </td>
+        </td>*@
         <td>
             @Html.ActionLink("Atbloķēt", "UnblockUser", new { id=item.ProfileID},
            new { onclick = "return modelItem => item.Uzvards" })

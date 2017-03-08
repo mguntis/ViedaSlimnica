@@ -26,7 +26,7 @@ namespace ViedaSlimnicaProject.Models
             public string Uzvards { get; set; } 
             public bool ToReset { get; set; }
             [DisplayName("Statuss")]
-            public string AccountBlocked { get; set; }
+            public bool AccountBlocked { get; set; }
             public bool ResetReq { get; set; }
             //public int Attempts { get; set; }
     }
