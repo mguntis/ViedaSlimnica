@@ -228,6 +228,7 @@ namespace ViedaSlimnicaProject.Controllers
             //lapošanas atributi
             int pageSize = 10;
             int pageNumber = (page ?? 1);
+            var patientsAsList = pacienti.ToList();
             return View(pacienti.ToPagedList(pageNumber, pageSize));
             
 
@@ -832,10 +833,10 @@ namespace ViedaSlimnicaProject.Controllers
         }
         // POST: ResetPassword
         [HttpPost,ActionName("ResetPassword")]
-        public ActionResult ResetPasswordConfirm(int? profileID,string newPassword, string testingPassword)
+        public ActionResult ResetPasswordConfirm(int? profileID,string newPassword,Profils profils)
         {
             if (profileID == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            if (newPassword != testingPassword) return View();
+            if (newPassword != profils.Password) return View();
             var account = db.Accounts.Find(profileID);
             account.Password = HashSaltStore(newPassword);
             account.ToReset = false;
@@ -883,6 +884,11 @@ namespace ViedaSlimnicaProject.Controllers
             {
                return RedirectToAction("Index");
             }
+        }
+
+        public ActionResult Contact()
+        {
+            return View();
         }
     }
 

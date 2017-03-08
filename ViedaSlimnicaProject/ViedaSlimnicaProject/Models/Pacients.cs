@@ -12,16 +12,25 @@ namespace ViedaSlimnicaProject.Models
     {
         [Key]
         public int PacientaID { get; set; }
+
         [DisplayName("Vārds")]
         public string Vards { get; set; }
+
         [DisplayName("Uzvārds")]
         public string Uzvards { get; set; }
         [DisplayName("Personas kods")]
         public string PersKods { get; set; }
         [DisplayName("E-Pasts")]
         public string Epasts { get; set; }
+
         [DisplayName("Telefona numurs")]
         public string TNumurs { get; set; }
+
+        [DisplayName("Kontaktpersonas vārds, uzvārds")]
+        public string KontaktpersVardsUzvards { get; set; }
+        [DisplayName("Kontaktpersonas telefona numurs")]
+        public string KontaktpersTNumurs { get; set; }
+
         [DisplayName("Rēķins")]
         public double? Rekins { get; set; }
         /*[DisplayName("Simptomi")]

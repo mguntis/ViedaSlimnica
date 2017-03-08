@@ -7,8 +7,6 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.Optimization;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 

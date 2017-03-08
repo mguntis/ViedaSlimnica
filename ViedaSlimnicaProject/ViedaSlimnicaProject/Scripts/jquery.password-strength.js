@@ -146,7 +146,7 @@ http://stackoverflow.com/questions/1034306/public-functions-from-within-a-jquery
 
     //default setting
     var password_settings = {
-        minLength: 12,
+        minLength: 8,
         maxLength: 25,
         specialLength: 1,
         upperLength: 1,
