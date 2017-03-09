@@ -9,6 +9,7 @@ using System.Web.SessionState;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using ViedaSlimnicaProject.Controllers;
 
 namespace ViedaSlimnicaProject
 {
@@ -27,6 +28,36 @@ namespace ViedaSlimnicaProject
             var migrator = new DbMigrator(configuration);
             migrator.Update();
             //    SDatabase.SetInitializer<SmartHospitalDatabaseContext>(null);
+        }
+
+        protected void Application_Error()
+        {
+            Exception exeception = Server.GetLastError();
+            Response.Clear();
+            HttpException httpexeception = exeception as HttpException;
+            RouteData route = new RouteData();
+
+            route.Values.Add("controller","Error");
+            if (httpexeception != null)
+            {
+                switch (httpexeception.GetHttpCode())
+                {
+                    case 404:
+                        route.Values.Add("action","Http404");
+                        break;
+                    case 500:
+                        route.Values.Add("action", "Http500");
+                        break;
+                    default:
+                        route.Values.Add("action", "General");
+                        break;
+                }
+                Server.ClearError();
+                Response.TrySkipIisCustomErrors = true;
+                Response.Headers.Add("Content-Type", "text/html");
+            }
+            IController errorcontroller = new ErrorController();
+            errorcontroller.Execute(new RequestContext(new HttpContextWrapper(Context), route));
         }
     }
 }

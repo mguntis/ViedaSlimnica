@@ -19,6 +19,7 @@ using System.Web.Security.AntiXss;
 using System.Diagnostics;
 using System.Data.Entity.Validation;
 using System.Xml.Linq;
+using ViedaSlimnicaProject.Security;
 
 namespace ViedaSlimnicaProject.Controllers
 {
@@ -174,7 +175,7 @@ namespace ViedaSlimnicaProject.Controllers
         private SmartHospitalDatabaseContext db = new SmartHospitalDatabaseContext();
         // GET: Pacients
         //(Roles ="Admin")]
-        [Authorize(Roles = "SuperAdmin, Employee"), ValidateInput(false)]
+        [MyAuthorize(Roles = "SuperAdmin, Employee"), ValidateInput(false)]
         public ActionResult Index(string sortOrder, string currentFilter, string searchStringin, int? page)
         {
 
@@ -239,7 +240,7 @@ namespace ViedaSlimnicaProject.Controllers
 
 
         }
-        [Authorize(Roles = "SuperAdmin, Employee")]
+        [MyAuthorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Palata(int id)
         {
 
@@ -247,7 +248,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Details/5
-        [Authorize(Roles = "SuperAdmin, Employee, User")]
+        [MyAuthorize(Roles = "SuperAdmin, Employee, User")]
         public ActionResult Details(int? id)
         {
                 var finduser = db.Pacienti.Find(id);
@@ -268,7 +269,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/PatientView
-        [Authorize(Roles ="User")]
+        [MyAuthorize(Roles ="User")]
         public ActionResult PatientView(int id)
         {
             var user = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
@@ -286,7 +287,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Create
-        [Authorize(Roles = "SuperAdmin, Employee")]
+        [MyAuthorize(Roles = "SuperAdmin, Employee")]
         [HttpGet]
         public ActionResult Create(int? roomID)
         {
@@ -399,7 +400,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
 
         // GET: Pacients/Edit/5
-        [Authorize(Roles = "SuperAdmin, Employee")]
+        [MyAuthorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -441,7 +442,7 @@ namespace ViedaSlimnicaProject.Controllers
 
         }
         // GET: Pacients/Rekins/5
-        [Authorize(Roles = "SuperAdmin, Employee")]
+        [MyAuthorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Rekins(int? id)
         {
             if (id == null)
@@ -486,7 +487,7 @@ namespace ViedaSlimnicaProject.Controllers
             
         }
         // GET: Pacients/Delete/5
-        [Authorize(Roles = "SuperAdmin, Employee")]
+        [MyAuthorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -656,7 +657,7 @@ namespace ViedaSlimnicaProject.Controllers
             }
         }
 
-        [Authorize]
+        [MyAuthorize]
         public ActionResult LogOf()
         {
             FormsAuthentication.SignOut();
@@ -679,7 +680,7 @@ namespace ViedaSlimnicaProject.Controllers
         }
         
 
-        [Authorize(Roles = "SuperAdmin,Employee")]
+        [MyAuthorize(Roles = "SuperAdmin,Employee")]
         public ActionResult Zinojumi()
         {
             var msgList = db.Zinojumi.ToList().OrderByDescending(e => e.date);
@@ -687,7 +688,7 @@ namespace ViedaSlimnicaProject.Controllers
             return View(msgList);
         }
 
-        [Authorize(Roles = "SuperAdmin, Employee")]
+        [MyAuthorize(Roles = "SuperAdmin, Employee")]
         public ActionResult DeleteMsg(int? id)
         {
             if (id == null)
@@ -728,7 +729,7 @@ namespace ViedaSlimnicaProject.Controllers
 
         }
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin, Employee")]
+        [MyAuthorize(Roles = "SuperAdmin, Employee")]
         public ActionResult EditMsg(int? id)
         {
             return View(db.Zinojumi.Find(id));
@@ -845,7 +846,7 @@ namespace ViedaSlimnicaProject.Controllers
             return RedirectToAction("LoginAc");
         }
 
-        [Authorize(Roles = "SuperAdmin, Employee")]
+        [MyAuthorize(Roles = "SuperAdmin, Employee")]
         public ActionResult BlockedUsers()
         {
             try {
@@ -857,7 +858,7 @@ namespace ViedaSlimnicaProject.Controllers
             }
         }
 
-        [Authorize(Roles = "SuperAdmin, Employee")]
+        [MyAuthorize(Roles = "SuperAdmin, Employee")]
         public ActionResult UnblockUser(int? id)
         {
             try

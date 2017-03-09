@@ -343,6 +343,8 @@
     <Content Include="Views\Pacients\ResetPasswordReq.cshtml" />
     <Content Include="Views\Pacients\BlockedUsers.cshtml" />
     <Content Include="Views\Pacients\Contact.cshtml" />
+    <Content Include="Views\Error\http404.cshtml" />
+    <Content Include="Views\Error\http500.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -477,9 +479,11 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Profils.cs" />
     <Compile Include="Models\Zinojumi.cs" />
+    <Compile Include="Security\MyAuthorize.cs" />
     <Compile Include="Security\SiteRoles.cs" />
     <Compile Include="SmartHospitalDatabaseContext.cs" />
     <Compile Include="Controllers\PacientsController.cs" />
