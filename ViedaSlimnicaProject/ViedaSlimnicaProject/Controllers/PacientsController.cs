@@ -247,6 +247,13 @@ namespace ViedaSlimnicaProject.Controllers
             return View(db.Pacienti.Where(q => q.Palata.PalatasID == id).Take(4).ToList());
         }
 
+        [MyAuthorize(Roles = "SuperAdmin, Employee")]
+        public ActionResult Izrakstisanas()
+        {
+
+            return View(db.Pacienti.Where(q => q.IzrakstisanasDatums <= DateTime.Now).Take(10).ToList());
+        }
+
         // GET: Pacients/Details/5
         [MyAuthorize(Roles = "SuperAdmin, Employee, User")]
         public ActionResult Details(int? id)
@@ -468,6 +475,57 @@ namespace ViedaSlimnicaProject.Controllers
             return View(patientEditVm);
             
         }
+    
+        //Izrakstisanas datuma pievienosana
+
+        // GET: Pacients/Izrakstisanas/5
+        [MyAuthorize(Roles = "SuperAdmin, Employee")]
+        public ActionResult IzrakstisanasDatums(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Pacients pacients = db.Pacienti.Find(id);
+            if (pacients == null)
+                return HttpNotFound();
+            var patientEditVm = new PacientsEditViewModel()
+            {
+                Patient = pacients,
+                RoomsFromWhichToSelect = availableRooms()
+            };
+
+            if (pacients.Palata != null)
+            {
+                patientEditVm.SelectedRoomId = pacients.Palata.PalatasID;
+                patientEditVm.Patient.Palata = pacients.Palata;
+            }
+
+            return View(patientEditVm);
+        }
+
+        // POST: Pacients/Izrakstisanas/5
+        [HttpPost]
+        public ActionResult IzrakstisanasDatums(PacientsEditViewModel patientEditVm)
+        {
+            //var selectedRoom = db.Palatas.Single(room => room.PalatasID == patientEditVm.SelectedRoomId);
+            //patientEditVm.Patient.Palata = selectedRoom;
+            // TODO: Add update logic here
+
+            if (ModelState.IsValid)
+            {
+                //db.Palatas.Attach(selectedRoom);
+                db.Entry(patientEditVm.Patient).State = EntityState.Modified;
+                //db.Entry(selectedRoom).State = EntityState.Modified;
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            return View(patientEditVm);
+
+        }
+
+
+
         // GET: Pacients/Delete/5
         [MyAuthorize(Roles = "SuperAdmin, Employee")]
         public ActionResult Delete(int? id)

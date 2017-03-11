@@ -102,6 +102,7 @@
              <a href="@Url.Action("Delete","Pacients", new {id = item.PacientaID})" class="icon"><span title="Izrakstīt" class="glyphicon glyphicon-trash"></span></a>
              <a href="@Url.Action("Palata","Pacients", new {id = item.Palata.PalatasID})" class="icon"><span title="Apskatīt palātu" class="glyphicon glyphicon-home"></span></a>
               <a href="@Url.Action("Rekins","Pacients", new {id = item.PacientaID})" class="icon"><span title="Rēķins" class="glyphicon glyphicon-euro"></span></a>
+                <a href="@Url.Action("IzrakstisanasDatums","Pacients", new {id = item.PacientaID})" class="icon"><span title="Pievienot Izrakstīšanās datumu" class="glyphicon glyphicon-time"></span></a>
             </div>
         </td>
     </tr>

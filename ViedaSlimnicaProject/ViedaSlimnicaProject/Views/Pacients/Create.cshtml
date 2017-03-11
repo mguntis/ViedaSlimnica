@@ -114,18 +114,39 @@
                 @Html.ValidationMessageFor(model => model.Patient.IerasanasDatums, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Reģistrēt" class="btn btn-default" />
+        <div class="hide-password">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Patient.IzrakstisanasDatums, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Patient.IzrakstisanasDatums, new { htmlAttributes = new { @class = "form-control", @Type = "date", @Value = 0 } })
+                    @Html.ValidationMessageFor(model => model.Patient.IzrakstisanasDatums, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
-    </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Reģistrēt" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
 }
 
 <div>
     @Html.ActionLink("Atpakaļ uz sarakstu", "Index")
 </div>
+
+<script>
+    function showPass() {
+        var elems = document.getElementsByClassName('hide-password');
+        for (var i = 0; i < elems.length; i += 1) {
+            if (elems[i].style.display == 'none') {
+                elems[i].style.display = 'block';
+            }
+            else
+                elems[i].style.display = 'none';
+        }
+    }
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

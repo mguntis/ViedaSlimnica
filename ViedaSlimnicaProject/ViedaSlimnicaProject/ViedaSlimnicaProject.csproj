@@ -348,6 +348,8 @@
     <Content Include="Views\Pacients\Contact.cshtml" />
     <Content Include="Views\Error\http404.cshtml" />
     <Content Include="Views\Error\http500.cshtml" />
+    <Content Include="Views\Pacients\IzrakstisanasDatums.cshtml" />
+    <Content Include="Views\Pacients\Izrakstisanas.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
