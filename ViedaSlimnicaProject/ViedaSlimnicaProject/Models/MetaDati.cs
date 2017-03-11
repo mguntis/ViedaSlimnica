@@ -68,6 +68,13 @@ namespace ViedaSlimnicaProject.Models
         ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "*Lauks 'Ierašanās datums' nedrīkst būt tukšs")]
         public Nullable<System.DateTime> IerasanasDatums;
+
+        [DataType(DataType.Date)]
+        [DefaultValue(0)]
+        [DisplayFormat(DataFormatString =
+        "{0:yyyy-MM-dd}",
+        ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> IzrakstisanasDatums;
     }
 
 }

@@ -1,0 +1,140 @@
+﻿@model ViedaSlimnicaProject.ViewModel.PacientsEditViewModel
+
+@{
+    ViewBag.Title = "Rediģēt pacienta informāciju";
+}
+
+<h2>Labot informāciju</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Pacients</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Patient.PacientaID)
+
+        <div class="hide-password">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Patient.Vards, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Patient.Vards, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Patient.Vards, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="hide-password">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Patient.Uzvards, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Patient.Uzvards, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Patient.Uzvards, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="hide-password">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Patient.PersKods, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Patient.PersKods, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Patient.PersKods, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="hide-password">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Patient.Epasts, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Patient.Epasts, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Patient.Epasts, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="hide-password">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Patient.TNumurs, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Patient.TNumurs, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Patient.TNumurs, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <!-- contact persons name, surname -->
+        <div class="hide-password">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Patient.KontaktpersVardsUzvards, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Patient.KontaktpersVardsUzvards, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Patient.KontaktpersVardsUzvards, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <!-- contact persons phone number -->
+        <div class="hide-password">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Patient.KontaktpersTNumurs, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Patient.KontaktpersTNumurs, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Patient.KontaktpersTNumurs, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="hide-password">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Patient.Rekins, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Patient.Rekins, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Patient.Rekins, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            </div>
+            <div class="hide-password">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Patient.IerasanasDatums, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-3">
+                        @Html.EditorFor(model => model.Patient.IerasanasDatums, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Patient.IerasanasDatums, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Patient.IzrakstisanasDatums, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Patient.IzrakstisanasDatums, new { htmlAttributes = new { @class = "form-control", @Type = "date", @Value = DateTime.Now.ToString("yyyy-MM-dd") } })
+                @Html.ValidationMessageFor(model => model.Patient.IzrakstisanasDatums, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Saglabāt" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+}
+
+<div>
+    @Html.ActionLink("Atpakaļ uz sarakstu", "Index")
+</div>
+<script>
+    function showPass() {
+        var elems = document.getElementsByClassName('hide-password');
+        for (var i = 0; i < elems.length; i += 1) {
+            if (elems[i].style.display == 'none') {
+                elems[i].style.display = 'block';
+            }
+            else
+                elems[i].style.display = 'none';
+        }
+    }
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -345,6 +345,7 @@
     <Content Include="Views\Pacients\Contact.cshtml" />
     <Content Include="Views\Error\http404.cshtml" />
     <Content Include="Views\Error\http500.cshtml" />
+    <Content Include="Views\Pacients\IzrakstisanasDatums.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
