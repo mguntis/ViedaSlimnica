@@ -34,13 +34,14 @@ namespace ViedaSlimnicaProject.Controllers
             if (user.RoleStart == "User")
             {   // Pacienti
                 var recipentList = db.Accounts.ToList()
-                    .Where(a => a.RoleStart != "User");
+                    .Where(a => a.RoleStart != "User" && a.ProfileID != user.ProfileID);
                 Messages.AvailableRecipents = recipentList;
             }
             else
             {   // Ārsti/Admini
                 //Var nosūtīt ziņu visiem admini/ārsti/pacienti
-                var recipentList = db.Accounts.ToList();
+                var recipentList = db.Accounts.ToList()
+                    .Where(a => a.ProfileID != user.ProfileID);
                 Messages.AvailableRecipents = recipentList;
             }
             return View(Messages);
@@ -52,7 +53,8 @@ namespace ViedaSlimnicaProject.Controllers
         {
             Zinojumi message = new Zinojumi();
             Profils user = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
-            if (user.RoleStart == "User" && msgTo == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (user.RoleStart == "User" && msgTo == null) return RedirectToAction("Index");
+            if (text == "") return RedirectToAction("Index");
             message.msg = text;
             message.msgFrom = user;
             message.date = DateTime.Now;
@@ -62,13 +64,9 @@ namespace ViedaSlimnicaProject.Controllers
             {
                 message.msgTo = db.Accounts.Find(msgTo);
             }
-            if (ModelState.IsValid)
-            {
-                db.Zinojumi.Add(message);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View();
+            db.Zinojumi.Add(message);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public ActionResult DeleteMsg(int? msgID)

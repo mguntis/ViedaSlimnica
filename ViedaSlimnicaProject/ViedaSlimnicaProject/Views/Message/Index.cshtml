@@ -97,7 +97,7 @@
                                 > @if (item.msgTo != null)
                                 { @Html.DisplayFor(ModelItem => item.msgTo.Vards) <text> </text> @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)}
                                 else
-                                { <text>Visiem pacientiem</text>}
+                                { <text>Visiem</text>}
                             </div>
                             <div class="msgSubject" id="@("msgSubject"+i)">@Html.DisplayFor(ModelItem => item.subject)</div>
                             <div class="msgTime">@Html.DisplayFor(ModelItem => item.dateString)</div>
@@ -128,7 +128,7 @@
                                     > @if (item.msgTo != null)
                                     { @Html.DisplayFor(ModelItem => item.msgTo.Vards) <text> </text> @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)}
                                     else
-                                    { <text>Visiem pacientiem</text>}
+                                    { <text>Visiem</text>}
                                 </div>
                                 <div class="msgSubject" id="@("msgSubject"+i)">@Html.DisplayFor(ModelItem => item.subject)</div>
                                 <div class="msgTime">@Html.DisplayFor(ModelItem => item.dateString)</div>
