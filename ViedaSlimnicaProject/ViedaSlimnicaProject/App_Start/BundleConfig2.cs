@@ -23,6 +23,7 @@ namespace ViedaSlimnicaProject
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/bootstrap-select.min.css",
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
         }

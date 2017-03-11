@@ -29,6 +29,22 @@ namespace ViedaSlimnicaProject.Models
             public bool AccountBlocked { get; set; }
             public bool ResetReq { get; set; }
             //public int Attempts { get; set; }
+
+            public string Role()
+        {
+            switch (RoleStart)
+            {
+                case "User":
+                    return "Pacients";
+                case "Employee":
+                    return "Ārsts";
+                case "SuperAdmin":
+                    return "Admins";
+                default:
+                    return "?";
+            }
+
+        }
     }
 
 }

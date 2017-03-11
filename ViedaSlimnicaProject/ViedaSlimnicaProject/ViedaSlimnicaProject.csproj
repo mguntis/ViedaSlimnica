@@ -238,6 +238,7 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Contact.aspx" />
+    <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\dropdownicon.png" />
@@ -267,6 +268,7 @@
     <Content Include="fonts\TextFile1.txt" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
+    <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -278,6 +280,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Messages.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\PasswordPass.js" />
     <Content Include="Scripts\respond.js" />
@@ -345,6 +348,7 @@
     <Content Include="Views\Pacients\Contact.cshtml" />
     <Content Include="Views\Error\http404.cshtml" />
     <Content Include="Views\Error\http500.cshtml" />
+    <Content Include="Views\Message\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -480,6 +484,7 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Profils.cs" />
     <Compile Include="Models\Zinojumi.cs" />
@@ -520,6 +525,7 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\ZinojumiView.cs" />
     <Compile Include="ViewModel\DetailsView.cs" />
     <Compile Include="ViewModel\PacientsEditViewModel.cs" />
     <Compile Include="ViewModel\PacientsView.cs" />

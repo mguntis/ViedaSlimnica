@@ -32,8 +32,8 @@
     {
     <div class="Msg">
         <dl>
-            <dt>@Html.DisplayFor(ModelItem => item.dateString) no @Html.DisplayFor(ModelItem => item.profils.Vards) @Html.DisplayFor(ModelItem => item.profils.Uzvards) > 
-            @if (item.msgTo != null)  {@Html.ActionLink(item.msgTo.Vards + " " + item.msgTo.Uzvards, "Details", new { id = item.msgTo.PacientaID })} else { <text>Visiem pacientiem</text> } 
+            <dt>@Html.DisplayFor(ModelItem => item.dateString) no @Html.DisplayFor(ModelItem => item.msgFrom.Vards) @Html.DisplayFor(ModelItem => item.msgFrom.Uzvards) > 
+            @if (item.msgTo != null)  {@Html.ActionLink(item.msgTo.Vards + " " + item.msgTo.Uzvards, "Details", new { id = item.msgTo.Patient.PacientaID })} else { <text>Visiem pacientiem</text> } 
             @Html.ActionLink("Dzēst", "DeleteMsg", new { id = item.zinojumaID }, htmlAttributes: new { @class = "MsgControl" })
             @Html.ActionLink("Labot", "EditMsg", new { id = item.zinojumaID }, htmlAttributes: new { @class = "MsgControl" })</dt>
             <dd>@Html.DisplayFor(ModelItem => item.msg)</dd>

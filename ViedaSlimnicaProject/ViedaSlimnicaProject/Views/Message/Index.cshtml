@@ -1,0 +1,153 @@
+﻿@model ViedaSlimnicaProject.ViewModel.ZinojumiView
+@{
+    ViewBag.Title = "Ziņojumi";
+}
+<script type="text/javascript" src="~/Scripts/Messages.js"></script>
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">*@
+<p>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Jauna ziņa</button>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Jauns ziņojums</h4>
+                </div>
+                @using (Html.BeginForm("NewMsg", "Message", FormMethod.Post))
+                {
+                    <div class="modal-body">
+                        <select class="selectpicker" data-show-subtext="true" data-live-search="true" id="msgTo" name="msgTo">
+                            @if (this.User.IsInRole("Employee") || this.User.IsInRole("SuperAdmin"))
+                            {<option>Visiem</option>} 
+                            @foreach (var item in Model.AvailableRecipents)
+                            {
+                                <option data-subtext ="@if (@item.Patient != null) {@item.Role() <text> - </text> @item.Patient.Palata.Nodala <text> nodaļa </text>} else { @item.Role() } " value="@item.ProfileID">@Html.DisplayFor(ModelItem => item.Vards) @Html.DisplayText(" ") @Html.DisplayFor(ModelItem => item.Uzvards)</option> 
+                            }
+                        </select>
+                            @Html.TextBox("subject", "", htmlAttributes: new { @class = "form-control newmsgsubject", @placeholder = "Temats" })
+
+                            @Html.TextArea("text", null, htmlAttributes: new { @class = "form-control newmsg", @rows = "5", @resize = "none", @placeholder = "Ziņojums" })
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Izsūtīt" class="btn btn-default" /> <button type="button" class="btn btn-default" data-dismiss="modal">Aizvērt</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div id="deleteModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Dzēst ziņu</h4>
+                </div>
+                @using (Html.BeginForm("DeleteMsg", "Message", FormMethod.Post))
+                {@Html.Hidden("msgID"," ",htmlAttributes: new { @id = "deletemodalMsgID"})
+                    <div class="modal-body alert">
+                        Vai tiešām vēlaties dzēst šo ziņu?
+                    </div>
+                        <div class="modal-footer">
+                            <input type="submit" value="Dzēst" class="btn btn-default" /> <button type="button" class="btn btn-default" data-dismiss="modal">Aizvērt</button>
+                        </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div id="editreplyModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="editreplyTitle">Dzēst ziņu</h4>
+                </div>
+                @using (Html.BeginForm("EditorReplyMsg", "Message", FormMethod.Post))
+                {   @Html.Hidden("msgID", " ", htmlAttributes: new { @id = "editMsgID" })
+                    @Html.Hidden("mode", " ", htmlAttributes: new { @id = "editreplyMode" })
+                    <div class="modal-body alert">
+                        @Html.TextBox("subject", "", htmlAttributes: new { @class = "form-control newmsgsubject", @placeholder = "Temats", @id = "editreplySubject" })
+
+                        @Html.TextArea("text", null, htmlAttributes: new { @class = "form-control newmsg", @rows = "5", @resize = "none", @placeholder = "Ziņojums", @id = "editreplyText" })
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Nosūtīt" class="btn btn-default" id="editreplyBtn" /> <button type="button" class="btn btn-default" data-dismiss="modal">Aizvērt</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</p>
+<div class="container">
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Ienākošie</a></li>
+    <li><a data-toggle="tab" href="#menu1">Aizsūtītie</a></li>
+</ul>
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+        @* Ienākošie *@
+            <div class="panel-group">
+                @{ int i = 1;}
+                @foreach (var item in Model.Received)
+            {   <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <a data-toggle="collapse" href="@("#collapse" + i)">
+                            <div class="msgAuthor" id="@("msgAuthor" + i)">@Html.DisplayFor(ModelItem => item.msgFrom.Vards) @Html.DisplayFor(ModelItem => item.msgFrom.Uzvards)</div>
+                            <div class="msgTo" id="@("msgTo" + i)">
+                                > @if (item.msgTo != null)
+                                { @Html.DisplayFor(ModelItem => item.msgTo.Vards) <text> </text> @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)}
+                                else
+                                { <text>Visiem pacientiem</text>}
+                            </div>
+                            <div class="msgSubject" id="@("msgSubject"+i)">@Html.DisplayFor(ModelItem => item.subject)</div>
+                            <div class="msgTime">@Html.DisplayFor(ModelItem => item.dateString)</div>
+                        </a>
+                    </div>
+                </div>
+                <div id="@("collapse" + i)" class="panel-collapse collapse">
+                    <div class="panel-body" id="@("message"+i)">@Html.DisplayFor(ModelItem => item.msg)</div>
+                    <div class="panel-footer">
+                        <button type="button" class="btn btn-info btn-lg msgFooter" data-toggle="modal" data-target="#editreplyModal" onclick="editReply(@item.zinojumaID,'reply',@i); return false;">Atbildēt</button>
+                    </div>
+                </div>
+            </div>
+                    i += 1;
+                }
+            </div>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+        @* Aizsūtītie *@
+            <div class="panel-group">
+                @foreach (var item in Model.Sent)
+            {   <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <a data-toggle="collapse" href="@("#collapse" + i)">
+                                <div class="msgAuthor" id="@("msgAuthor" + i)">@Html.DisplayFor(ModelItem => item.msgFrom.Vards) @Html.DisplayFor(ModelItem => item.msgFrom.Uzvards)</div>
+                                <div class="msgTo" id="@("msgTo" + i)">
+                                    > @if (item.msgTo != null)
+                                    { @Html.DisplayFor(ModelItem => item.msgTo.Vards) <text> </text> @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)}
+                                    else
+                                    { <text>Visiem pacientiem</text>}
+                                </div>
+                                <div class="msgSubject" id="@("msgSubject"+i)">@Html.DisplayFor(ModelItem => item.subject)</div>
+                                <div class="msgTime">@Html.DisplayFor(ModelItem => item.dateString)</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="@("collapse" + i)" class="panel-collapse collapse">
+                        <div class="panel-body" id="@("message"+i)">@Html.DisplayFor(ModelItem => item.msg)</div>
+                        <div class="panel-footer">
+                            <button type="button" class="btn btn-info btn-lg notimportant" data-toggle="modal" data-target="#deleteModal" onclick="addID(@item.zinojumaID,'delete'); return false;">Dzēst</button>
+                            <button type="button" class="btn btn-info btn-lg notimportant" data-toggle="modal" data-target="#editreplyModal" onclick="editReply(@item.zinojumaID,'edit',@i); return false;">Labot</button>
+                            <button type="button" class="btn btn-info btn-lg msgFooter" data-toggle="modal" data-target="#editreplyModal" onclick="editReply(@item.zinojumaID,'reply',@i); return false;">Atbildēt</button>
+                        </div>
+                    </div>
+                </div>
+                    i += 1;
+                }
+            </div>
+    </div>
+</div>
+</div>
+<script src="~/Scripts/bootstrap-select.min.js"></script>

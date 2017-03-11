@@ -270,15 +270,14 @@ namespace ViedaSlimnicaProject.Controllers
 
         // GET: Pacients/PatientView
         [MyAuthorize(Roles ="User")]
-        public ActionResult PatientView(int id)
+        public ActionResult PatientView()
         {
             var user = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
-            var msglist = db.Zinojumi
-                .Where(a => a.msgTo.PacientaID == user.Patient.PacientaID || a.msgTo.Vards == null)
-                .ToList();
+           // var msglist = db.Zinojumi
+           //     .Where(a => a.msgTo.PacientaID == user.Patient.PacientaID || a.msgTo.Vards == null)
+           //     .ToList();
             var pacients = new PacientsView() {
-                Pacients = db.Pacienti.Find(user.Patient.PacientaID),
-                Msg = msglist.OrderByDescending(e => e.date)
+                Pacients = db.Pacienti.Find(user.Patient.PacientaID)
             };
 
             if (pacients == null)
@@ -380,24 +379,7 @@ namespace ViedaSlimnicaProject.Controllers
                 return View(patientEditVm);
             }
         }
-        
-        [HttpPost]
-        public ActionResult NewMsg(string text)
-        {
-            Zinojumi message = new Zinojumi();
-            Profils user = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
-            message.msg = text;
-            message.profils = user;
-            message.date = DateTime.Now;
-            message.dateString = message.date.ToString("d MMM HH:mm");
-            if (ModelState.IsValid)
-            {
-                db.Zinojumi.Add(message);
-                db.SaveChanges();
-                return RedirectToAction("Zinojumi");
-            }
-            return View();
-        }
+       
 
         // GET: Pacients/Edit/5
         [MyAuthorize(Roles = "SuperAdmin, Employee")]
@@ -510,7 +492,7 @@ namespace ViedaSlimnicaProject.Controllers
                 Pacients pacients = db.Pacienti.Find(id);
                 Profils profile = db.Accounts.Find(user.ProfileID);
 
-                var userMsgs = db.Zinojumi.Where(a => a.msgTo.PacientaID == finduser.PacientaID).ToList();
+                var userMsgs = db.Zinojumi.Where(a => a.msgTo.Patient.PacientaID == finduser.PacientaID).ToList();
                     foreach (var i in userMsgs)
                     {
                         db.Zinojumi.Remove(i);
@@ -666,28 +648,19 @@ namespace ViedaSlimnicaProject.Controllers
         public ActionResult SendMsgToPatient(int patientID, string MsgToPatient)
         {
             Profils user = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
+            Profils patient = db.Accounts.Where(b => b.Patient.PacientaID == patientID).FirstOrDefault();
             var message = new Zinojumi() {
                 msg = MsgToPatient,
-                profils = user,
+                msgFrom = user,
                 date = DateTime.Now,
                 dateString = DateTime.Now.ToString("d MMM HH:mm"),
-                msgTo = db.Pacienti.Find(patientID)
+                msgTo = patient
         };
             db.Zinojumi.Add(message);
             db.SaveChanges();
            
             return RedirectToAction("Index");
         }
-        
-
-        [MyAuthorize(Roles = "SuperAdmin,Employee")]
-        public ActionResult Zinojumi()
-        {
-            var msgList = db.Zinojumi.ToList().OrderByDescending(e => e.date);
-          //      msgList.OrderByDescending(e => e.date);
-            return View(msgList);
-        }
-
         [MyAuthorize(Roles = "SuperAdmin, Employee")]
         public ActionResult DeleteMsg(int? id)
         {

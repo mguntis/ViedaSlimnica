@@ -13,9 +13,10 @@ namespace ViedaSlimnicaProject.Models
         public int zinojumaID { get; set; }
         [DisplayName("Ziņojuma Teksts")]
         public string msg { get; set; }
-        public virtual Profils profils { get; set; }  // kas izsūtīja šo ziņojumu
+        public string subject { get; set; } // ziņojuma virsrakts
+        public virtual Profils msgFrom { get; set; }  // kas izsūtīja šo ziņojumu
         public DateTime date { get; set; } // datums 
         public string dateString { get; set; } // datums noformatesanai
-        public virtual Pacients msgTo { get; set; }
+        public virtual Profils msgTo { get; set; }
     }
 }

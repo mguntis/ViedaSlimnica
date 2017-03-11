@@ -7,7 +7,8 @@
     <title>@ViewBag.Title - Viedā slimnīca</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -32,6 +33,10 @@
                             {
                                 if (this.User.IsInRole("User"))
                                 {
+
+                                    <li>@Html.ActionLink("Kontakti", "Contact", "Pacients")</li>
+                                    <li><a runat="server" href="~/Message/Index">Ziņojumi</a></li>
+                                    <li>@Html.ActionLink("Mani Dati", "PatientView", "Pacients")</li>
                                     <li>@Html.ActionLink("Iziet", "LogOf", "Pacients")</li>
                                 }
                                 else
@@ -48,7 +53,7 @@
                                     {
                                         <li><a runat="server" href="~/Pacients/BlockedUsers">Bloķētie Lietotāji</a></li>
                                         <li><a runat="server" href="~/Pacients/Register">Reģistrēt</a></li>
-                                        <li><a runat="server" href="~/Pacients/Zinojumi">Ziņojumi</a></li>
+                                        <li><a runat="server" href="~/Message/Index">Ziņojumi</a></li>
                                         <li><a runat="server" href="~/Palatas/Index">Palātas</a></li>
                                         <li><a runat="server" href="~/Pacients/Index">Pacienti</a></li>
                                         <li>@Html.ActionLink("Kontakti", "Contact", "Pacients")</li>
@@ -81,7 +86,7 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/bootstrap")
+   @* @Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
     @if (ViewBag.Message != null)
     {
