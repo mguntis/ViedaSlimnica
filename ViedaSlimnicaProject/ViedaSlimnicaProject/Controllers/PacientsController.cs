@@ -247,6 +247,13 @@ namespace ViedaSlimnicaProject.Controllers
             return View(db.Pacienti.Where(q => q.Palata.PalatasID == id).Take(4).ToList());
         }
 
+        [MyAuthorize(Roles = "SuperAdmin, Employee")]
+        public ActionResult Izrakstisanas()
+        {
+
+            return View(db.Pacienti.Where(q => q.IzrakstisanasDatums <= DateTime.Now).Take(10).ToList());
+        }
+
         // GET: Pacients/Details/5
         [MyAuthorize(Roles = "SuperAdmin, Employee, User")]
         public ActionResult Details(int? id)
