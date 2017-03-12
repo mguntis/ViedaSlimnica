@@ -18,5 +18,6 @@ namespace ViedaSlimnicaProject.Models
         public DateTime date { get; set; } // datums 
         public string dateString { get; set; } // datums noformatesanai
         public virtual Profils msgTo { get; set; }
+        public bool isRead { get; set; } // ir izlasīta
     }
 }
