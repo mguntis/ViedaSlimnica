@@ -26,7 +26,7 @@
                             @Html.TextArea("text", null, htmlAttributes: new { @class = "form-control newmsg", @rows = "5", @resize = "none", @placeholder = "Ziņojums" })
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" value="Izsūtīt" class="btn btn-default" /> <button type="button" class="btn btn-default" data-dismiss="modal">Aizvērt</button>
+                        <input type="submit" value="Izsūtīt" class="btn btn-default" id="newMsgSent"/> <button type="button" class="btn btn-default" data-dismiss="modal">Aizvērt</button>
                     </div>
                 }
             </div>
@@ -88,7 +88,7 @@
             {   <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-title">
-                        <a data-toggle="collapse" href="@("#collapse" + i)" onclick="updateMessage(@item.zinojumaID,@i); return false;">
+                        <a data-toggle="collapse" href="@("#collapse" + i)" onclick="updateMessage(@item.zinojumaID,@i,@item.isRead); return false;">
                             <div class="msgAuthor" id="@("msgAuthor" + i)">@Html.DisplayFor(ModelItem => item.msgFrom.Vards) @Html.DisplayFor(ModelItem => item.msgFrom.Uzvards)</div>
                             <div class="msgTo" id="@("msgTo" + i)">
                                 > @Html.DisplayFor(ModelItem => item.msgTo.Vards) @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)

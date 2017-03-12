@@ -25,9 +25,24 @@
 
         }
     }
-    function updateMessage(msgID, htmlID) {
+    function updateMessage(msgID, htmlID, isRead) {
+        if (!isRead) {
+            $.connection.hub.start().done(function () {
+                chat.server.markMessage(msgID);
+                chat.server.messageUpdate();
+                $('#msgNew' + htmlID).html('');
+            });
+        }
+    }
+    function sendNotif() {
         $.connection.hub.start().done(function () {
-            chat.server.markMessage(msgID);
-            $('#msgNew' + htmlID).html('');
+            var msgTo = $('#msgTo').find(":selected").val();
+            chat.server.sendNotification(msgTo);
         });
     }
+    $.connection.hub.start().done(function () {
+        $('#newMsgSent').click(function () {
+            var msgTo = $('#msgTo').find(":selected").val();
+            chat.server.sendNotification(msgTo);
+        });
+    });

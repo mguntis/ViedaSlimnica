@@ -507,3 +507,34 @@ body {
     width: 100%;
     max-width:1000px
 }
+.notification {
+    display:none;
+    position:absolute;
+    top:0px;
+    right:20px;
+    width:25%;
+    min-width:270px;
+    height:30px;
+    padding:5px;
+    padding-left:13px;
+    padding-bottom:7px;
+    background-color:#f5f5f5;
+    box-shadow:0px 0px 10px;
+}
+.notification-body {
+    display: inline;
+    font-size: 13px;
+    color:#484848;
+    width: 80%;
+} 
+.notification-footer {
+    width: 20%;
+    display: inline;
+}
+.notification-footer button {
+    float:right;
+    height:100%;
+    background-color:#f5f5f5;
+    border:hidden;
+    color:#bbbbbb;
+}

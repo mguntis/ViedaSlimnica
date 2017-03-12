@@ -12,6 +12,7 @@
     <!--Reference the SignalR library. -->
     <script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
     <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/Notifications.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -38,7 +39,7 @@
                                 {
 
                                     <li>@Html.ActionLink("Kontakti", "Contact", "Pacients")</li>
-                                    <li><a runat="server" href="~/Message/Index">Ziņojumi</a></li>
+                                    <li><a runat="server" id="zinojumiNav" href="~/Message/Index">Ziņojumi</a></li>
                                     <li>@Html.ActionLink("Mani Dati", "PatientView", "Pacients")</li>
                                     <li>@Html.ActionLink("Iziet", "LogOf", "Pacients")</li>
                                 }
@@ -46,7 +47,7 @@
                                 {
                                     if (this.User.IsInRole("Employee"))
                                     {
-                                        <li><a runat="server" href="~/Pacients/Zinojumi">Ziņojumi</a></li>
+                                        <li><a runat="server" id="zinojumiNav" href="~/Message/Index">Ziņojumi</a></li>
                                         <li><a runat="server" href="~/Pacients/Index">Pacienti</a></li>
                                         <li><a runat="server" href="~/Pacients/Izrakstisanas">Izrakstīšana</a></li>
                                         <li><a runat="server" href="~/Palatas/Index">Palātas</a></li>
@@ -56,7 +57,7 @@
                                     {
                                         <li><a runat="server" href="~/Pacients/BlockedUsers">Bloķētie Lietotāji</a></li>
                                         <li><a runat="server" href="~/Pacients/Register">Reģistrēt</a></li>
-                                        <li><a runat="server" href="~/Message/Index">Ziņojumi</a></li>
+                                        <li><a runat="server" id="zinojumiNav" href="~/Message/Index">Ziņojumi</a></li>
                                         <li><a runat="server" href="~/Pacients/Izrakstisanas">Izrakstīšana</a></li>
                                         <li><a runat="server" href="~/Palatas/Index">Palātas</a></li>
                                         <li><a runat="server" href="~/Pacients/Index">Pacienti</a></li>
@@ -83,10 +84,14 @@
 
     <div class="container body-content">
         @RenderBody()
+        <div class="notification" id="notification">
+            <div class="notification-body" id="notification-body">hi</div>
+            <div class="notification-footer" id="notification-footer"><button onclick="closeNotif()">X</button></div>
+        </div>
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Viedā Slimnīca 
-            @if (this.User.Identity.Name != "") {<text>| Ielogojies kā @Html.ViewContext.HttpContext.User.Identity.Name </text>}</p>
+            @if (this.User.Identity.Name != "") {<text>| Ielogojies kā <div id="username" style="display:inline"> @Html.ViewContext.HttpContext.User.Identity.Name</div> </text>}</p>
         </footer>
     </div>
 
