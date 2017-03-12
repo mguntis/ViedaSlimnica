@@ -3,7 +3,6 @@
     ViewBag.Title = "Ziņojumi";
 }
 <script type="text/javascript" src="~/Scripts/Messages.js"></script>
-@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">*@
 <p>
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Jauna ziņa</button>
     <div id="myModal" class="modal fade" role="dialog">
@@ -89,13 +88,15 @@
             {   <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-title">
-                        <a data-toggle="collapse" href="@("#collapse" + i)">
+                        <a data-toggle="collapse" href="@("#collapse" + i)" onclick="updateMessage(@item.zinojumaID,@i); return false;">
                             <div class="msgAuthor" id="@("msgAuthor" + i)">@Html.DisplayFor(ModelItem => item.msgFrom.Vards) @Html.DisplayFor(ModelItem => item.msgFrom.Uzvards)</div>
                             <div class="msgTo" id="@("msgTo" + i)">
                                 > @Html.DisplayFor(ModelItem => item.msgTo.Vards) @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)
                             </div>
                             <div class="msgSubject" id="@("msgSubject"+i)">@Html.DisplayFor(ModelItem => item.subject)</div>
                             <div class="msgTime">@Html.DisplayFor(ModelItem => item.dateString)</div>
+                            @if (!item.isRead)
+                            { <div class="msgNew" id="@("msgNew"+i)">Jauna!</div>}
                         </a>
                     </div>
                 </div>
@@ -117,7 +118,7 @@
             {   <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <a data-toggle="collapse" href="@("#collapse" + i)">
+                            <a data-toggle="collapse" href="@("#collapse" + i)" onclick="updateMessage(@item.zinojumaID,@i); return false;">
                                 <div class="msgAuthor" id="@("msgAuthor" + i)">@Html.DisplayFor(ModelItem => item.msgFrom.Vards) @Html.DisplayFor(ModelItem => item.msgFrom.Uzvards)</div>
                                 <div class="msgTo" id="@("msgTo" + i)">
                                     > @Html.DisplayFor(ModelItem => item.msgTo.Vards) @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)

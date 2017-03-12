@@ -349,8 +349,18 @@ body {
     font-size:12px;
     color:#777777;
 }
+.msgNew {
+    float: right;
+    display: inline-block;
+    color: #e00303;
+    font-size: 11px;
+    vertical-align:middle;
+    margin-right: 15px;
+    margin-top: 3px;
+}
+
 .msgTime {
-    display:inline;
+    display:inline-block;
     float:right;
     font-size:14px;
     color:#bbbbbb
