@@ -17,8 +17,6 @@
                 {
                     <div class="modal-body">
                         <select class="selectpicker" data-show-subtext="true" data-live-search="true" id="msgTo" name="msgTo">
-                            @if (this.User.IsInRole("Employee") || this.User.IsInRole("SuperAdmin"))
-                            {<option>Visiem</option>} 
                             @foreach (var item in Model.AvailableRecipents)
                             {
                                 <option data-subtext ="@if (@item.Patient != null) {@item.Role() <text> - </text> @item.Patient.Palata.Nodala <text> nodaļa </text>} else { @item.Role() } " value="@item.ProfileID">@Html.DisplayFor(ModelItem => item.Vards) @Html.DisplayText(" ") @Html.DisplayFor(ModelItem => item.Uzvards)</option> 
@@ -94,10 +92,7 @@
                         <a data-toggle="collapse" href="@("#collapse" + i)">
                             <div class="msgAuthor" id="@("msgAuthor" + i)">@Html.DisplayFor(ModelItem => item.msgFrom.Vards) @Html.DisplayFor(ModelItem => item.msgFrom.Uzvards)</div>
                             <div class="msgTo" id="@("msgTo" + i)">
-                                > @if (item.msgTo != null)
-                                { @Html.DisplayFor(ModelItem => item.msgTo.Vards) <text> </text> @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)}
-                                else
-                                { <text>Visiem</text>}
+                                > @Html.DisplayFor(ModelItem => item.msgTo.Vards) @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)
                             </div>
                             <div class="msgSubject" id="@("msgSubject"+i)">@Html.DisplayFor(ModelItem => item.subject)</div>
                             <div class="msgTime">@Html.DisplayFor(ModelItem => item.dateString)</div>
@@ -125,10 +120,8 @@
                             <a data-toggle="collapse" href="@("#collapse" + i)">
                                 <div class="msgAuthor" id="@("msgAuthor" + i)">@Html.DisplayFor(ModelItem => item.msgFrom.Vards) @Html.DisplayFor(ModelItem => item.msgFrom.Uzvards)</div>
                                 <div class="msgTo" id="@("msgTo" + i)">
-                                    > @if (item.msgTo != null)
-                                    { @Html.DisplayFor(ModelItem => item.msgTo.Vards) <text> </text> @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)}
-                                    else
-                                    { <text>Visiem</text>}
+                                    > @Html.DisplayFor(ModelItem => item.msgTo.Vards) @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)
+                                    
                                 </div>
                                 <div class="msgSubject" id="@("msgSubject"+i)">@Html.DisplayFor(ModelItem => item.subject)</div>
                                 <div class="msgTime">@Html.DisplayFor(ModelItem => item.dateString)</div>
@@ -140,7 +133,6 @@
                         <div class="panel-footer">
                             <button type="button" class="btn btn-info btn-lg notimportant" data-toggle="modal" data-target="#deleteModal" onclick="addID(@item.zinojumaID,'delete'); return false;">Dzēst</button>
                             <button type="button" class="btn btn-info btn-lg notimportant" data-toggle="modal" data-target="#editreplyModal" onclick="editReply(@item.zinojumaID,'edit',@i); return false;">Labot</button>
-                            <button type="button" class="btn btn-info btn-lg msgFooter" data-toggle="modal" data-target="#editreplyModal" onclick="editReply(@item.zinojumaID,'reply',@i); return false;">Atbildēt</button>
                         </div>
                     </div>
                 </div>

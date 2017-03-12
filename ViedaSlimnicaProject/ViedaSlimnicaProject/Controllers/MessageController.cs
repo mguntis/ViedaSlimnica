@@ -20,7 +20,7 @@ namespace ViedaSlimnicaProject.Controllers
         {
             Profils user = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
             var msgListReceived = db.Zinojumi.ToList()
-                .Where(a => a.msgTo == user || a.msgTo == null)
+                .Where(a => a.msgTo == user)
                 .OrderByDescending(e => e.date);
             var msgListSent = db.Zinojumi.ToList()
                 .Where(a => a.msgFrom == user)
@@ -53,7 +53,7 @@ namespace ViedaSlimnicaProject.Controllers
         {
             Zinojumi message = new Zinojumi();
             Profils user = db.Accounts.Where(a => a.UserName == User.Identity.Name).FirstOrDefault();
-            if (user.RoleStart == "User" && msgTo == null) return RedirectToAction("Index");
+            if (msgTo == null) return RedirectToAction("Index");
             if (text == "") return RedirectToAction("Index");
             message.msg = text;
             message.msgFrom = user;
