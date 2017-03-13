@@ -20,6 +20,8 @@ using System.Diagnostics;
 using System.Data.Entity.Validation;
 using System.Xml.Linq;
 using ViedaSlimnicaProject.Security;
+using System.Net.Mail;
+using System.ComponentModel.DataAnnotations;
 
 namespace ViedaSlimnicaProject.Controllers
 {
@@ -609,6 +611,7 @@ namespace ViedaSlimnicaProject.Controllers
                 {
                     if (HashSaltVerify(log.Password, user.Password))
                     {
+                        Session["loginclient"] = null;
                         if (user.ToReset) return RedirectToAction("ResetPassword", new { id = user.ProfileID });
                         FormsAuthentication.SetAuthCookie(user.UserName, true);
                         if (user.RoleStart == "Employee" || user.RoleStart == "SuperAdmin")
@@ -678,12 +681,38 @@ namespace ViedaSlimnicaProject.Controllers
             try
             {
                 var user = db.Accounts.Where(a => a.UserName == log.UserName).FirstOrDefault();
+                var password = "VS" + DateTime.Now.ToString("ddmm");
                 if (user.UserName != null)
                 {
-                        user.ResetReq = true;
+                    if (this.IsValidEmailAddress(user.UserName))
+                    {
+                        MailMessage mail = new MailMessage();
+
+                        SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
+                        smtpServer.EnableSsl = true;
+                        smtpServer.UseDefaultCredentials = false;
+                        smtpServer.Credentials = new NetworkCredential("viedaslimnica@gmail.com", "VS@2017AGKA");
+                        smtpServer.Port = 587;
+
+                        mail.From = new MailAddress("viedaslimnica@gmail.com");
+                        mail.To.Add(user.UserName);
+                        mail.Subject = "Paroles atjaunošana";
+                        mail.Body = ("Jūsu lietotājvārds: " + user.UserName + " un jaunā parole: " + password);
+
+                        smtpServer.Send(mail);
+
+                        user.Password = HashSaltStore(password);
+                        user.ToReset = true;
+                        user.AccountBlocked = false;
                         db.SaveChanges();
                         ModelState.AddModelError("", "Pieprasījums veiksmīgi nosūtīts");
                         return View();
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Nav ievadīts korekts e-pasts");
+                        return View();
+                    }
                 }
                 else
                 {
@@ -693,8 +722,17 @@ namespace ViedaSlimnicaProject.Controllers
             }
             catch
             {
+                ModelState.AddModelError("", "Ir notikusi neparedzēta kļūda. Lūdzu mēģiniet vēlreiz!");
                 return View();
             }
+        }
+
+        private bool IsValidEmailAddress(string emailToValidate)
+        {
+            // Get instance of MVC email validation attribute
+            var emailAttribute = new EmailAddressAttribute();
+
+            return emailAttribute.IsValid(emailToValidate);
         }
 
         [MyAuthorize]
@@ -881,7 +919,7 @@ namespace ViedaSlimnicaProject.Controllers
         public ActionResult BlockedUsers()
         {
             try {
-                return View(db.Accounts.Where(a => a.ResetReq == true));
+                return View(db.Accounts.Where(a => a.AccountBlocked == true));
         }
             catch
             {
@@ -895,17 +933,17 @@ namespace ViedaSlimnicaProject.Controllers
             try
             {
                 var user = db.Accounts.Where(a => a.ProfileID == id).FirstOrDefault();
-                //var password = "VS" + DateTime.Now.ToString("ddmm");
+                var password = "VS" + DateTime.Now.ToString("ddmm");
+
                 if (user.UserName != null)
                 {
                     if (user.AccountBlocked == true)
                     {
-                        user.ResetReq = false;
                         user.AccountBlocked = false;
                         user.ToReset = true;
-                        //user.Password = HashSaltStore(password);
+                        user.Password = HashSaltStore(password);
                         db.SaveChanges();
-                        //TempData["AlertMessage"] = "Lietotājvārds: " + user.UserName + " parole: " + password;
+                        TempData["AlertMsg"] = "Lietotājvārds: [" + user.UserName + "] un jaunā parole: [" + password + "]";
                         return RedirectToAction("BlockedUsers");
                     }
 

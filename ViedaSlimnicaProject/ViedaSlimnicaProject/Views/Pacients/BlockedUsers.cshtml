@@ -5,6 +5,7 @@
 }
 
 <h2>Bloķētie lietotāji</h2>
+<h6>@Html.Raw(TempData["Alertmsg"])</h6>
 
 @*<p>
     @Html.ActionLink("Create New", "Create")
@@ -59,8 +60,8 @@
             @Html.DisplayFor(modelItem => item.AccountBlocked)
         </td>*@
         <td>
-            @Html.ActionLink("Atbloķēt", "UnblockUser", new { id=item.ProfileID},
-           new { onclick = "return modelItem => item.Uzvards" })
+            @Html.ActionLink("Atbloķēt", "UnblockUser", new { id=item.ProfileID}
+           /*new { onclick = "return TempData["AlertMsg"]" }*/)
 
         </td>
     </tr>

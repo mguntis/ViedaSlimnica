@@ -11,7 +11,7 @@ namespace ViedaSlimnicaProject.Models
     {
             [Key]
             public int ProfileID { get; set; }
-            [DisplayName("Lietotājvārds")]
+            [DisplayName("E-pasts")]
             public string UserName { get; set; }
             [DisplayName("Parole")]
             [DataType(DataType.Password)]
@@ -27,8 +27,6 @@ namespace ViedaSlimnicaProject.Models
             public bool ToReset { get; set; }
             [DisplayName("Statuss")]
             public bool AccountBlocked { get; set; }
-            public bool ResetReq { get; set; }
-            //public int Attempts { get; set; }
 
             public string Role()
         {
