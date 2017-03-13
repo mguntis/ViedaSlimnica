@@ -88,11 +88,11 @@
             {   <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-title">
-                        <a data-toggle="collapse" href="@("#collapse" + i)" onclick="updateMessage(@item.zinojumaID,@i,@item.isRead); return false;">
+                        <a data-toggle="collapse" href="@("#collapse" + i)" onclick="updateMessage(@item.zinojumaID,@i); return false;">
                             <div class="msgAuthor" id="@("msgAuthor" + i)">@Html.DisplayFor(ModelItem => item.msgFrom.Vards) @Html.DisplayFor(ModelItem => item.msgFrom.Uzvards)</div>
-                            <div class="msgTo" id="@("msgTo" + i)">
+                            @*<div class="msgTo" id="@("msgTo" + i)">
                                 > @Html.DisplayFor(ModelItem => item.msgTo.Vards) @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)
-                            </div>
+                            </div>*@
                             <div class="msgSubject" id="@("msgSubject"+i)">@Html.DisplayFor(ModelItem => item.subject)</div>
                             <div class="msgTime">@Html.DisplayFor(ModelItem => item.dateString)</div>
                             @if (!item.isRead)
@@ -119,11 +119,11 @@
                     <div class="panel-heading">
                         <div class="panel-title">
                             <a data-toggle="collapse" href="@("#collapse" + i)" onclick="updateMessage(@item.zinojumaID,@i); return false;">
-                                <div class="msgAuthor" id="@("msgAuthor" + i)">@Html.DisplayFor(ModelItem => item.msgFrom.Vards) @Html.DisplayFor(ModelItem => item.msgFrom.Uzvards)</div>
-                                <div class="msgTo" id="@("msgTo" + i)">
+                                <div class="msgAuthor" id="@("msgAuthor" + i)">@Html.DisplayFor(ModelItem => item.msgTo.Vards) @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)</div>
+                                @*<div class="msgTo" id="@("msgTo" + i)">
                                     > @Html.DisplayFor(ModelItem => item.msgTo.Vards) @Html.DisplayFor(ModelItem => item.msgTo.Uzvards)
                                     
-                                </div>
+                                </div>*@
                                 <div class="msgSubject" id="@("msgSubject"+i)">@Html.DisplayFor(ModelItem => item.subject)</div>
                                 <div class="msgTime">@Html.DisplayFor(ModelItem => item.dateString)</div>
                             </a>

@@ -20,7 +20,12 @@ $(function () {
     }
     chat.client.updateMessageCount = function (count) {
         console.log(count);
-        $('#zinojumiNav').html('Ziņojumi(' + count + ')');
+        if (count > 0) {
+            $('#zinojumiNav').html('Ziņojumi(' + count + ')');
+        }
+        else {
+            $('#zinojumiNav').html('Ziņojumi');
+        }
     }
     $.connection.hub.start().done(function () {
         chat.server.messageUpdate();

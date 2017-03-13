@@ -635,3 +635,6 @@ h4 small,
 .h4 small {
   font-size: 14px;
 }
+footer p {
+    display:inline;
+}

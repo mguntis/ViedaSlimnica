@@ -28,6 +28,16 @@ public class MessagesHub : Hub
             {
                 db.Zinojumi.Find(msgID).isRead = true;
                 db.SaveChanges();
+                var user = db.Accounts.Where(a => a.UserName == Context.User.Identity.Name).FirstOrDefault();
+                if (user != null)
+                {
+                    var newMessages = db.Zinojumi.Where(a => a.msgTo.ProfileID == user.ProfileID && !a.isRead).Count();
+                    if (newMessages >= 0)
+                    {
+                        var client = uList.Where(o => o.UserName == user.UserName).FirstOrDefault();
+                        Clients.Client(client.ConnectionID).UpdateMessageCount(newMessages);
+                    }
+                }
             }
         }
         public override Task OnConnected()
@@ -65,14 +75,35 @@ public class MessagesHub : Hub
                 }
                 }
             }
+        public void SendNotificationReply(int? msgID)
+        {
+            //Clients.All.receiveNotification("hello");
+
+            if (msgID != null)
+            {
+                var sender = db.Accounts.Where(a => a.UserName == Context.User.Identity.Name).FirstOrDefault();
+                var msgToReply = db.Zinojumi.Find(msgID);
+                var user = uList.Where(o => o.UserName == msgToReply.msgFrom.UserName).FirstOrDefault();
+                if (user != null)
+                {
+                    var newMsgCount = db.Zinojumi.Where(a => a.msgTo.ProfileID == msgToReply.msgFrom.ProfileID && !a.isRead).Count();
+                    string message = "Jums ir jauna ziņa no " + sender.Vards + " " + sender.Uzvards;
+                    Clients.Client(user.ConnectionID).receiveNotification(message, newMsgCount + 1);
+                    //Clients.All.receiveNotification(message);
+                }
+            }
+        }
         public void MessageUpdate()
         {
             var user = db.Accounts.Where(a => a.UserName == Context.User.Identity.Name).FirstOrDefault();
-            var newMessages = db.Zinojumi.Where(a => a.msgTo.ProfileID == user.ProfileID && !a.isRead).Count();
-            if (newMessages > 0)
+            if (user != null)
             {
-                var client = uList.Where(o => o.UserName == user.UserName).FirstOrDefault();
-                Clients.Client(client.ConnectionID).UpdateMessageCount(newMessages);
+                var newMessages = db.Zinojumi.Where(a => a.msgTo.ProfileID == user.ProfileID && !a.isRead).Count();
+                if (newMessages > 0)
+                {
+                    var client = uList.Where(o => o.UserName == user.UserName).FirstOrDefault();
+                    Clients.Client(client.ConnectionID).UpdateMessageCount(newMessages);
+                }
             }
         }
         }

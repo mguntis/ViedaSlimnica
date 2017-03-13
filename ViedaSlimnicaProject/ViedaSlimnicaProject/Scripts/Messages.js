@@ -25,14 +25,12 @@
 
         }
     }
-    function updateMessage(msgID, htmlID, isRead) {
-        if (!isRead) {
+    function updateMessage(msgID, htmlID) {
             $.connection.hub.start().done(function () {
                 chat.server.markMessage(msgID);
                 chat.server.messageUpdate();
                 $('#msgNew' + htmlID).html('');
             });
-        }
     }
     function sendNotif() {
         $.connection.hub.start().done(function () {
@@ -44,5 +42,9 @@
         $('#newMsgSent').click(function () {
             var msgTo = $('#msgTo').find(":selected").val();
             chat.server.sendNotification(msgTo);
+        });
+        $('#editreplyBtn').click(function () {
+            var msgID = $('#editMsgID').val();
+            chat.server.sendNotificationReply(msgID);
         });
     });
