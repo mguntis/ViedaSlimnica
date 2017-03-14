@@ -32,7 +32,9 @@
                 @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
             </div>
         </div>
+        <div id="kk">
         @Html.ActionLink("Paroles noteikumi", "", null, new { id = "passwordPolicy" })
+        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Vards, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
