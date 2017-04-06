@@ -52,6 +52,7 @@
                                         <li><a runat="server" href="~/Pacients/Izrakstisanas">Izrakstīšana</a></li>
                                         <li><a runat="server" href="~/Palatas/Index">Palātas</a></li>
                                         <li>@Html.ActionLink("Kontakti", "Contact", "Pacients")</li>
+                                        <li>@Html.ActionLink("Iziet", "LogOf", "Pacients")</li>
                                     }
                                     if (this.User.IsInRole("SuperAdmin"))
                                     {
